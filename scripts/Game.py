@@ -2,6 +2,9 @@ import pygame
 import Data
 import Player
 from math import *
+import weapons
+
+pygame.init()
 
 screen = pygame.display.set_mode(Data.screenSize, flags = pygame.NOFRAME)
 pygame.display.set_caption("Raycasters2005") #Здесь будет название игры, которого пока что нет
@@ -14,7 +17,6 @@ textures = {
 "4" : pygame.image.load("images/4.jpg")}
 #background1 = pygame.image.load("images/background1.jpeg")
 #background2 = pygame.image.load("images/background1.jpeg")
-
 
 gameRunning = True
 gameClock = pygame.time.Clock()
@@ -82,7 +84,42 @@ def Raycast(ray, ox, oy, xm, ym):
     wallColumn = pygame.transform.scale(wallColumn, (Data.rayThickness + 1, proectionHeight))
     screen.blit(wallColumn, (ray * Data.rayThickness + Data.screenWidth / 2, Data.screenHeight // 2 - proectionHeight // 2))
 
-
+def weapon():
+    pushed_mouse_button = pygame.mouse.get_pressed()
+    KeyPressed = pygame.key.get_pressed()
+    if(weapons.ammo == weapons.max_ammo or KeyPressed[pygame.K_r]):
+        weapons.reload_flag = True
+    if weapons.reload_flag:
+        screen.blit(weapons.sprites_reload[weapons.weapon_anim_count], (Data.screenWidth/2 + weapons.sprites_reload[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_reload[weapons.weapon_anim_count].get_height()))
+        if weapons.anim_frames == 1:
+            weapons.pistol_reload_sound.play()
+        elif weapons.weapon_anim_count == len(weapons.sprites_reload) - 1 and weapons.anim_frames % weapons.anim_speed_for_reload == 0:
+            weapons.weapon_anim_count = 0
+            weapons.ammo = 0
+            weapons.anim_frames = 0
+            weapons.weapon_anim_count = 0
+            weapons.reload_flag = False
+        elif weapons.anim_frames % weapons.anim_speed_for_reload == 0:
+            weapons.weapon_anim_count += 1
+        weapons.anim_frames += 1
+    else:
+            if pushed_mouse_button[0] == True:
+                weapons.shot_flag = True
+            if weapons.shot_flag == True:
+                screen.blit(weapons.sprites_shot[weapons.weapon_anim_count],(Data.screenWidth/2 + weapons.sprites_shot[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_shot[weapons.weapon_anim_count].get_height()))
+                if weapons.anim_frames == 1:
+                    weapons.pistol_shot_sound.play()
+                elif weapons.weapon_anim_count == len(weapons.sprites_shot)-1 and weapons.anim_frames % weapons.anim_speed_for_shot == 0:
+                    weapons.weapon_anim_count = 0
+                    weapons.ammo += 1
+                    weapons.shot_flag = False
+                    weapons.anim_frames = 0
+                    weapons.anim_frames = 0
+                elif weapons.anim_frames % weapons.anim_speed_for_shot == 0:
+                    weapons.weapon_anim_count += 1
+                weapons.anim_frames += 1
+            else:
+                screen.blit(weapons.sprites_shot[weapons.weapon_anim_count], (Data.screenWidth / 2 + weapons.sprites_shot[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_shot[weapons.weapon_anim_count].get_height()))
 def Draw():
     ox, oy = Player.position[0], Player.position[1]
     xm, ym = (ox // Data.blockSize * Data.blockSize, oy // Data.blockSize * Data.blockSize)
@@ -103,7 +140,7 @@ def Draw():
 while gameRunning:
     Movement(backgroundPosition=0)
     Draw()
-
+    weapon()
     pygame.display.update()
 
     for event in pygame.event.get():
