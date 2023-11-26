@@ -36,8 +36,8 @@ pistol_reload_sound = pygame.mixer.Sound("sounds/pistol_reload.mp3")
 
 weapon_anim_count = 0
 anim_frames = 0
-anim_speed_for_shot = 5
-anim_speed_for_reload = 5
+anim_speed_for_shot = 12
+anim_speed_for_reload = 12
 shot_flag = False
 reload_flag = False
 scope_flag = False
