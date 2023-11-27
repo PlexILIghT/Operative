@@ -113,7 +113,6 @@ def WeaponStatic():
     else:
         screen.blit(weapons.SpritesPistolShotScope[0], (Data.screenWidth / 2 - weapons.SpritesPistolShotScope[0].get_width()/2 + 26, Data.screenHeight - weapons.SpritesPistolShotScope[0].get_height()))
 
-
 def Shot():
     TrueAnimSpeedForShot = gameClock.get_fps() // weapons.AnimSpeedForShot
     screen.blit(weapons.SpritesPistolShot[weapons.WeaponAnimCount], (Data.screenWidth / 2 + weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_width(), Data.screenHeight - weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_height())) if not weapons.ScopeFlag else screen.blit(weapons.SpritesPistolShotScope[weapons.WeaponAnimCount], (Data.screenWidth / 2 - weapons.SpritesPistolShotScope[weapons.WeaponAnimCount].get_width()/2 + 26, Data.screenHeight - weapons.SpritesPistolShotScope[weapons.WeaponAnimCount].get_height()))
@@ -131,14 +130,16 @@ def Shot():
 def WeaponEvents():
     PushedMouseButton = pygame.mouse.get_pressed()
     KeyPressed = pygame.key.get_pressed()
+    if not PushedMouseButton[2]:
+        weapons.ScopeToggle = False
     if weapons.Ammo == weapons.MaxAmmo or KeyPressed[pygame.K_r]:
         weapons.ReloadFlag = True
-        weapons.ScopeFlag = False
-    if PushedMouseButton[2] and not weapons.ReloadFlag and not weapons.ShotFlag:
-        weapons.ScopeFlag = not weapons.ScopeFlag
-    if PushedMouseButton[0] and not weapons.ReloadFlag:
+    if weapons.ScopeToggle == False:
+        if PushedMouseButton[2] and not weapons.ReloadFlag and not weapons.ShotFlag:
+            weapons.ScopeFlag = not weapons.ScopeFlag
+            weapons.ScopeToggle = True
+    if PushedMouseButton[0] and not weapons.ReloadFlag and not weapons.ShotFlag:
         weapons.ShotFlag = True
-
 
 
 def Weapon():

@@ -46,5 +46,6 @@ AnimSpeedForReload = 12
 ShotFlag = False
 ReloadFlag = False
 ScopeFlag = False
+ScopeToggle = False
 Ammo = 0
 MaxAmmo = 6
