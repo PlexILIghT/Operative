@@ -156,18 +156,13 @@ def Draw():
         Raycast(ray, ox, oy, xm, ym)
 
     # Отрисовка мини карты
-    pygame.draw.rect(screen, "black", (
-        0, 0, Data.blockSize * len(Data.map[0]) / Data.miniMapScale,
-        Data.blockSize * len(Data.map[0]) / Data.miniMapScale))
+    pygame.draw.rect(screen, "black", (0, 0, Data.blockSize * len(Data.map[0]) / Data.miniMapScale, Data.blockSize * len(Data.map) / Data.miniMapScale))
     for y in range(len(Data.map)):
         for x in range(len(Data.map[0])):
             if Data.map[y][x] != " ":
-                pygame.draw.rect(screen, "white", (
-                    x * Data.blockSize / Data.miniMapScale, y * Data.blockSize / Data.miniMapScale,
-                    Data.blockSize / Data.miniMapScale, Data.blockSize / Data.miniMapScale))
+                pygame.draw.rect(screen, "white", (x * Data.blockSize / Data.miniMapScale, y * Data.blockSize / Data.miniMapScale, Data.blockSize / Data.miniMapScale, Data.blockSize / Data.miniMapScale))
 
-    pygame.draw.circle(screen, "blue", (Player.position[0] / Data.miniMapScale, Player.position[1] / Data.miniMapScale),
-                       4)
+    pygame.draw.circle(screen, "blue", (Player.position[0] / Data.miniMapScale, Player.position[1] / Data.miniMapScale),4)
     # Отрисовка оружия
     Weapon()
 
