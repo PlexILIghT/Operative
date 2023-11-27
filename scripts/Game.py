@@ -89,59 +89,64 @@ def Raycast(ray, ox, oy, xm, ym):
                 (ray * Data.rayThickness + Data.screenWidth / 2, Data.screenHeight // 2 - proectionHeight // 2))
 
 
-def reload():
-    true_anim_speed_for_reload = gameClock.get_fps() // weapons.anim_speed_for_reload
-    screen.blit(weapons.sprites_reload[weapons.weapon_anim_count], (
-        Data.screenWidth / 2 + weapons.sprites_reload[weapons.weapon_anim_count].get_width(),
-        Data.screenHeight - weapons.sprites_reload[weapons.weapon_anim_count].get_height()))
-    if weapons.anim_frames == 1:
-        weapons.pistol_reload_sound.play()
-    elif weapons.weapon_anim_count == len(weapons.sprites_reload) - 1 and weapons.anim_frames % true_anim_speed_for_reload == 0:
+def Reload():
+    TrueAnimSpeedForReload = gameClock.get_fps() // weapons.AnimSpeedForReload
+    screen.blit(weapons.SpritesPistolReload[weapons.WeaponAnimCount], (
+        Data.screenWidth / 2 + weapons.SpritesPistolReload[weapons.WeaponAnimCount].get_width(),
+        Data.screenHeight - weapons.SpritesPistolReload[weapons.WeaponAnimCount].get_height()))
+    if weapons.AnimFrames == 1:
+        weapons.PistolReloadSound.play()
+    elif weapons.WeaponAnimCount == len(weapons.SpritesPistolReload) - 1 and weapons.AnimFrames % TrueAnimSpeedForReload == 0:
         weapons.weapon_anim_count = 0
-        weapons.ammo = 0
-        weapons.anim_frames = 0
-        weapons.weapon_anim_count = 0
-        weapons.reload_flag = False
-    elif weapons.anim_frames % true_anim_speed_for_reload == 0:
-        weapons.weapon_anim_count += 1
-    weapons.anim_frames += 1
+        weapons.Ammo = 0
+        weapons.AnimFrames = 0
+        weapons.WeaponAnimCount = 0
+        weapons.ReloadFlag = False
+    elif weapons.AnimFrames % TrueAnimSpeedForReload == 0:
+        weapons.WeaponAnimCount += 1
+    weapons.AnimFrames += 1
 
 
-def weapon_static():
-    screen.blit(weapons.sprites_shot[weapons.weapon_anim_count], (Data.screenWidth / 2 + weapons.sprites_shot[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_shot[weapons.weapon_anim_count].get_height()))
-
-
-def shot():
-    true_anim_speed_for_shot = gameClock.get_fps() // weapons.anim_speed_for_shot
-    screen.blit(weapons.sprites_shot[weapons.weapon_anim_count], (Data.screenWidth / 2 + weapons.sprites_shot[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_shot[weapons.weapon_anim_count].get_height()))
-    if weapons.anim_frames == 1:
-        weapons.pistol_shot_sound.play()
-    elif weapons.weapon_anim_count == len(weapons.sprites_shot) - 1 and weapons.anim_frames % true_anim_speed_for_shot == 0:
-        weapons.weapon_anim_count = 0
-        weapons.ammo += 1
-        weapons.shot_flag = False
-        weapons.anim_frames = 0
-    elif weapons.anim_frames % true_anim_speed_for_shot == 0:
-        weapons.weapon_anim_count += 1
-    weapons.anim_frames += 1
-
-def weapon_events():
-    pushed_mouse_button = pygame.mouse.get_pressed()
-    KeyPressed = pygame.key.get_pressed()
-    if weapons.ammo == weapons.max_ammo or KeyPressed[pygame.K_r]:
-        weapons.reload_flag = True
-    if pushed_mouse_button[0] and not weapons.reload_flag:
-        weapons.shot_flag = True
-    if pushed_mouse_button[2] and not weapons.reload_flag and not weapons.shot_flag:
-        weapons.scope_flag = not weapons.scope_flag
-
-
-def weapon():
-    weapon_events()
-    if weapons.reload_flag and not weapons.shot_flag:
-        reload()
+def WeaponStatic():
+    if not weapons.ScopeFlag:
+        screen.blit(weapons.SpritesPistolShot[0], (Data.screenWidth / 2 + weapons.SpritesPistolShot[0].get_width(), Data.screenHeight - weapons.SpritesPistolShot[0].get_height()))
     else:
-        shot() if weapons.shot_flag else weapon_static()
+        screen.blit(weapons.SpritesPistolShotScope[0], (Data.screenWidth / 2 - weapons.SpritesPistolShotScope[0].get_width()/2 + 26, Data.screenHeight - weapons.SpritesPistolShotScope[0].get_height()))
+
+
+def Shot():
+    TrueAnimSpeedForShot = gameClock.get_fps() // weapons.AnimSpeedForShot
+    screen.blit(weapons.SpritesPistolShot[weapons.WeaponAnimCount], (Data.screenWidth / 2 + weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_width(), Data.screenHeight - weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_height())) if not weapons.ScopeFlag else screen.blit(weapons.SpritesPistolShotScope[weapons.WeaponAnimCount], (Data.screenWidth / 2 - weapons.SpritesPistolShotScope[weapons.WeaponAnimCount].get_width()/2 + 26, Data.screenHeight - weapons.SpritesPistolShotScope[weapons.WeaponAnimCount].get_height()))
+    if weapons.AnimFrames == 1:
+        weapons.PistolShotSound.play()
+    elif weapons.WeaponAnimCount == len(weapons.SpritesPistolShot) - 1 and weapons.AnimFrames % TrueAnimSpeedForShot == 0:
+        weapons.WeaponAnimCount = 0
+        weapons.Ammo += 1
+        weapons.ShotFlag = False
+        weapons.AnimFrames = 0
+    elif weapons.AnimFrames % TrueAnimSpeedForShot == 0:
+        weapons.WeaponAnimCount += 1
+    weapons.AnimFrames += 1
+
+def WeaponEvents():
+    PushedMouseButton = pygame.mouse.get_pressed()
+    KeyPressed = pygame.key.get_pressed()
+    if weapons.Ammo == weapons.MaxAmmo or KeyPressed[pygame.K_r]:
+        weapons.ReloadFlag = True
+        weapons.ScopeFlag = False
+    if PushedMouseButton[2] and not weapons.ReloadFlag and not weapons.ShotFlag:
+        weapons.ScopeFlag = not weapons.ScopeFlag
+    if PushedMouseButton[0] and not weapons.ReloadFlag:
+        weapons.ShotFlag = True
+
+
+
+def Weapon():
+    WeaponEvents()
+    if weapons.ReloadFlag and not weapons.ShotFlag:
+        Reload()
+    else:
+        Shot() if weapons.ShotFlag else WeaponStatic()
 
 def Draw():
     ox, oy = Player.position[0], Player.position[1]
@@ -163,7 +168,7 @@ def Draw():
     pygame.draw.circle(screen, "blue", (Player.position[0] / Data.miniMapScale, Player.position[1] / Data.miniMapScale),
                        4)
     # Отрисовка оружия
-    weapon()
+    Weapon()
 
 while gameRunning:
     Movement(backgroundPosition=0)
