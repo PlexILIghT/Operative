@@ -2,24 +2,25 @@ import pygame
 import Data
 import Player
 from math import *
+import weapons
 
-screen = pygame.display.set_mode(Data.screenSize, flags = pygame.NOFRAME)
-pygame.display.set_caption("Raycasters2005") #Здесь будет название игры, которого пока что нет
-#gameIcon = pygame.image.load("images/icon.png")
-#pygame.display.set_icon(gameIcon) #Здесь будет иконка игры
+pygame.init()
+
+screen = pygame.display.set_mode(Data.screenSize, flags=pygame.NOFRAME)
+pygame.display.set_caption("Raycasters2005")  # Здесь будет название игры, которого пока что нет
+# gameIcon = pygame.image.load("images/icon.png")
+# pygame.display.set_icon(gameIcon) #Здесь будет иконка игры
 textures = {
-"1" : pygame.image.load("images/1.jpg"),
-"2" : pygame.image.load("images/2.jpg"),
-"3" : pygame.image.load("images/3.jpg"),
-"4" : pygame.image.load("images/4.jpg")}
-#background1 = pygame.image.load("images/background1.jpeg")
-#background2 = pygame.image.load("images/background1.jpeg")
-
+    "1": pygame.image.load("images/1.jpg"),
+    "2": pygame.image.load("images/2.jpg"),
+    "3": pygame.image.load("images/3.jpg"),
+    "4": pygame.image.load("images/4.jpg")}
+# background1 = pygame.image.load("images/background1.jpeg")
+# background2 = pygame.image.load("images/background1.jpeg")
 
 gameRunning = True
 gameClock = pygame.time.Clock()
 pygame.mouse.set_visible(False)
-
 
 
 def Movement(backgroundPosition):
@@ -28,7 +29,8 @@ def Movement(backgroundPosition):
     verticalInput = -int(keyPressed[Data.keys["forward"]]) + int(keyPressed[Data.keys["back"]])
     rightPlayerDirection = [sin(Player.rotation), -cos(Player.rotation)]
     forwardPlayerDirection = [cos(Player.rotation), sin(Player.rotation)]
-    moveVector = [rightPlayerDirection[0] * -horizontalInput + forwardPlayerDirection[0] * -verticalInput, rightPlayerDirection[1] * -horizontalInput + forwardPlayerDirection[1] * -verticalInput]
+    moveVector = [rightPlayerDirection[0] * -horizontalInput + forwardPlayerDirection[0] * -verticalInput,
+                  rightPlayerDirection[1] * -horizontalInput + forwardPlayerDirection[1] * -verticalInput]
 
     if moveVector[0] != 0 and moveVector[1] != 0:
         magnitude = (moveVector[0] ** 2 + moveVector[1] ** 2) ** 0.5
@@ -40,9 +42,10 @@ def Movement(backgroundPosition):
     mouseDirection = mouseRel[0]
     pygame.mouse.set_pos(Data.screenWidth // 2, Data.screenHeight // 2)
     Player.rotation += (mouseDirection) / Player.rotationSpeed
-    #backgroundPosition = -Player.rotation * 700
-    #screen.blit(background1, (backgroundPosition, 0))
-    #screen.blit(background2, (backgroundPosition + 2716, 0))
+    # backgroundPosition = -Player.rotation * 700
+    # screen.blit(background1, (backgroundPosition, 0))
+    # screen.blit(background2, (backgroundPosition + 2716, 0))
+
 
 def Raycast(ray, ox, oy, xm, ym):
     rayAngle = ray * Data.paddingOfRays + Player.rotation
@@ -71,17 +74,74 @@ def Raycast(ray, ox, oy, xm, ym):
             break
         y += dy * Data.blockSize
 
-    #if currentTextureH != 0 or currentTextureV != 0:
-    depth, offset, currentTexture = (magnitude[0], yv, currentTextureV) if magnitude[0] < magnitude[1] else (magnitude[1], xh, currentTextureH)
+    # if currentTextureH != 0 or currentTextureV != 0:
+    depth, offset, currentTexture = (magnitude[0], yv, currentTextureV) if magnitude[0] < magnitude[1] else (
+        magnitude[1], xh, currentTextureH)
 
     offset = int(offset) % Data.blockSize
     depth = depth * cos(Player.rotation - rayAngle)
     proectionHeight = Data.blockSize * Data.distanceFromScreen / depth * Data.proectionCoefficient
 
-    wallColumn = textures[currentTexture].subsurface(offset * Data.textureScale, 0, Data.textureScale, Data.textureHeight)
+    wallColumn = textures[currentTexture].subsurface(offset * Data.textureScale, 0, Data.textureScale,
+                                                     Data.textureHeight)
     wallColumn = pygame.transform.scale(wallColumn, (Data.rayThickness + 1, proectionHeight))
-    screen.blit(wallColumn, (ray * Data.rayThickness + Data.screenWidth / 2, Data.screenHeight // 2 - proectionHeight // 2))
+    screen.blit(wallColumn,
+                (ray * Data.rayThickness + Data.screenWidth / 2, Data.screenHeight // 2 - proectionHeight // 2))
 
+
+def reload():
+    true_anim_speed_for_reload = gameClock.get_fps() // weapons.anim_speed_for_reload
+    screen.blit(weapons.sprites_reload[weapons.weapon_anim_count], (
+        Data.screenWidth / 2 + weapons.sprites_reload[weapons.weapon_anim_count].get_width(),
+        Data.screenHeight - weapons.sprites_reload[weapons.weapon_anim_count].get_height()))
+    if weapons.anim_frames == 1:
+        weapons.pistol_reload_sound.play()
+    elif weapons.weapon_anim_count == len(weapons.sprites_reload) - 1 and weapons.anim_frames % true_anim_speed_for_reload == 0:
+        weapons.weapon_anim_count = 0
+        weapons.ammo = 0
+        weapons.anim_frames = 0
+        weapons.weapon_anim_count = 0
+        weapons.reload_flag = False
+    elif weapons.anim_frames % true_anim_speed_for_reload == 0:
+        weapons.weapon_anim_count += 1
+    weapons.anim_frames += 1
+
+
+def weapon_static():
+    screen.blit(weapons.sprites_shot[weapons.weapon_anim_count], (Data.screenWidth / 2 + weapons.sprites_shot[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_shot[weapons.weapon_anim_count].get_height()))
+
+
+def shot():
+    true_anim_speed_for_shot = gameClock.get_fps() // weapons.anim_speed_for_shot
+    screen.blit(weapons.sprites_shot[weapons.weapon_anim_count], (Data.screenWidth / 2 + weapons.sprites_shot[weapons.weapon_anim_count].get_width(), Data.screenHeight - weapons.sprites_shot[weapons.weapon_anim_count].get_height()))
+    if weapons.anim_frames == 1:
+        weapons.pistol_shot_sound.play()
+    elif weapons.weapon_anim_count == len(weapons.sprites_shot) - 1 and weapons.anim_frames % true_anim_speed_for_shot == 0:
+        weapons.weapon_anim_count = 0
+        weapons.ammo += 1
+        weapons.shot_flag = False
+        weapons.anim_frames = 0
+    elif weapons.anim_frames % true_anim_speed_for_shot == 0:
+        weapons.weapon_anim_count += 1
+    weapons.anim_frames += 1
+
+def weapon_events():
+    pushed_mouse_button = pygame.mouse.get_pressed()
+    KeyPressed = pygame.key.get_pressed()
+    if weapons.ammo == weapons.max_ammo or KeyPressed[pygame.K_r]:
+        weapons.reload_flag = True
+    if pushed_mouse_button[0] and not weapons.reload_flag:
+        weapons.shot_flag = True
+    if pushed_mouse_button[2] and not weapons.reload_flag and not weapons.shot_flag:
+        weapons.scope_flag = not weapons.scope_flag
+
+
+def weapon():
+    weapon_events()
+    if weapons.reload_flag and not weapons.shot_flag:
+        reload()
+    else:
+        shot() if weapons.shot_flag else weapon_static()
 
 def Draw():
     ox, oy = Player.position[0], Player.position[1]
@@ -89,27 +149,32 @@ def Draw():
     for ray in range(-Data.accuracyOfDraw // 2, Data.accuracyOfDraw // 2):
         Raycast(ray, ox, oy, xm, ym)
 
-#Отрисовка мини карты
-    pygame.draw.rect(screen, "black", (0, 0, Data.blockSize * len(Data.map[0]) / Data.miniMapScale, Data.blockSize * len(Data.map[0]) / Data.miniMapScale))
+    # Отрисовка мини карты
+    pygame.draw.rect(screen, "black", (
+        0, 0, Data.blockSize * len(Data.map[0]) / Data.miniMapScale,
+        Data.blockSize * len(Data.map[0]) / Data.miniMapScale))
     for y in range(len(Data.map)):
         for x in range(len(Data.map[0])):
             if Data.map[y][x] != " ":
-                pygame.draw.rect(screen, "white",(x * Data.blockSize / Data.miniMapScale, y * Data.blockSize / Data.miniMapScale, Data.blockSize / Data.miniMapScale, Data.blockSize / Data.miniMapScale))
+                pygame.draw.rect(screen, "white", (
+                    x * Data.blockSize / Data.miniMapScale, y * Data.blockSize / Data.miniMapScale,
+                    Data.blockSize / Data.miniMapScale, Data.blockSize / Data.miniMapScale))
 
-    pygame.draw.circle(screen,"blue", (Player.position[0] / Data.miniMapScale, Player.position[1] / Data.miniMapScale), 4)
-
-
+    pygame.draw.circle(screen, "blue", (Player.position[0] / Data.miniMapScale, Player.position[1] / Data.miniMapScale),
+                       4)
+    # Отрисовка оружия
+    weapon()
 
 while gameRunning:
     Movement(backgroundPosition=0)
     Draw()
-
     pygame.display.update()
+
+    screen.fill("black")
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             gameRunning = False
 
-    screen.fill("black")
     gameClock.tick(Data.fps)

@@ -38,3 +38,8 @@ miniMapScale = 4
 textureWidth = 800
 textureHeight = 800
 textureScale = textureWidth / blockSize
+
+weapon_scale_wight = screenWidth/(screenWidth * 0.4)
+weapon_scale_height = screenHeight/(screenHeight * 0.4)
+weapon_scale_scope_wight = screenWidth/(screenWidth * 0.2)
+weapon_scale_scope_height = screenHeight/(screenHeight * 0.2)
