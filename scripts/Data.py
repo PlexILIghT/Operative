@@ -38,3 +38,4 @@ miniMapScale = 4
 textureWidth = 800
 textureHeight = 800
 textureScale = textureWidth / blockSize
+
