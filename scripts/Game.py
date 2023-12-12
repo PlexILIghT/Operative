@@ -108,14 +108,10 @@ def Reload():
 
 
 def WeaponStatic():
-    if not weapons.ScopeFlag:
         screen.blit(weapons.SpritesPistolShot[0], (Data.screenWidth / 2 + weapons.SpritesPistolShot[0].get_width(), Data.screenHeight - weapons.SpritesPistolShot[0].get_height()))
-    else:
-        screen.blit(weapons.SpritesPistolShotScope[0], (Data.screenWidth / 2 - weapons.SpritesPistolShotScope[0].get_width()/2 + 26, Data.screenHeight - weapons.SpritesPistolShotScope[0].get_height()))
-
 def Shot():
     TrueAnimSpeedForShot = gameClock.get_fps() // weapons.AnimSpeedForShot
-    screen.blit(weapons.SpritesPistolShot[weapons.WeaponAnimCount], (Data.screenWidth / 2 + weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_width(), Data.screenHeight - weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_height())) if not weapons.ScopeFlag else screen.blit(weapons.SpritesPistolShotScope[weapons.WeaponAnimCount], (Data.screenWidth / 2 - weapons.SpritesPistolShotScope[weapons.WeaponAnimCount].get_width()/2 + 26, Data.screenHeight - weapons.SpritesPistolShotScope[weapons.WeaponAnimCount].get_height()))
+    screen.blit(weapons.SpritesPistolShot[weapons.WeaponAnimCount], (Data.screenWidth / 2 + weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_width(), Data.screenHeight - weapons.SpritesPistolShot[weapons.WeaponAnimCount].get_height()))
     if weapons.AnimFrames == 1:
         weapons.PistolShotSound.play()
     elif weapons.WeaponAnimCount == len(weapons.SpritesPistolShot) - 1 and weapons.AnimFrames % TrueAnimSpeedForShot == 0:
@@ -127,27 +123,42 @@ def Shot():
         weapons.WeaponAnimCount += 1
     weapons.AnimFrames += 1
 
+def MeleeAttack():
+    TrueAnimSpeedForMelee = gameClock.get_fps() // weapons.AnimSpeedForMelee
+    screen.blit(weapons.SpritesMelee[weapons.WeaponAnimCount],(Data.screenWidth / 2 - weapons.SpritesMelee[weapons.WeaponAnimCount].get_width()/2 + 26, Data.screenHeight - weapons.SpritesMelee[weapons.WeaponAnimCount].get_height()))
+    if weapons.AnimFrames == 1:
+        weapons.MeleeAttackSound.play()
+    elif weapons.WeaponAnimCount == len(weapons.SpritesMelee) - 1 and weapons.AnimFrames % TrueAnimSpeedForMelee == 0:
+        weapons.WeaponAnimCount = 0
+        weapons.MeleeAttackFlag = False
+        weapons.AnimFrames = 0
+    elif weapons.AnimFrames % TrueAnimSpeedForMelee == 0:
+        weapons.WeaponAnimCount += 1
+    weapons.AnimFrames += 1
+
 def WeaponEvents():
     PushedMouseButton = pygame.mouse.get_pressed()
     KeyPressed = pygame.key.get_pressed()
     if not PushedMouseButton[2]:
         weapons.ScopeToggle = False
+    if KeyPressed[pygame.K_c] and not weapons.ReloadFlag and not weapons.ShotFlag:
+        weapons.MeleeAttackFlag = True
     if weapons.Ammo == weapons.MaxAmmo or KeyPressed[pygame.K_r]:
         weapons.ReloadFlag = True
-    if weapons.ScopeToggle == False:
-        if PushedMouseButton[2] and not weapons.ReloadFlag and not weapons.ShotFlag:
-            weapons.ScopeFlag = not weapons.ScopeFlag
-            weapons.ScopeToggle = True
     if PushedMouseButton[0] and not weapons.ReloadFlag and not weapons.ShotFlag:
         weapons.ShotFlag = True
 
-
 def Weapon():
     WeaponEvents()
-    if weapons.ReloadFlag and not weapons.ShotFlag:
+    if weapons.MeleeAttackFlag:
+        MeleeAttack()
+    elif weapons.ReloadFlag and not weapons.ShotFlag:
         Reload()
     else:
-        Shot() if weapons.ShotFlag else WeaponStatic()
+        if weapons.ShotFlag:
+            Shot()
+        else:
+            WeaponStatic()
 
 def Draw():
     ox, oy = Player.position[0], Player.position[1]
