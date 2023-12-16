@@ -10,7 +10,7 @@ movement_speed = 7
 rotation_speed = 5 * 10 ** 2
 
 
-def movement(background_position):
+def movement():
     global rotation
     key_pressed = pygame.key.get_pressed()
     horizontal_input = -int(key_pressed[data.keys["left"]]) + int(key_pressed[data.keys["right"]])
@@ -30,6 +30,3 @@ def movement(background_position):
     mouse_direction = mouse_rel[0]
     pygame.mouse.set_pos(data.screen_width // 2, data.screen_height // 2)
     rotation += mouse_direction / rotation_speed
-    # background_position = -rotation * 700
-    # screen.blit(background1, (backgroundPosition, 0))
-    # screen.blit(background2, (backgroundPosition + 2716, 0))
