@@ -1,5 +1,6 @@
 import pygame
 import data
+from data import screen
 
 pygame.init()
 
@@ -101,10 +102,6 @@ shot_flag = False
 reload_flag = False
 scope_flag = False
 scope_toggle = False
-
-
-screen = pygame.display.set_mode(data.screen_size, flags=pygame.NOFRAME)
-game_clock = pygame.time.Clock()
 
 
 def reload():

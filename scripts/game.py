@@ -1,23 +1,24 @@
 import pygame
-import data
 import player
+import data
 import renderer
-
+from data import screen
+import weapon
 pygame.init()
 
-screen = pygame.display.set_mode(data.screen_size, flags=pygame.NOFRAME)
 pygame.display.set_caption("raycasters2005")
 # gameIcon = pygame.image.load("images/icon.png")
 # pygame.display.set_icon(gameIcon)
 
 game_running = True
-game_clock = pygame.time.Clock()
 pygame.mouse.set_visible(False)
 
 
 while game_running:
     player.movement()
     renderer.draw_scene(screen)
+    weapon.weapons()
+
     pygame.display.update()
     screen.fill("black")
 
@@ -26,4 +27,4 @@ while game_running:
             game_running = False
             pygame.quit()
 
-    game_clock.tick(data.fps)
+    data.game_clock.tick(data.fps)
