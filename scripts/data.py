@@ -45,10 +45,10 @@ flat_objects_prefabs = {
 map = [
     "bbbbbbbbbbbb           ",
     "b        r b           ",
-    "b        erb           ",
+    "b    r    rb           ",
     "b          bbbbbb      ",
     "b               b      ",
-    "br     e   b    b      ",
+    "br         b    b      ",
     "b r       rb    b      ",
     "bbbbbbbbbbbbb bbbbbbbbb",
     "       b              b",

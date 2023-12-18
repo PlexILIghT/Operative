@@ -80,6 +80,13 @@ def draw_objects(screen, objects):
 
         if atan2(*object_pos_vector) > atan2(*center_ray_vector):
             angle_between = -angle_between
+            #if atan2(*object_pos_vector) < (-1.57) and atan2(*center_ray_vector) > 1.57:
+            #    print(1)
+            #    object_pos_angle_between_world0 = acos(object_pos_vector[0] / object_pos_vector_magnitude)
+            #    center_ray_angle_between_world0 = acos(center_ray_vector[0])
+            #    if object_pos_angle_between_world0 > center_ray_angle_between_world0:
+            #        angle_between = -angle_between
+
         if abs(angle_between) <= ((data.field_of_view + pi / 4) / 2):
             texture_pixel_size = data.textureWidth * (data.object_scale_coefficient / object_pos_vector_magnitude)
             if texture_pixel_size > data.screen_height * 2:

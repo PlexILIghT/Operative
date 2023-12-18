@@ -37,7 +37,7 @@ def raycast_walls(angle):
 
     depth, offset, current_texture = (magnitude[0], yv, current_texture_v) if magnitude[0] < magnitude[1] else (
         magnitude[1], xh, current_texture_h)
-    return [depth, current_texture]
+    return [depth, current_texture, [round(rounded[0] // data.blockSize), round(rounded[1] // data.blockSize)]]
 
 
 def raycast_all(angle):
@@ -52,8 +52,7 @@ def raycast_all(angle):
         yv = start_ray_pos_y + magnitude[0] * sin(ray_angle)
         rounded = [int((x + dx) // data.blockSize), int(yv // data.blockSize)]
         current_texture_v = 0
-        print(rounded[0], rounded[1])
-        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and data.map[rounded[1]][rounded[0]] != " ":
+        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and data.map[rounded[1]][rounded[0]] != " ":
             current_texture_v = data.map[rounded[1]][rounded[0]]
             break
         x += dx * data.blockSize
@@ -65,7 +64,6 @@ def raycast_all(angle):
         xh = start_ray_pos_x + magnitude[1] * cos(ray_angle)
         rounded = [int(xh // data.blockSize), int((y + dy) // data.blockSize)]
         current_texture_h = 0
-        print(rounded[0], rounded[1])
         if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and data.map[rounded[1]][rounded[0]] != " ":
             current_texture_h = data.map[rounded[1]][rounded[0]]
             break
@@ -73,4 +71,4 @@ def raycast_all(angle):
 
     depth, offset, current_texture = (magnitude[0], yv, current_texture_v) if magnitude[0] < magnitude[1] else (
         magnitude[1], xh, current_texture_h)
-    return [depth, current_texture]
+    return [depth, current_texture, [rounded[0], rounded[1]]]
