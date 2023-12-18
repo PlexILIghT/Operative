@@ -1,5 +1,6 @@
 import pygame
 from math import *
+import AI
 # menu data
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -28,6 +29,7 @@ textures = {
     "c": pygame.image.load("images/textures/chair.png").convert_alpha()
 }
 
+bots = [AI.Bot(10, 20, 0.03) ]
 
 # map data
 # b - Brick wall
