@@ -8,20 +8,22 @@ pygame.init()
 #scale settings for sprites
 weaponScaleWidth = data.screen_width / (data.screen_width * 0.4)
 weaponScaleHeight = data.screen_height / (data.screen_height * 0.4)
-weaponMeleeScaleWidth = data.screen_width/(data.screen_width * 0.2)
-weaponMeleeScaleHeight = data.screen_height/(data.screen_height * 0.2)
+weaponMeleeScaleWidth = data.screen_width/(data.screen_width * 0.5)
+weaponMeleeScaleHeight = data.screen_height/(data.screen_height * 0.5)
 
 #pistol settings
 damageForPistol = 10
-maxAmmoPistol = 1
+maxAmmoPistol = 6
 animSpeedForShotPistol = 12
 animSpeedForReloadPistol = 12
 
 #M4 settings
-maxAmmoM4 = 5
+maxAmmoM4 = 30
+animSpeedForShotM4 = 40
+animSpeedForReloadM4 = 12
 
 #melee settings
-animSpeedForMelee = 12
+animSpeedForMelee = 3
 
 
 # weapon animation
@@ -85,18 +87,18 @@ spritesMelee = [
     pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/2.png"), (
     pygame.image.load("images/melee_sprites/2.png").get_width() * weaponMeleeScaleWidth,
     pygame.image.load("images/melee_sprites/2.png").get_height() * weaponMeleeScaleHeight)),
-    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/1.png"), (
-    pygame.image.load("images/melee_sprites/1.png").get_width() * weaponMeleeScaleWidth,
-    pygame.image.load("images/melee_sprites/1.png").get_height() * weaponMeleeScaleHeight)),
-    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/2.png"), (
-    pygame.image.load("images/melee_sprites/2.png").get_width() * weaponMeleeScaleWidth,
-    pygame.image.load("images/melee_sprites/2.png").get_height() * weaponMeleeScaleHeight)),
-    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/1.png"), (
-    pygame.image.load("images/melee_sprites/1.png").get_width() * weaponMeleeScaleWidth,
-    pygame.image.load("images/melee_sprites/1.png").get_height() * weaponMeleeScaleHeight)),
-    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/2.png"), (
-    pygame.image.load("images/melee_sprites/2.png").get_width() * weaponMeleeScaleWidth,
-    pygame.image.load("images/melee_sprites/2.png").get_height() * weaponMeleeScaleHeight))
+    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/3.png"), (
+    pygame.image.load("images/melee_sprites/3.png").get_width() * weaponMeleeScaleWidth,
+    pygame.image.load("images/melee_sprites/3.png").get_height() * weaponMeleeScaleHeight)),
+    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/4.png"), (
+    pygame.image.load("images/melee_sprites/4.png").get_width() * weaponMeleeScaleWidth,
+    pygame.image.load("images/melee_sprites/4.png").get_height() * weaponMeleeScaleHeight)),
+    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/5.png"), (
+    pygame.image.load("images/melee_sprites/5.png").get_width() * weaponMeleeScaleWidth,
+    pygame.image.load("images/melee_sprites/5.png").get_height() * weaponMeleeScaleHeight)),
+    pygame.transform.smoothscale(pygame.image.load("images/melee_sprites/6.png"), (
+    pygame.image.load("images/melee_sprites/6.png").get_width() * weaponMeleeScaleWidth,
+    pygame.image.load("images/melee_sprites/6.png").get_height() * weaponMeleeScaleHeight))
 ]
 
 pistol_shot_sound = pygame.mixer.Sound("sounds/shot_pistol.mp3")
@@ -125,7 +127,7 @@ class Weapon:
         self.ammo = 0
         self.animCount = 0
         self.animFrames = 0
-        self.depth, self.number = raycast.raycast_walls(0)
+        self.number = raycast.raycast_walls(0)
 
     def events(self):
         keys = pygame.key.get_pressed()
@@ -171,8 +173,8 @@ class Weapon:
             data.screen_height - self.spritesShot[self.animCount].get_height()))
         if self.animFrames == 1:
             self.shotSound.play()
-        if self.animCount == len(self.spritesShot) - 1 and self.animFrames % self.trueAnimSpeedForShot == 0:
             self.check_for_hit()
+        if self.animCount == len(self.spritesShot) - 1 and self.animFrames % self.trueAnimSpeedForShot == 0:
             self.animCount = 0
             self.animFrames = 0
             self.ammo += 1
@@ -183,7 +185,7 @@ class Weapon:
 
     def melee(self):
         screen.blit(self.spritesMelee[self.animCount], (
-            data.screen_width / 2 + self.spritesMelee[self.animCount].get_width(),
+            data.screen_width / 2 - self.spritesMelee[self.animCount].get_width() / 2,
             data.screen_height - self.spritesMelee[self.animCount].get_height()))
         if self.animFrames == 1:
             self.meleeSound.play()
@@ -207,7 +209,7 @@ class Weapon:
             self.static()
 
 pistol = Weapon(damage=damageForPistol, spritesShot=spritesPistolShot, spritesReload=spritesPistolReload, maxAmmo=maxAmmoPistol, animSpeedForShot=animSpeedForShotPistol, animSpeedForReload=animSpeedForReloadPistol, spritesMelee=spritesMelee, shotSound=pistol_shot_sound, reloadSound=pistol_reload_sound, meleeSound=meleeSound, animSpeedForMelee=animSpeedForMelee)
-m4 = Weapon(damage=damageForPistol, spritesShot=spritesPistolShot, spritesReload=spritesPistolReload, maxAmmo=maxAmmoM4, animSpeedForShot=animSpeedForShotPistol, animSpeedForReload=animSpeedForReloadPistol, spritesMelee=spritesMelee, shotSound=pistol_shot_sound, reloadSound=pistol_reload_sound, meleeSound=meleeSound, animSpeedForMelee=animSpeedForMelee)
+m4 = Weapon(damage=damageForPistol, spritesShot=spritesPistolShot, spritesReload=spritesPistolReload, maxAmmo=maxAmmoM4, animSpeedForShot=animSpeedForShotM4, animSpeedForReload=animSpeedForReloadM4, spritesMelee=spritesMelee, shotSound=pistol_shot_sound, reloadSound=pistol_reload_sound, meleeSound=meleeSound, animSpeedForMelee=animSpeedForMelee)
 
 class Selector:
     def __init__(self, first, second):
