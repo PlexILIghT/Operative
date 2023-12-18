@@ -64,7 +64,8 @@ def raycast_all(angle):
         xh = start_ray_pos_x + magnitude[1] * cos(ray_angle)
         rounded = [int(xh // data.blockSize), int((y + dy) // data.blockSize)]
         current_texture_h = 0
-        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and data.map[rounded[1]][rounded[0]] != " ":
+        print(rounded[0], rounded[1])
+        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and data.map[rounded[1]][rounded[0]] != " ":
             current_texture_h = data.map[rounded[1]][rounded[0]]
             break
         y += dy * data.blockSize
