@@ -164,8 +164,10 @@ class Weapon:
 
     def check_for_hit(self):
         self.number = raycast.raycast_all(0)
-        if 'e' in self.number:
-            screen.fill('black')
+        if self.number[1] == "e":
+            print(self.number)
+            data.map[self.number[2][1]] = data.map[self.number[2][1]][:self.number[2][0]] + "r" + data.map[self.number[2][1]][:self.number[2][0]]
+            print(data.map[self.number[2][1]-1])
 
     def shot(self):
         screen.blit(self.spritesShot[self.animCount], (
