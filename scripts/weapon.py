@@ -14,16 +14,16 @@ weaponMeleeScaleHeight = data.screen_height/(data.screen_height * 0.5)
 #pistol settings
 damageForPistol = 10
 maxAmmoPistol = 6
-animSpeedForShotPistol = 12
-animSpeedForReloadPistol = 12
+animSpeedForShotPistol = 15
+animSpeedForReloadPistol = 14
 
 #M4 settings
 maxAmmoM4 = 30
-animSpeedForShotM4 = 40
+animSpeedForShotM4 = 100
 animSpeedForReloadM4 = 12
 
 #melee settings
-animSpeedForMelee = 3
+animSpeedForMelee = 4
 
 
 # weapon animation
@@ -132,9 +132,9 @@ class Weapon:
     def events(self):
         keys = pygame.key.get_pressed()
         mouseButton = pygame.mouse.get_pressed()
-        self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot
-        self.trueAnimSpeedForReload = game_clock.get_fps() // self.animSpeedForReload
-        self.trueAnimSpeedForMelee = game_clock.get_fps() // self.animSpeedForMelee
+        self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot + 1
+        self.trueAnimSpeedForReload = game_clock.get_fps() // self.animSpeedForReload + 1
+        self.trueAnimSpeedForMelee = game_clock.get_fps() // self.animSpeedForMelee + 1
         if (self.maxAmmo == self.ammo or keys[pygame.K_r]) and not self.shotFlag:
             self.reloadFlag = True
         elif mouseButton[0] and not self.reloadFlag:
