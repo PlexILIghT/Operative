@@ -49,8 +49,10 @@ def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_p
     screen.blit(wall_column,
                 (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
 
+
 def draw_weapon():
     weapon.selector.draw_selected_weapon()
+
 
 def draw_scene(screen):
     start_ray_pos_x, start_ray_pos_y = player.position[0], player.position[1]
@@ -59,7 +61,7 @@ def draw_scene(screen):
         ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_pos_x, floor_start_pos_y, screen)
 
     flat_objects_queue_to_render = []
-    for objects_list in (data.environment, data.enemies):
+    for objects_list in (data.environment, data.enemies_position):
         for object in objects_list:
             object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0], object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
             object_pos_vector_magnitude = (object_pos_vector[0] ** 2 + object_pos_vector[1] ** 2)
@@ -70,6 +72,7 @@ def draw_scene(screen):
 
     draw_objects(screen, flat_objects_queue_to_render)
     draw_weapon()
+
 
 def draw_objects(screen, objects):
     for object in objects:
@@ -100,4 +103,3 @@ def draw_objects(screen, objects):
                 if raycast.raycast_walls(angle)[0] > object_pos_vector_magnitude:
                     enemy_column = texture.subsurface(((i + texture_pixel_size // data.ray_thickness // 2) * data.ray_thickness, 0, data.ray_thickness + 1, texture_pixel_size))
                     screen.blit(enemy_column, (offset + i * data.ray_thickness, data.screen_height // 2 - texture_pixel_size // 2))
-

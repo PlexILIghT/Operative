@@ -1,29 +1,44 @@
-# Bot should have weapon with him.
-# Bot needs to navigate through map.
+import pygame
+import data
+import raycast
+from pygame import Surface
+from random import random
+
+
 # Bot needs a player detection system.
 # Bot should be able to change animations.
-# rename for enemies
+# Needs dynamic images!!!
 
+class Enemy:
+    image: Surface
 
-class Bot:
-
-    def __init__(self, damage, health, speed):
+    def __init__(self, start_pos, damage, health, speed):
+        self.start_pos = start_pos
         self.damage = damage
         self.health = health
         self.speed = speed
+        self.image = pygame.image.load("images/textures/enemy.jpg").convert_alpha()
+        self.accuracy = 0.1
 
-    def move(self, x, y):
-        pass
-    def look_for_player(self):
+    def update(self):
         pass
 
-    def shooting(self):
+    def get_image(self):
+        return self.image
+
+    def shoot(self):
+        if raycast.raycast_all(0)[1] in data.worldMap and self.accuracy > random():
+            pass
         pass
 
     def dead(self):
+        # animate death
         pass
 
-    def lose_hp(self, other: int):
-        self.health -= int
+    def loose_hp(self):
+        pass
 
 
+enemies = []
+for i in range(len(data.enemies_position)):
+    enemies[i] = Enemy(data.enemies_position[i], 20, 100, 0.03)
