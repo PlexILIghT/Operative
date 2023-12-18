@@ -6,8 +6,8 @@ from data import screen, game_clock
 pygame.init()
 
 #scale settings for sprites
-weaponScaleWidth = data.screen_width / (data.screen_width * 0.4)
-weaponScaleHeight = data.screen_height / (data.screen_height * 0.4)
+weaponScaleWidth = data.screen_width / (data.screen_width * 1.6)
+weaponScaleHeight = data.screen_height / (data.screen_height * 1.6)
 weaponMeleeScaleWidth = data.screen_width/(data.screen_width * 0.5)
 weaponMeleeScaleHeight = data.screen_height/(data.screen_height * 0.5)
 
@@ -47,7 +47,19 @@ spritesPistolShot = [
     pygame.transform.smoothscale
     (pygame.image.load("images/pistol_sprites/5.png"),
      (pygame.image.load("images/pistol_sprites/5.png").get_width() * weaponScaleWidth,
-      pygame.image.load("images/pistol_sprites/5.png").get_height() * weaponScaleHeight))
+      pygame.image.load("images/pistol_sprites/5.png").get_height() * weaponScaleHeight)),
+    pygame.transform.smoothscale
+    (pygame.image.load("images/pistol_sprites/6.png"),
+     (pygame.image.load("images/pistol_sprites/6.png").get_width() * weaponScaleWidth,
+      pygame.image.load("images/pistol_sprites/6.png").get_height() * weaponScaleHeight)),
+    pygame.transform.smoothscale
+    (pygame.image.load("images/pistol_sprites/7.png"),
+     (pygame.image.load("images/pistol_sprites/7.png").get_width() * weaponScaleWidth,
+      pygame.image.load("images/pistol_sprites/7.png").get_height() * weaponScaleHeight)),
+    pygame.transform.smoothscale
+    (pygame.image.load("images/pistol_sprites/8.png"),
+     (pygame.image.load("images/pistol_sprites/8.png").get_width() * weaponScaleWidth,
+      pygame.image.load("images/pistol_sprites/8.png").get_height() * weaponScaleHeight))
 ]
 
 spritesPistolReload = [
@@ -144,7 +156,7 @@ class Weapon:
 
     def static(self):
         screen.blit(self.spritesShot[0], (
-            data.screen_width / 2 + self.spritesShot[0].get_width(),
+            data.screen_width / 2 - self.spritesShot[0].get_width()/4,
             data.screen_height - self.spritesShot[0].get_height()))
 
     def reload(self):
@@ -166,12 +178,12 @@ class Weapon:
         self.number = raycast.raycast_all(0)
         if self.number[1] == "e":
             print(self.number)
-            data.map[self.number[2][1]] = data.map[self.number[2][1]][:self.number[2][0]] + "r" + data.map[self.number[2][1]][:self.number[2][0]]
+            data.map[self.number[2][1]] = data.map[self.number[2][1]][:self.number[2][0]] + "ca" + data.map[self.number[2][1]][:self.number[2][0]]
             print(data.map[self.number[2][1]-1])
 
     def shot(self):
         screen.blit(self.spritesShot[self.animCount], (
-            data.screen_width / 2 + self.spritesShot[self.animCount].get_width(),
+            data.screen_width / 2 - self.spritesShot[0].get_width()/4,
             data.screen_height - self.spritesShot[self.animCount].get_height()))
         if self.animFrames == 1:
             self.shotSound.play()
