@@ -242,3 +242,5 @@ fabric.properties
 # Built Visual Studio Code Extensions
 *.vsix
 *.xml
+*.xml
+.idea/misc.xml
