@@ -1,6 +1,5 @@
 import pygame
 from math import *
-import AI
 # menu data
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -30,7 +29,6 @@ textures = {
     "background": pygame.image.load("images/background.png").convert()
 }
 
-bots = [AI.Bot(10, 20, 0.03)]
 
 # map data
 # b - Brick wall
@@ -65,7 +63,7 @@ map = [
     "            bbbbbbbbbbb"]
 
 
-enemies = []
+enemies_position = []
 environment = []
 worldMap = dict()
 for y in range(len(map)):
@@ -73,7 +71,7 @@ for y in range(len(map)):
         if map[y][x] != " " and map[y][x] not in flat_objects_prefabs["environment"] and map[y][x] not in flat_objects_prefabs["enemies"]:
             worldMap[(x * blockSize, y * blockSize)] = map[y][x]
         if map[y][x] in flat_objects_prefabs["enemies"]:
-            enemies.append([x, y])
+            enemies_position.append([x, y])
         elif map[y][x] in flat_objects_prefabs["environment"]:
             environment.append([x, y])
 

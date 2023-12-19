@@ -55,6 +55,7 @@ def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_p
                 (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
     screen.blit(wall_column_surface, (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
 
+
 def draw_weapon():
     weapon.selector.draw_selected_weapon()
 
@@ -70,7 +71,7 @@ def draw_scene(screen):
 
 
     flat_objects_queue_to_render = []
-    for objects_list in (data.environment, data.enemies):
+    for objects_list in (data.environment, data.enemies_position):
         for object in objects_list:
             object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0], object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
             object_pos_vector_magnitude = (object_pos_vector[0] ** 2 + object_pos_vector[1] ** 2)
