@@ -20,6 +20,8 @@ while game_running:
     pygame.display.update()
     screen.fill("black")
 
+    renderer.animation_frame = pygame.time.get_ticks() // 60
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_running = False

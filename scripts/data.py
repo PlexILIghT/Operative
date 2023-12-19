@@ -23,48 +23,45 @@ keys = {"forward": pygame.K_w, "left": pygame.K_a, "back": pygame.K_s, "right": 
 
 textures = {
     "b": pygame.image.load("images/textures/brick_wall.jpg").convert(),
-    "r": pygame.image.load("images/textures/ruins.png").convert_alpha(),
-    "e": pygame.image.load("images/textures/enemy.jpg").convert_alpha(),
-    "t": pygame.image.load("images/textures/table.png").convert_alpha(),
-    "c": pygame.image.load("images/textures/chair.png").convert_alpha()
+    "c": pygame.image.load("images/textures/breakable_brick_wall.jpg").convert(),
+    "e": [pygame.image.load("images/enemy_shoot/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
+    "r": pygame.image.load("images/textures/brick_wall_rusty.jpg").convert(),
+    "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
+    "background": pygame.image.load("images/background.png").convert()
 }
 
-bots = [AI.Bot(10, 20, 0.03) ]
+bots = [AI.Bot(10, 20, 0.03)]
 
 # map data
 # b - Brick wall
-# e - enemy
-# r - ruins
-# c - chair
-# t - table
 
 flat_objects_prefabs = {
-    "environment": ["r", "c", "t"],
+    "environment": [],
     "enemies": ["e"]}
 
 map = [
-    "bbbbbbbbbbbb           ",
-    "b        r b           ",
-    "b    r    rb           ",
+    "bbbbbbrrrbbb           ",
+    "b          b           ",
+    "b          d           ",
     "b          bbbbbb      ",
-    "b               b      ",
-    "br         b    b      ",
-    "b r       rb    b      ",
-    "bbbbbbbbbbbbb bbbbbbbbb",
+    "r               b      ",
+    "r e     e  b    b      ",
+    "b     e    d    b      ",
+    "bbbcbbrrrrbbb bbbbbbbbb",
     "       b              b",
-    "       b ctc          b",
+    "       b              b",
     "       bbbbbbbbbbbb bbb",
     "                b     b",
-    "                b e   b",
-    "                b   e b",
+    "                b     b",
+    "                b     b",
     "                bb    b",
     "                b    bb",
     "                b     b",
     "            bbbbbb bbbb",
     "            b         b",
     "            b         b",
-    "            br e      b",
-    "            b r  e    b",
+    "            b         b",
+    "            b         b",
     "            bbbbbbbbbbb"]
 
 

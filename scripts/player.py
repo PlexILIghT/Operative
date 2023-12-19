@@ -9,7 +9,7 @@ rotation = -pi * 3 / 2
 movement_speed = 10
 rotation_speed = 5 * 10 ** 2
 
-self_distance = data.blockSize
+self_distance = data.blockSize // 5
 def movement():
     global rotation
     key_pressed = pygame.key.get_pressed()

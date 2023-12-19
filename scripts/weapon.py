@@ -174,12 +174,12 @@ class Weapon:
             self.animCount += 1
         self.animFrames += 1
 
-    def check_for_hit(self):
-        self.number = raycast.raycast_all(0)
-        if self.number[1] == "e":
-            print(self.number)
-            data.map[self.number[2][1]] = data.map[self.number[2][1]][:self.number[2][0]] + "ca" + data.map[self.number[2][1]][:self.number[2][0]]
-            print(data.map[self.number[2][1]-1])
+    # def check_for_hit(self):
+    #     self.number = raycast.raycast_all(0)
+    #     if self.number[1] == "e":
+    #         print(self.number)
+    #         data.map[self.number[2][1]] = data.map[self.number[2][1]][:self.number[2][0]] + "ca" + data.map[self.number[2][1]][:self.number[2][0]]
+    #         print(data.map[self.number[2][1]-1])
 
     def shot(self):
         screen.blit(self.spritesShot[self.animCount], (
