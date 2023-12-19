@@ -9,6 +9,8 @@ rotation = -pi * 3 / 2
 movement_speed = 10
 rotation_speed = 5 * 10 ** 2
 
+damage = 20
+
 self_distance = data.blockSize // 5
 def movement():
     global rotation

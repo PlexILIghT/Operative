@@ -47,7 +47,7 @@ def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_p
                                                             data.textureHeight)
     wall_column = pygame.transform.scale(wall_column, (data.ray_thickness + 1, projection_height))
     wall_column_surface = pygame.Surface((wall_column.get_width(), wall_column.get_height()), pygame.SRCALPHA)
-    color_of_depth = depth // 7
+    color_of_depth = depth // 6
     if color_of_depth > 255:
         color_of_depth = 255
     pygame.draw.rect(wall_column_surface, (0, 0, 0, color_of_depth), (0, 0, wall_column.get_width(), wall_column.get_height()))
@@ -71,7 +71,7 @@ def draw_scene(screen):
 
 
     flat_objects_queue_to_render = []
-    for objects_list in (data.environment, data.enemies_position):
+    for objects_list in (data.environment, data.enemies):
         for object in objects_list:
             object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0], object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
             object_pos_vector_magnitude = (object_pos_vector[0] ** 2 + object_pos_vector[1] ** 2)
@@ -115,6 +115,13 @@ def draw_objects(screen, objects):
 
 def flat_object_animation(object, animation_frame):
     if data.map[object[1]][object[0]] == "e":
-        return data.textures["e"][animation_frame % 15]
+        if data.enemies[(object[0],object[1])].state == "alive":
+            return data.textures["alive_enemy"][animation_frame % 15]
+        elif data.enemies[(object[0],object[1])].state == "hurt":
+            return data.textures["hurt_enemy"][animation_frame % 30]
+        elif data.enemies[(object[0],object[1])].state == "dead_animation":
+            return data.textures["dead_enemy"][animation_frame % 30]
+        elif data.enemies[(object[0],object[1])].state == "dead":
+            return data.textures["dead_enemy"][-1]
     else:
         return data.textures[data.map[object[1]][object[0]]]

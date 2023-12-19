@@ -3,7 +3,6 @@ import player
 import data
 import renderer
 from data import screen
-import weapon
 pygame.init()
 
 pygame.display.set_caption("raycasters2005")

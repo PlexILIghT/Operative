@@ -1,5 +1,6 @@
 import pygame
 from math import *
+import AI
 # menu data
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -23,19 +24,19 @@ keys = {"forward": pygame.K_w, "left": pygame.K_a, "back": pygame.K_s, "right": 
 textures = {
     "b": pygame.image.load("images/textures/brick_wall.jpg").convert(),
     "c": pygame.image.load("images/textures/breakable_brick_wall.jpg").convert(),
-    "e": [pygame.image.load("images/enemy_shoot/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
     "r": pygame.image.load("images/textures/brick_wall_rusty.jpg").convert(),
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
-    "background": pygame.image.load("images/background.png").convert()
+    "background": pygame.image.load("images/background.png").convert(),
+    "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
+    #"hurt_enemy": [pygame.image.load("images/hurt_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 31)],
+    #"dead_enemy": [pygame.image.load("images/dead_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 31)]
 }
 
 
 # map data
 # b - Brick wall
 
-flat_objects_prefabs = {
-    "environment": [],
-    "enemies": ["e"]}
+flat_objects_prefabs = []
 
 map = [
     "bbbbbbrrrbbb           ",
@@ -63,17 +64,18 @@ map = [
     "            bbbbbbbbbbb"]
 
 
-enemies_position = []
+enemies = dict()
 environment = []
 worldMap = dict()
 for y in range(len(map)):
     for x in range(len(map[0])):
-        if map[y][x] != " " and map[y][x] not in flat_objects_prefabs["environment"] and map[y][x] not in flat_objects_prefabs["enemies"]:
+        if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
             worldMap[(x * blockSize, y * blockSize)] = map[y][x]
-        if map[y][x] in flat_objects_prefabs["enemies"]:
-            enemies_position.append([x, y])
-        elif map[y][x] in flat_objects_prefabs["environment"]:
+        elif map[y][x] == "e":
+            enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
+        elif map[y][x] in flat_objects_prefabs:
             environment.append([x, y])
+print(enemies)
 
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200
