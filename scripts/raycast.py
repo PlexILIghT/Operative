@@ -2,6 +2,7 @@ import player
 import data
 from math import *
 
+
 # how to use:
 # в аргументы подается угол луча в градусах относительно игрока
 # то есть 0 градусов, это прямо по центру экрана, что-то отрицательное - слева, что-то положительное - справа
@@ -9,7 +10,8 @@ from math import *
 def raycast_walls(angle):
     ray_angle = radians(angle) + player.rotation
     start_ray_pos_x, start_ray_pos_y = player.position[0], player.position[1]
-    floor_start_pos_x, floor_start_pos_y = (start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
+    floor_start_pos_x, floor_start_pos_y = (
+    start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
     x, dx = (floor_start_pos_x + data.blockSize, 1) if cos(ray_angle) >= 0 else (floor_start_pos_x, -1)
     magnitude = [10 ** 10, 10 ** 10]
     for i in range(0, int(data.depth_of_field), data.blockSize):
@@ -43,7 +45,8 @@ def raycast_walls(angle):
 def raycast_all(angle):
     ray_angle = radians(angle) + player.rotation
     start_ray_pos_x, start_ray_pos_y = player.position[0], player.position[1]
-    floor_start_pos_x, floor_start_pos_y = (start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
+    floor_start_pos_x, floor_start_pos_y = (
+    start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
     x, dx = (floor_start_pos_x + data.blockSize, 1) if cos(ray_angle) >= 0 else (floor_start_pos_x, -1)
     magnitude = [10 ** 10, 10 ** 10]
     cur_coord = [0, 0]
@@ -53,7 +56,8 @@ def raycast_all(angle):
         yv = start_ray_pos_y + magnitude[0] * sin(ray_angle)
         rounded = [int((x + dx) // data.blockSize), int(yv // data.blockSize)]
         current_texture_v = 0
-        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and data.map[rounded[1]][rounded[0]] != " ":
+        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
+                data.map[rounded[1]][rounded[0]] != " ":
             current_texture_v = data.map[rounded[1]][rounded[0]]
             cur_coord[0] = [rounded[0], rounded[1]]
             break
@@ -66,13 +70,16 @@ def raycast_all(angle):
         xh = start_ray_pos_x + magnitude[1] * cos(ray_angle)
         rounded = [int(xh // data.blockSize), int((y + dy) // data.blockSize)]
         current_texture_h = 0
-        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and data.map[rounded[1]][rounded[0]] != " ":
+        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
+                data.map[rounded[1]][rounded[0]] != " ":
             current_texture_h = data.map[rounded[1]][rounded[0]]
             cur_coord[1] = [rounded[0], rounded[1]]
             break
         y += dy * data.blockSize
 
-    depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < magnitude[1] else (
+    depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < \
+                                                                                                         magnitude[
+                                                                                                             1] else (
         magnitude[1], xh, current_texture_h, cur_coord[1])
     return [depth, current_texture, coordinates]
 
@@ -80,7 +87,8 @@ def raycast_all(angle):
 def raycast_all_by_vector(vector):
     ray_angle = atan2(*vector) - (pi / 2)
     start_ray_pos_x, start_ray_pos_y = player.position[0], player.position[1]
-    floor_start_pos_x, floor_start_pos_y = (start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
+    floor_start_pos_x, floor_start_pos_y = (
+    start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
     x, dx = (floor_start_pos_x + data.blockSize, 1) if cos(ray_angle) >= 0 else (floor_start_pos_x, -1)
     magnitude = [10 ** 10, 10 ** 10]
     cur_coord = [0, 0]
@@ -90,7 +98,8 @@ def raycast_all_by_vector(vector):
         yv = start_ray_pos_y + magnitude[0] * sin(ray_angle)
         rounded = [int((x + dx) // data.blockSize), int(yv // data.blockSize)]
         current_texture_v = 0
-        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and data.map[rounded[1]][rounded[0]] != " ":
+        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
+                data.map[rounded[1]][rounded[0]] != " ":
             current_texture_v = data.map[rounded[1]][rounded[0]]
             cur_coord[0] = [rounded[0], rounded[1]]
             break
@@ -103,12 +112,15 @@ def raycast_all_by_vector(vector):
         xh = start_ray_pos_x + magnitude[1] * cos(ray_angle)
         rounded = [int(xh // data.blockSize), int((y + dy) // data.blockSize)]
         current_texture_h = 0
-        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and data.map[rounded[1]][rounded[0]] != " ":
+        if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
+                data.map[rounded[1]][rounded[0]] != " ":
             current_texture_h = data.map[rounded[1]][rounded[0]]
             cur_coord[1] = [rounded[0], rounded[1]]
             break
         y += dy * data.blockSize
 
-    depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < magnitude[1] else (
+    depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < \
+                                                                                                         magnitude[
+                                                                                                             1] else (
         magnitude[1], xh, current_texture_h, cur_coord[1])
     return [depth, current_texture, tuple(coordinates)]

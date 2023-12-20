@@ -12,6 +12,8 @@ rotation_speed = 5 * 10 ** 2
 damage = 20
 
 self_distance = data.blockSize // 5
+
+
 def movement():
     global rotation
     key_pressed = pygame.key.get_pressed()
@@ -30,9 +32,11 @@ def movement():
 
     move_vector_ray = [move_vector[0] * self_distance + position[0], move_vector[1] * self_distance + position[1]]
 
-    if (move_vector_ray[0] // data.blockSize * data.blockSize, position[1] // data.blockSize * data.blockSize) not in data.worldMap:
+    if (move_vector_ray[0] // data.blockSize * data.blockSize,
+        position[1] // data.blockSize * data.blockSize) not in data.worldMap:
         position[0] += move_vector[0] * movement_speed
-    if (position[0] // data.blockSize * data.blockSize, move_vector_ray[1] // data.blockSize * data.blockSize) not in data.worldMap:
+    if (position[0] // data.blockSize * data.blockSize,
+        move_vector_ray[1] // data.blockSize * data.blockSize) not in data.worldMap:
         position[1] += move_vector[1] * movement_speed
 
     mouse_rel = pygame.mouse.get_rel()

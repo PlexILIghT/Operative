@@ -6,6 +6,8 @@ import weapon
 from math import *
 
 animation_frame = 0
+
+
 def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_pos_x, floor_start_pos_y, screen):
     ray_angle = ray * data.padding_of_rays + player.rotation
     x, dx = (floor_start_pos_x + data.blockSize, 1) if cos(ray_angle) >= 0 else (floor_start_pos_x, -1)
@@ -45,16 +47,19 @@ def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_p
 
     if current_texture != 0:
         wall_column = data.textures[current_texture].subsurface(offset * data.textureScale, 0, data.textureScale,
-                                                            data.textureHeight)
+                                                                data.textureHeight)
         wall_column = pygame.transform.scale(wall_column, (data.ray_thickness + 1, projection_height))
         wall_column_surface = pygame.Surface((wall_column.get_width(), wall_column.get_height()), pygame.SRCALPHA)
         color_of_depth = depth // 6
         if color_of_depth > 255:
             color_of_depth = 255
-        pygame.draw.rect(wall_column_surface, (0, 0, 0, color_of_depth), (0, 0, wall_column.get_width(), wall_column.get_height()))
+        pygame.draw.rect(wall_column_surface, (0, 0, 0, color_of_depth),
+                         (0, 0, wall_column.get_width(), wall_column.get_height()))
         screen.blit(wall_column,
-                (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
-        screen.blit(wall_column_surface, (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
+                    (
+                    ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
+        screen.blit(wall_column_surface, (
+        ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
 
 
 def draw_weapon():
@@ -66,18 +71,19 @@ def draw_scene(screen):
     screen.blit(background_texture, (0, 0))
 
     start_ray_pos_x, start_ray_pos_y = player.position[0], player.position[1]
-    floor_start_pos_x, floor_start_pos_y = (start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
+    floor_start_pos_x, floor_start_pos_y = (
+    start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
     for ray in range(-data.accuracy_of_draw // 2, data.accuracy_of_draw // 2):
         ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_pos_x, floor_start_pos_y, screen)
-
 
     flat_objects_queue_to_render = []
     for objects_list in (data.environment, data.enemies):
         for object in objects_list:
-            object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0], object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
+            object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0],
+                                 object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
             object_pos_vector_magnitude = (object_pos_vector[0] ** 2 + object_pos_vector[1] ** 2)
             flat_objects_queue_to_render.append((object_pos_vector_magnitude, data.map[object[1]][object[0]], object))
-    flat_objects_queue_to_render.sort(reverse = True)
+    flat_objects_queue_to_render.sort(reverse=True)
     for i in range(len(flat_objects_queue_to_render)):
         flat_objects_queue_to_render[i] = flat_objects_queue_to_render[i][2]
 
@@ -88,14 +94,18 @@ def draw_scene(screen):
 def draw_objects(screen, objects):
     for object in objects:
         center_ray_vector = [cos(player.rotation), sin(player.rotation)]
-        object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0], object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
-        object_pos_vector_magnitude = (object_pos_vector[0]**2 + object_pos_vector[1]**2)**0.5
+        object_pos_vector = [object[0] * data.blockSize + data.blockSize // 2 - player.position[0],
+                             object[1] * data.blockSize + data.blockSize // 2 - player.position[1]]
+        object_pos_vector_magnitude = (object_pos_vector[0] ** 2 + object_pos_vector[1] ** 2) ** 0.5
         if object_pos_vector_magnitude != 0:
-            angle_between = acos((center_ray_vector[0] * object_pos_vector[0] + center_ray_vector[1] * object_pos_vector[1]) / (object_pos_vector_magnitude))
+            angle_between = acos(
+                (center_ray_vector[0] * object_pos_vector[0] + center_ray_vector[1] * object_pos_vector[1]) / (
+                    object_pos_vector_magnitude))
 
         if atan2(*object_pos_vector) > atan2(*center_ray_vector):
             angle_between = -angle_between
-        if atan2(*object_pos_vector) < (-1.57) and atan2(*center_ray_vector) > 1.57 or atan2(*object_pos_vector) > 1.57 and atan2(*center_ray_vector) < (-1.57):
+        if atan2(*object_pos_vector) < (-1.57) and atan2(*center_ray_vector) > 1.57 or atan2(
+                *object_pos_vector) > 1.57 and atan2(*center_ray_vector) < (-1.57):
             angle_between = -angle_between
 
         if abs(angle_between) <= ((data.field_of_view + pi / 4) / 2):
@@ -104,13 +114,19 @@ def draw_objects(screen, objects):
                 if texture_pixel_size > round(data.screen_height * 1.5):
                     texture_pixel_size = round(data.screen_height * 1.5)
                 if object in data.enemies:
-                    texture = pygame.transform.scale(data.enemies[object].get_frame(), (texture_pixel_size, texture_pixel_size))
+                    texture = pygame.transform.scale(data.enemies[object].get_frame(),
+                                                     (texture_pixel_size, texture_pixel_size))
                 else:
-                    texture = pygame.transform.scale(data.textures[data.map[object[1], object[0]]], (texture_pixel_size, texture_pixel_size))
+                    texture = pygame.transform.scale(data.textures[data.map[object[1], object[0]]],
+                                                     (texture_pixel_size, texture_pixel_size))
             offset = angle_between / data.padding_of_rays * data.ray_thickness + data.screen_width // 2
 
-            for i in range(-round(texture_pixel_size // data.ray_thickness // 2), round(texture_pixel_size // data.ray_thickness // 2 - 1)):
+            for i in range(-round(texture_pixel_size // data.ray_thickness // 2),
+                           round(texture_pixel_size // data.ray_thickness // 2 - 1)):
                 angle = degrees(angle_between + i * data.padding_of_rays)
                 if raycast.raycast_walls(angle)[0] > object_pos_vector_magnitude:
-                    enemy_column = texture.subsurface(((i + texture_pixel_size // data.ray_thickness // 2) * data.ray_thickness, 0, data.ray_thickness + 1, texture_pixel_size))
-                    screen.blit(enemy_column, (offset + i * data.ray_thickness, data.screen_height // 2 - texture_pixel_size // 2))
+                    enemy_column = texture.subsurface(((
+                                                                   i + texture_pixel_size // data.ray_thickness // 2) * data.ray_thickness,
+                                                       0, data.ray_thickness + 1, texture_pixel_size))
+                    screen.blit(enemy_column,
+                                (offset + i * data.ray_thickness, data.screen_height // 2 - texture_pixel_size // 2))
