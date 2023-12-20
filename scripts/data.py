@@ -28,8 +28,8 @@ textures = {
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
     "background": pygame.image.load("images/background.png").convert(),
     "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
-    #"hurt_enemy": [pygame.image.load("images/hurt_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 31)],
-    #"dead_enemy": [pygame.image.load("images/dead_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 31)]
+    "hurt_enemy": [pygame.image.load("images/hurt_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 27)],
+    "dead_enemy": [pygame.image.load("images/dead_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 31)]
 }
 
 
@@ -42,9 +42,9 @@ map = [
     "bbbbbbrrrbbb           ",
     "b          b           ",
     "b          d           ",
-    "b          bbbbbb      ",
+    "b          bbccbb      ",
     "r               b      ",
-    "r e     e  b    b      ",
+    "r e     e  b    c      ",
     "b     e    d    b      ",
     "bbbcbbrrrrbbb bbbbbbbbb",
     "       b              b",
@@ -64,6 +64,19 @@ map = [
     "            bbbbbbbbbbb"]
 
 
+def convert_map_to_list(cur_map):
+    res_map = []
+    for y in range(len(cur_map)):
+        line = []
+        for x in range(len(cur_map[0])):
+            line.append(cur_map[y][x])
+        res_map.append(line)
+    return res_map
+
+
+map = convert_map_to_list(map)
+
+
 enemies = dict()
 environment = []
 worldMap = dict()
@@ -75,7 +88,6 @@ for y in range(len(map)):
             enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
         elif map[y][x] in flat_objects_prefabs:
             environment.append([x, y])
-print(enemies)
 
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200

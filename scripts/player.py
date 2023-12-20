@@ -6,7 +6,7 @@ x = (2 + 0.5) * data.blockSize
 y = (2 + 0.5) * data.blockSize
 position = [x, y]
 rotation = -pi * 3 / 2
-movement_speed = 10
+movement_speed = 11
 rotation_speed = 5 * 10 ** 2
 
 damage = 20

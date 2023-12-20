@@ -74,7 +74,7 @@ def raycast_all(angle):
 
     depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < magnitude[1] else (
         magnitude[1], xh, current_texture_h, cur_coord[1])
-    return [depth, current_texture, tuple(coordinates)]
+    return [depth, current_texture, coordinates]
 
 
 def raycast_all_by_vector(vector):
