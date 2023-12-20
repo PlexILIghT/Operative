@@ -43,17 +43,18 @@ def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_p
     if projection_height > data.screen_height * 7:
         projection_height = data.screen_height * 7
 
-    wall_column = data.textures[current_texture].subsurface(offset * data.textureScale, 0, data.textureScale,
+    if current_texture != 0:
+        wall_column = data.textures[current_texture].subsurface(offset * data.textureScale, 0, data.textureScale,
                                                             data.textureHeight)
-    wall_column = pygame.transform.scale(wall_column, (data.ray_thickness + 1, projection_height))
-    wall_column_surface = pygame.Surface((wall_column.get_width(), wall_column.get_height()), pygame.SRCALPHA)
-    color_of_depth = depth // 6
-    if color_of_depth > 255:
-        color_of_depth = 255
-    pygame.draw.rect(wall_column_surface, (0, 0, 0, color_of_depth), (0, 0, wall_column.get_width(), wall_column.get_height()))
-    screen.blit(wall_column,
+        wall_column = pygame.transform.scale(wall_column, (data.ray_thickness + 1, projection_height))
+        wall_column_surface = pygame.Surface((wall_column.get_width(), wall_column.get_height()), pygame.SRCALPHA)
+        color_of_depth = depth // 6
+        if color_of_depth > 255:
+            color_of_depth = 255
+        pygame.draw.rect(wall_column_surface, (0, 0, 0, color_of_depth), (0, 0, wall_column.get_width(), wall_column.get_height()))
+        screen.blit(wall_column,
                 (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
-    screen.blit(wall_column_surface, (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
+        screen.blit(wall_column_surface, (ray * data.ray_thickness + data.screen_width / 2, data.screen_height // 2 - projection_height // 2))
 
 
 def draw_weapon():
@@ -102,8 +103,10 @@ def draw_objects(screen, objects):
                 texture_pixel_size = data.textureWidth * (data.object_scale_coefficient / object_pos_vector_magnitude)
                 if texture_pixel_size > round(data.screen_height * 1.5):
                     texture_pixel_size = round(data.screen_height * 1.5)
-                texture = pygame.transform.scale(flat_object_animation(object, animation_frame), (texture_pixel_size, texture_pixel_size))
-
+                if object in data.enemies:
+                    texture = pygame.transform.scale(data.enemies[object].get_frame(), (texture_pixel_size, texture_pixel_size))
+                else:
+                    texture = pygame.transform.scale(data.textures[data.map[object[1], object[0]]], (texture_pixel_size, texture_pixel_size))
             offset = angle_between / data.padding_of_rays * data.ray_thickness + data.screen_width // 2
 
             for i in range(-round(texture_pixel_size // data.ray_thickness // 2), round(texture_pixel_size // data.ray_thickness // 2 - 1)):
@@ -111,17 +114,3 @@ def draw_objects(screen, objects):
                 if raycast.raycast_walls(angle)[0] > object_pos_vector_magnitude:
                     enemy_column = texture.subsurface(((i + texture_pixel_size // data.ray_thickness // 2) * data.ray_thickness, 0, data.ray_thickness + 1, texture_pixel_size))
                     screen.blit(enemy_column, (offset + i * data.ray_thickness, data.screen_height // 2 - texture_pixel_size // 2))
-
-
-def flat_object_animation(object, animation_frame):
-    if data.map[object[1]][object[0]] == "e":
-        if data.enemies[(object[0],object[1])].state == "alive":
-            return data.textures["alive_enemy"][animation_frame % 15]
-        elif data.enemies[(object[0],object[1])].state == "hurt":
-            return data.textures["hurt_enemy"][animation_frame % 30]
-        elif data.enemies[(object[0],object[1])].state == "dead_animation":
-            return data.textures["dead_enemy"][animation_frame % 30]
-        elif data.enemies[(object[0],object[1])].state == "dead":
-            return data.textures["dead_enemy"][-1]
-    else:
-        return data.textures[data.map[object[1]][object[0]]]
