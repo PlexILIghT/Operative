@@ -34,13 +34,13 @@ class Weapon:
 
     def static(self):
         screen.blit(self.spritesShot[0], (
-            data.screen_width / 2 - self.spritesShot[0].get_width()/4,
+            data.screen_width / 2 - self.spritesShot[0].get_width()/2,
             data.screen_height - self.spritesShot[0].get_height()))
 
     def reload(self):
         self.trueAnimSpeedForReload = game_clock.get_fps() // self.animSpeedForReload + 1
         screen.blit(self.spritesReload[self.animCount], (
-            data.screen_width / 2 - self.spritesReload[self.animCount].get_width()/4,
+            data.screen_width / 2 - self.spritesReload[self.animCount].get_width()/2,
             data.screen_height - self.spritesReload[self.animCount].get_height()))
         if self.animFrames == 1:
             self.reloadSound.play()
@@ -64,7 +64,7 @@ class Weapon:
     def shot(self):
         self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot + 1
         screen.blit(self.spritesShot[self.animCount], (
-            data.screen_width / 2 - self.spritesShot[0].get_width()/4,
+            data.screen_width / 2 - self.spritesShot[0].get_width()/2,
             data.screen_height - self.spritesShot[self.animCount].get_height()))
         if self.animFrames == 1:
             self.shotSound.play()

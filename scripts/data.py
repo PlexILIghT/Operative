@@ -36,13 +36,13 @@ textures = {
 }
 
 #scale settings for sprites
-weaponScaleWidth = screen_width / (screen_width * 1.6)
-weaponScaleHeight = screen_height / (screen_height * 1.6)
+weaponScaleWidth = screen_width / (screen_width * 2)
+weaponScaleHeight = screen_height / (screen_height * 2)
 weaponMeleeScaleWidth = screen_width/(screen_width * 0.5)
 weaponMeleeScaleHeight = screen_height/(screen_height * 0.5)
 
-spritesPistolShot = [pygame.transform.smoothscale(pygame.image.load(f"images/pistol_sprites/{i}.png"), (pygame.image.load(f"images/pistol_sprites/{i}.png").get_width() * weaponScaleWidth, pygame.image.load(f"images/pistol_sprites/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 9, 1)]
-spritesPistolReload = [pygame.transform.smoothscale(pygame.image.load(f"images/reload/{i}.png"), (pygame.image.load(f"images/reload/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/reload/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 34, 1)]
+spritesPistolShot = [pygame.transform.smoothscale(pygame.image.load(f"images/pistol_sprites/{i}.png"), (pygame.image.load(f"images/pistol_sprites/{i}.png").get_width() * weaponScaleWidth, pygame.image.load(f"images/pistol_sprites/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 11, 1)]
+spritesPistolReload = [pygame.transform.smoothscale(pygame.image.load(f"images/reload/{i}.png"), (pygame.image.load(f"images/reload/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/reload/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 47, 1)]
 spritesMelee = [pygame.transform.smoothscale(pygame.image.load(f"images/melee_sprites/{i}.png"), (pygame.image.load(f"images/melee_sprites/{i}.png").get_width() * weaponMeleeScaleWidth, pygame.image.load(f"images/melee_sprites/{i}.png").get_height() * weaponMeleeScaleHeight)) for i in range(1, 7, 1)]
 meleeSound = pygame.mixer.Sound("sounds/MeleeSound.mp3")
 pistolShotSound, pistolReloadSound = pygame.mixer.Sound("sounds/shot_pistol.mp3"), pygame.mixer.Sound("sounds/pistol_reload.mp3")
@@ -50,8 +50,8 @@ pistolShotSound, pistolReloadSound = pygame.mixer.Sound("sounds/shot_pistol.mp3"
 #second weapon settings
 damageForPistol = 10
 maxAmmoPistol = 6
-animSpeedForShotPistol = 15
-animSpeedForReloadPistol = 16
+animSpeedForShotPistol = 50
+animSpeedForReloadPistol = 20
 
 #first weapon settings
 maxAmmoM4 = 30
