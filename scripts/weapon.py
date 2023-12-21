@@ -106,7 +106,7 @@ class Weapon:
 
 
 pistol = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoPistol, data.animSpeedForShotPistol, data.animSpeedForReloadPistol, data.pistolShotSound, data.pistolReloadSound)
-m4 = Weapon(data.damageForPistol, data.m4Shot, data.m4reload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.pistolShotSound, data.pistolReloadSound)
+m4 = Weapon(data.damageForPistol, data.m4Shot, data.m4reload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.m4shotSound, data.m4reloadSound)
 
 
 class Selector:
@@ -125,7 +125,10 @@ class Selector:
         screen.blit(data.swapToFirst[self.animCount], (
             data.screen_width / 2 - data.swapToFirst[0].get_width() / 2,
             data.screen_height - data.swapToFirst[0].get_height()))
-        if self.animCount == len(data.swapToFirst) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
+        if self.animCount == 1:
+            data.swapSound.play()
+            self.animCount += 1
+        elif self.animCount == len(data.swapToFirst) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
             self.animCount = 0
             self.animFrames = 0
             self.swapToFirst = False
@@ -140,7 +143,10 @@ class Selector:
         screen.blit(data.swapToSecond[self.animCount], (
             data.screen_width / 2 - data.swapToSecond[0].get_width() / 2,
             data.screen_height - data.swapToSecond[0].get_height()))
-        if self.animCount == len(data.swapToSecond) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
+        if self.animCount == 1:
+            data.swapSound.play()
+            self.animCount += 1
+        elif self.animCount == len(data.swapToSecond) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
             self.animCount = 0
             self.animFrames = 0
             self.swapToSecond = False
