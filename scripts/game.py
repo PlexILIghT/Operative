@@ -7,7 +7,7 @@ from data import screen
 pygame.init()
 
 pygame.display.set_caption("raycasters2005")
-# gameIcon = pygame.image.load("images/icon.png")
+# gameIcon = pygame.image.load("images/icon.png")s
 # pygame.display.set_icon(gameIcon)
 
 game_running = True
