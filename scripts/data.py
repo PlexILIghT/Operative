@@ -90,7 +90,51 @@ swapFlag = False
 # q - weapons cases 2 (flat)
 
 flat_objects_prefabs = ["w", "q"]
-
+map_level2 = [
+    "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
+    "b         b        r e    wb",
+    "b      w           b      eb",
+    "bbrb  rbbrb        r       b",
+    "b                  r    e  r",
+    "b                    rbrbbbb",
+    "b                         qb",
+    "r                          b",
+    "b                          r",
+    "r                          b",
+    "rw                  r erbb r",
+    "rrbbbrbbr           b   e wb",
+    "b                   b     wb",
+    "bbb  e r                  qb",
+    "deb    b            b rbbr b",
+    "b                      e   r",
+    "b                          b",
+    "bbbrbbrb            ww     b",
+    "r                 q  e     r",
+    "b      e                   b",
+    "bbbbbrbbrbbrr  bbrrbbbbrbrbb",
+    "b                          b",
+    "r                e         b",
+    "b     brbrbbrrccdbbbrbbrbr r",
+    "rbbbrbbw   e  b  ew  q   b b",
+    "b b           b          b b"
+    "b b       we  r      e   e b",
+    "bbb      bbrbbbb  bbbrbbbrbr",
+    "b                          r",
+    "r             b            b",
+    "br rbbrbbbrbbrbbbbbbbbbrbrer",
+    "bb b  e      b  r rw b     b",
+    "bb r         b  r rw b     b",
+    "             b       b   e b"
+    "b  wbb bbrrbbb  r    b     b",
+    "r        e      b          r",
+    "bbbrrbrbbrbbrb bbbrbrrbbbrbr",
+    "r w  errwbqreb r bqbwbqrebwb",
+    "b    ebbeb r b beb b r b beb",
+    "b    w              e      b",
+    "r  rbbbbrbrbbbrbbbbbbrbbbbbb",
+    "b        eb                 ",
+    "rbrbbrbrbbb                 "
+]
 map = [
     "bbbbbbrrrbbb           ",
     "b        w b           ",
@@ -127,7 +171,7 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map)
+map = convert_map_to_list(map_level2)
 
 
 enemies = dict()

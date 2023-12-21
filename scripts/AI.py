@@ -20,8 +20,8 @@ class Enemy:
         return  self.damage * randint(30, 70) // 50
 
     def player_visible(self):
-        print((self.start_pos[0] + 0.5) * data.blockSize, (self.start_pos[1] + 0.5) * data.blockSize,
-              player.position[0], player.position[1])
+        # print((self.start_pos[0] + 0.5) * data.blockSize, (self.start_pos[1] + 0.5) * data.blockSize,
+        #       player.position[0], player.position[1])
         return raycast.raycast_all_by_vector((self.start_pos[0] * data.blockSize - player.position[0],
                                               self.start_pos[1] * data.blockSize - player.position[1]))[1] == "e"
 
