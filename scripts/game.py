@@ -2,7 +2,7 @@ import pygame
 import player
 import data
 import renderer
-from UI import render_all
+from UI import render_all_UI
 from data import screen
 pygame.init()
 
@@ -17,7 +17,8 @@ pygame.mouse.set_visible(False)
 while game_running:
     player.movement()
     renderer.draw_scene(screen)
-    render_all(player.health)
+    render_all_UI(player.health)
+
 
     pygame.display.update()
     screen.fill("black")

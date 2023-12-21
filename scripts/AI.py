@@ -38,6 +38,7 @@ class Enemy:
         self.state = "dead_animation"
         self.frame = 0
         data.map[self.start_pos[1]][self.start_pos[0]] = " "
+        data.cur_amount_of_enemies -= 1
 
     def get_hit(self):
         self.frame = 0
@@ -49,6 +50,7 @@ class Enemy:
 
     def get_frame(self):
         if self.state == "alive":
+
             if self.frame < 14:
                 self.frame += 1
                 if self.frame == 5 and self.player_visible():

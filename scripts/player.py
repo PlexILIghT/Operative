@@ -45,6 +45,7 @@ def movement():
     pygame.mouse.set_pos(data.screen_width // 2, data.screen_height // 2)
     rotation += mouse_direction / rotation_speed
 
+
 def get_hit(damage):
     global health
     health -= damage

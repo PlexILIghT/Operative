@@ -19,6 +19,7 @@ object_scale_coefficient = 150
 #fonts
 font = pygame.font.SysFont('impact', 50)
 
+
 screen = pygame.display.set_mode((0, 0), flags=pygame.FULLSCREEN)
 screen_width = screen.get_width()
 screen_height = screen.get_height()
@@ -90,6 +91,7 @@ swapFlag = False
 # q - weapons cases 2 (flat)
 
 flat_objects_prefabs = ["w", "q"]
+
 map_level2 = [
     "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
     "b         b        r e    wb",
@@ -115,9 +117,9 @@ map_level2 = [
     "b                          b",
     "r                e         b",
     "b     brbrbbrrccdbbbrbbrbr r",
-    "rbbbrbbw   e  b  ew  q   b b",
+    "rbbbrbbw   e  b  ew  q e b b",
     "b b           b          b b"
-    "b b       we  r      e   e b",
+    "b b       we  r      e     b",
     "bbb      bbrbbbb  bbbrbbbrbr",
     "b                          r",
     "r             b            b",
@@ -135,6 +137,7 @@ map_level2 = [
     "b        eb                 ",
     "rbrbbrbrbbb                 "
 ]
+
 map = [
     "bbbbbbrrrbbb           ",
     "b        w b           ",
@@ -186,6 +189,7 @@ for y in range(len(map)):
         elif map[y][x] in flat_objects_prefabs:
             environment.append((x, y))
 
+cur_amount_of_enemies = len(enemies)
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200
 ray_thickness = screen_width / accuracy_of_draw
