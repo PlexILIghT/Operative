@@ -1,6 +1,6 @@
 import player
 import data
-
+from random import randint, random
 
 class Enemy:
 
@@ -9,11 +9,15 @@ class Enemy:
         self.damage = damage
         self.health = health
         self.state = "alive"
-        self.accuracy = 0.1
+        self.accuracy = 0.5
         self.frame = 0
 
+    def randomize_damage(self):
+        return  self.damage * randint(30, 70) // 50
+
     def shoot(self):
-        player.get_hit(self.damage)
+        if self.accuracy > random():
+            player.get_hit(self.randomize_damage())
 
     def render_hp(font):
         global health

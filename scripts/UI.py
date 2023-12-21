@@ -4,8 +4,8 @@ from weapon import selector, m4, pistol
 
 
 def render_hp(health):
-    text = data.font.render(str(health), True, "white")
-    data.screen.blit(text, (data.screen_width // 8, data.screen_height // 8))
+    text = data.font.render(f"HEALTH: {health}", True, "white")
+    data.screen.blit(text, (data.screen_width * 0.8, data.screen_height * 0.9))
 
 
 def render_ammo():

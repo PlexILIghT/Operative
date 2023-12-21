@@ -17,7 +17,7 @@ depth_of_field = blockSize * 50
 object_scale_coefficient = 150
 
 #fonts
-font = pygame.font.SysFont('arial', 36)
+font = pygame.font.SysFont('impact', 50)
 
 screen = pygame.display.set_mode((0, 0), flags=pygame.FULLSCREEN)
 screen_width = screen.get_width()
