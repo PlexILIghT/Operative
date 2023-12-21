@@ -17,7 +17,6 @@ pygame.mouse.set_visible(False)
 while game_running:
     player.movement()
     renderer.draw_scene(screen)
-    # text
     render_all(player.health)
 
     pygame.display.update()

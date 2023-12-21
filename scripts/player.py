@@ -48,3 +48,4 @@ def movement():
 def get_hit(damage):
     global health
     health -= damage
+    data.screen.blit(data.textures["blood"], (0, 0))

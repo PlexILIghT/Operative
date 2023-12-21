@@ -130,3 +130,14 @@ def draw_objects(screen, objects):
                                                        0, data.ray_thickness + 1, texture_pixel_size))
                     screen.blit(enemy_column,
                                 (offset + i * data.ray_thickness, data.screen_height // 2 - texture_pixel_size // 2))
+
+
+def debug():
+    blockSize = data.blockSize // 4
+    for y in range(len(data.map)):
+        for x in range(len(data.map[0])):
+            if data.map[y][x] != " ":
+                pygame.draw.rect(data.screen, "white", (x * blockSize, y * blockSize, blockSize, blockSize))
+
+    pygame.draw.circle(data.screen, "blue", (player.position[0] // 4, player.position[1] // 4), 10)
+    pygame.draw.line(data.screen, "green", (player.position[0] // 4, player.position[1] // 4), (cos(player.rotation) * 1000 + player.position[0] // 4, sin(player.rotation) * 1000 + player.position[1] // 4))
