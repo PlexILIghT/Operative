@@ -41,7 +41,7 @@ class Enemy:
 
     def get_hit(self):
         self.frame = 0
-        self.health -= player.damage
+        self.health -= player.damage * randint(30, 70) // 50
         self.state = "hurt"
         if self.health <= 0:
             self.dead()

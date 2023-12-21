@@ -25,7 +25,7 @@ class Weapon:
     def events(self):
         keys = pygame.key.get_pressed()
         mouseButton = pygame.mouse.get_pressed()
-        if (self.maxAmmo == self.ammo or keys[pygame.K_r]) and not self.shotFlag and not self.meleeFlag and not data.swapFlag:
+        if keys[pygame.K_r] and not self.shotFlag and not self.meleeFlag and not data.swapFlag:
             self.reloadFlag = True
         elif mouseButton[0] and not self.reloadFlag and not self.meleeFlag and not data.swapFlag:
             self.shotFlag = True
@@ -62,21 +62,25 @@ class Weapon:
             data.worldMap.pop((ray_hit_info[2][0] * data.blockSize, ray_hit_info[2][1] * data.blockSize))
 
     def shot(self):
-        self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot + 1
-        screen.blit(self.spritesShot[self.animCount], (
-            data.screen_width / 2 - self.spritesShot[0].get_width()/2,
-            data.screen_height - self.spritesShot[self.animCount].get_height()))
-        if self.animFrames == 1:
-            self.shotSound.play()
-            self.check_for_hit()
-        if self.animCount == len(self.spritesShot) - 1 and self.animFrames % self.trueAnimSpeedForShot == 0:
-            self.animCount = 0
-            self.animFrames = 0
-            self.ammo += 1
+        if self.ammo != self.maxAmmo:
+            self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot + 1
+            screen.blit(self.spritesShot[self.animCount], (
+                data.screen_width / 2 - self.spritesShot[0].get_width()/2,
+                data.screen_height - self.spritesShot[self.animCount].get_height()))
+            if self.animFrames == 1:
+                self.shotSound.play()
+                self.check_for_hit()
+            if self.animCount == len(self.spritesShot) - 1 and self.animFrames % self.trueAnimSpeedForShot == 0:
+                self.animCount = 0
+                self.animFrames = 0
+                self.ammo += 1
+                self.shotFlag = False
+            elif self.animFrames % self.trueAnimSpeedForShot == 0:
+                self.animCount += 1
+            self.animFrames += 1
+        else:
+            self.static()
             self.shotFlag = False
-        elif self.animFrames % self.trueAnimSpeedForShot == 0:
-            self.animCount += 1
-        self.animFrames += 1
 
     def melee(self):
         self.trueAnimSpeedForMelee = game_clock.get_fps() // data.animSpeedForMelee + 1

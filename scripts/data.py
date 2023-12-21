@@ -63,7 +63,7 @@ swapSound = pygame.mixer.Sound("sounds/swap_to_pistol.mp3")
 
 
 #second weapon settings
-damageForPistol = 10
+damageForPistol = 45
 maxAmmoPistol = 6
 animSpeedForShotPistol = 50
 animSpeedForReloadPistol = 20
@@ -71,7 +71,7 @@ animSpeedForReloadPistol = 20
 animSpeedForSwap = 18
 
 #first weapon settings
-damageForM4 = 6
+damageForM4 = 30
 maxAmmoM4 = 30
 animSpeedForShotM4 = 140
 animSpeedForReloadM4 = 20
