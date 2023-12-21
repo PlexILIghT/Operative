@@ -41,9 +41,14 @@ weaponScaleHeight = screen_height / (screen_height * 2)
 weaponMeleeScaleWidth = screen_width/(screen_width * 0.5)
 weaponMeleeScaleHeight = screen_height/(screen_height * 0.5)
 
+m4Shot = [pygame.transform.smoothscale(pygame.image.load(f"images/m4_shot/{i}.png"), (pygame.image.load(f"images/m4_shot/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/m4_shot/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 4, 1)]
+m4reload = [pygame.transform.smoothscale(pygame.image.load(f"images/m4_reload/{i}.png"), (pygame.image.load(f"images/m4_reload/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/m4_reload/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 53, 1)]
+
 spritesPistolShot = [pygame.transform.smoothscale(pygame.image.load(f"images/pistol_sprites/{i}.png"), (pygame.image.load(f"images/pistol_sprites/{i}.png").get_width() * weaponScaleWidth, pygame.image.load(f"images/pistol_sprites/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 11, 1)]
 spritesPistolReload = [pygame.transform.smoothscale(pygame.image.load(f"images/reload/{i}.png"), (pygame.image.load(f"images/reload/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/reload/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 47, 1)]
 spritesMelee = [pygame.transform.smoothscale(pygame.image.load(f"images/melee_sprites/{i}.png"), (pygame.image.load(f"images/melee_sprites/{i}.png").get_width() * weaponMeleeScaleWidth, pygame.image.load(f"images/melee_sprites/{i}.png").get_height() * weaponMeleeScaleHeight)) for i in range(1, 7, 1)]
+swapToFirst = [pygame.transform.smoothscale(pygame.image.load(f"images/swap_to_first/{i}.png"), (pygame.image.load(f"images/swap_to_first/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/swap_to_first/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 15, 1)]
+swapToSecond = [pygame.transform.smoothscale(pygame.image.load(f"images/swap_to_second/{i}.png"), (pygame.image.load(f"images/swap_to_second/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/swap_to_second/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 15, 1)]
 meleeSound = pygame.mixer.Sound("sounds/MeleeSound.mp3")
 pistolShotSound, pistolReloadSound = pygame.mixer.Sound("sounds/shot_pistol.mp3"), pygame.mixer.Sound("sounds/pistol_reload.mp3")
 
@@ -52,14 +57,17 @@ damageForPistol = 10
 maxAmmoPistol = 6
 animSpeedForShotPistol = 50
 animSpeedForReloadPistol = 20
+animSpeedForSwap = 20
 
 #first weapon settings
 maxAmmoM4 = 30
-animSpeedForShotM4 = 100
-animSpeedForReloadM4 = 12
+animSpeedForShotM4 = 140
+animSpeedForReloadM4 = 20
 
 #melee weapon settings
 animSpeedForMelee = 4
+
+swapFlag = False
 
 # map data
 # b - Brick wall

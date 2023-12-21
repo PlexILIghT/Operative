@@ -25,11 +25,11 @@ class Weapon:
     def events(self):
         keys = pygame.key.get_pressed()
         mouseButton = pygame.mouse.get_pressed()
-        if (self.maxAmmo == self.ammo or keys[pygame.K_r]) and not self.shotFlag and not self.meleeFlag:
+        if (self.maxAmmo == self.ammo or keys[pygame.K_r]) and not self.shotFlag and not self.meleeFlag and not data.swapFlag:
             self.reloadFlag = True
-        elif mouseButton[0] and not self.reloadFlag and not self.meleeFlag:
+        elif mouseButton[0] and not self.reloadFlag and not self.meleeFlag and not data.swapFlag:
             self.shotFlag = True
-        elif keys[pygame.K_c] and not self.reloadFlag and not self.shotFlag:
+        elif keys[pygame.K_c] and not self.reloadFlag and not self.shotFlag and not data.swapFlag:
             self.meleeFlag = True
 
     def static(self):
@@ -101,29 +101,71 @@ class Weapon:
             self.shot()
         elif self.meleeFlag:
             self.melee()
-        elif not self.shotFlag:
+        elif not self.shotFlag and not data.swapFlag:
             self.static()
 
+
 pistol = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoPistol, data.animSpeedForShotPistol, data.animSpeedForReloadPistol, data.pistolShotSound, data.pistolReloadSound)
-m4 = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.pistolShotSound, data.pistolReloadSound)
+m4 = Weapon(data.damageForPistol, data.m4Shot, data.m4reload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.pistolShotSound, data.pistolReloadSound)
 
 class Selector:
     def __init__(self, first, second):
         self.first = first
         self.second = second
         self.selectionFlag = False
+        self.animCount = 0
+        self.animFrames = 0
+        self.swapToFirst = False
+        self.swapToSecond = False
+
+    def swap_to_first(self):
+        trueAnimSpeedForSwap = game_clock.get_fps() // data.animSpeedForSwap + 1
+        screen.blit(data.swapToFirst[self.animCount], (
+            data.screen_width / 2 - data.swapToFirst[0].get_width() / 2,
+            data.screen_height - data.swapToFirst[0].get_height()))
+        if self.animCount == len(data.swapToFirst) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
+            self.animCount = 0
+            self.animFrames = 0
+            self.swapToFirst = False
+            data.swapFlag = False
+            self.selectionFlag = False
+        elif self.animFrames % trueAnimSpeedForSwap == 0:
+            self.animCount += 1
+        self.animFrames += 1
+
+    def swap_to_second(self):
+        trueAnimSpeedForSwap = game_clock.get_fps() // data.animSpeedForSwap + 1
+        screen.blit(data.swapToSecond[self.animCount], (
+            data.screen_width / 2 - data.swapToSecond[0].get_width() / 2,
+            data.screen_height - data.swapToSecond[0].get_height()))
+        if self.animCount == len(data.swapToSecond) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
+            self.animCount = 0
+            self.animFrames = 0
+            self.swapToSecond = False
+            data.swapFlag = False
+            self.selectionFlag = True
+        elif self.animFrames % trueAnimSpeedForSwap == 0:
+            self.animCount += 1
+        self.animFrames += 1
+
     def selection(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_1]:
-            self.selectionFlag = False
-        if keys[pygame.K_2]:
-            self.selectionFlag = True
+        if keys[pygame.K_1] and self.selectionFlag and not pistol.reloadFlag and not pistol.meleeFlag:
+            data.swapFlag = True
+            self.swapToFirst = True
+        if keys[pygame.K_2] and not self.selectionFlag and not m4.reloadFlag and not pistol.meleeFlag:
+            data.swapFlag = True
+            self.swapToSecond = True
 
     def draw_selected_weapon(self):
         self.selection()
-        if self.selectionFlag:
-            self.second.draw_weapon()
-        elif not self.selectionFlag:
-            self.first.draw_weapon()
+        if self.swapToFirst:
+            self.swap_to_first()
+        elif self.swapToSecond:
+            self.swap_to_second()
+        elif self.selectionFlag:
+            pistol.draw_weapon()
+        else:
+            m4.draw_weapon()
 
 selector = Selector(m4, pistol)
