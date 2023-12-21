@@ -107,11 +107,14 @@ class Weapon:
 pistol = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoPistol, data.animSpeedForShotPistol, data.animSpeedForReloadPistol, data.pistolShotSound, data.pistolReloadSound)
 m4 = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.pistolShotSound, data.pistolReloadSound)
 
+
 class Selector:
+
     def __init__(self, first, second):
         self.first = first
         self.second = second
         self.selectionFlag = False
+
     def selection(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1]:

@@ -21,6 +21,11 @@ class Enemy:
     def shoot(self):
         player.get_hit(self.damage)
 
+    def render_hp(font):
+        global health
+        text = font.render(str(health), True, "white")
+        data.screen.blit(text, (data.screen_width // 8, data.screen_height // 8))
+
     def dead(self):
         self.state = "dead_animation"
         self.frame = 0
@@ -32,6 +37,7 @@ class Enemy:
         self.state = "hurt"
         if self.health <= 0:
             self.dead()
+
 
     def get_frame(self):
         if self.state == "alive":
