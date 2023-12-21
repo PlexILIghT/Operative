@@ -1,9 +1,25 @@
-import pygame
 import data
-import player
-font = pygame.font.SysFont('arial', 36)
+from player import health
+from weapon import selector, m4, pistol
 
-def render_hp(player.health):
-    data.screen.blit(health, 36)
-def render_all():
-    pass
+
+def render_hp(health):
+    text = data.font.render(str(health), True, "white")
+    data.screen.blit(text, (data.screen_width // 8, data.screen_height // 8))
+
+
+def render_ammo():
+    if selector.selectionFlag:
+        max_ammo = pistol.maxAmmo
+        cur_ammo = pistol.maxAmmo - pistol.ammo
+    else:
+        max_ammo = m4.maxAmmo
+        cur_ammo = m4.maxAmmo - m4.ammo
+
+    text = data.font.render(f"{cur_ammo} / {max_ammo}", True, "white")
+    data.screen.blit(text, (data.screen_width * 0.8, data.screen_height * 0.8))
+
+
+def render_all(health):
+    render_hp(health)
+    render_ammo()

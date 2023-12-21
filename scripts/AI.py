@@ -14,7 +14,11 @@ class Enemy:
 
     def shoot(self):
         player.get_hit(self.damage)
-        print(player.health)
+
+    def render_hp(font):
+        global health
+        text = font.render(str(health), True, "white")
+        data.screen.blit(text, (data.screen_width // 8, data.screen_height // 8))
 
     def dead(self):
         self.state = "dead_animation"

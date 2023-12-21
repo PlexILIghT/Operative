@@ -2,6 +2,7 @@ import pygame
 import player
 import data
 import renderer
+from UI import render_all
 from data import screen
 pygame.init()
 
@@ -17,6 +18,7 @@ while game_running:
     player.movement()
     renderer.draw_scene(screen)
     # text
+    render_all(player.health)
 
     pygame.display.update()
     screen.fill("black")
