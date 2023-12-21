@@ -5,89 +5,31 @@ from data import screen, game_clock
 
 pygame.init()
 
-#scale settings for sprites
-weaponScaleWidth = data.screen_width / (data.screen_width * 1.6)
-weaponScaleHeight = data.screen_height / (data.screen_height * 1.6)
-weaponMeleeScaleWidth = data.screen_width/(data.screen_width * 0.5)
-weaponMeleeScaleHeight = data.screen_height/(data.screen_height * 0.5)
-
-#pistol settings
-damageForPistol = 10
-maxAmmoPistol = 6
-animSpeedForShotPistol = 15
-animSpeedForReloadPistol = 16
-spritesPistolReload = []
-spritesPistolShot = []
-
-#M4 settings
-maxAmmoM4 = 30
-animSpeedForShotM4 = 100
-animSpeedForReloadM4 = 12
-
-#melee settings
-animSpeedForMelee = 4
-spritesMelee = []
-
-# weapon animation
-
-for i in range(1, 9, 1):
-    spritesPistolShot.append(
-        pygame.transform.smoothscale
-        (pygame.image.load(f"images/pistol_sprites/{i}.png"),
-         (pygame.image.load(f"images/pistol_sprites/{i}.png").get_width() * weaponScaleWidth,
-         pygame.image.load(f"images/pistol_sprites/{i}.png").get_height() * weaponScaleHeight)))
-
-for i in range(1, 32, 1):
-    spritesPistolReload.append( pygame.transform.smoothscale(pygame.image.load(f"images/reload/{i}.png"), (
-        pygame.image.load(f"images/reload/{i}.png").get_width() * weaponScaleWidth,
-        pygame.image.load(f"images/reload/{i}.png").get_height() * weaponScaleHeight)))
-
-for i in range(1, 7, 1):
-    spritesMelee.append(
-        pygame.transform.smoothscale(pygame.image.load(f"images/melee_sprites/{i}.png"), (
-            pygame.image.load(f"images/melee_sprites/{i}.png").get_width() * weaponMeleeScaleWidth,
-            pygame.image.load(f"images/melee_sprites/{i}.png").get_height() * weaponMeleeScaleHeight)))
-
-pistol_shot_sound = pygame.mixer.Sound("sounds/shot_pistol.mp3")
-pistol_reload_sound = pygame.mixer.Sound("sounds/pistol_reload.mp3")
-meleeSound = pygame.mixer.Sound("sounds/MeleeSound.mp3")
-
-
 class Weapon:
-    def __init__(self, damage, spritesShot, spritesReload, maxAmmo, animSpeedForShot, animSpeedForReload, spritesMelee, shotSound, reloadSound, meleeSound, animSpeedForMelee):
+    def __init__(self, damage, spritesShot, spritesReload, maxAmmo, animSpeedForShot, animSpeedForReload, shotSound, reloadSound):
         self.damage = damage
         self.spritesShot = list(spritesShot)
         self.spritesReload = list(spritesReload)
         self.maxAmmo = maxAmmo
         self.animSpeedForShot = animSpeedForShot
         self.animSpeedForReload = animSpeedForReload
-        self.animSpeedForMelee = animSpeedForMelee
-        self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot
-        self.trueAnimSpeedForReload = game_clock.get_fps() // self.animSpeedForReload
-        self.trueAnimSpeedForMelee = game_clock.get_fps() // self.animSpeedForMelee
-        self.spritesMelee = list(spritesMelee)
         self.shotSound = shotSound
         self.reloadSound = reloadSound
-        self.meleeSound = meleeSound
         self.reloadFlag = False
         self.shotFlag = False
         self.meleeFlag = False
         self.ammo = 0
         self.animCount = 0
         self.animFrames = 0
-        self.number = raycast.raycast_walls(0)
 
     def events(self):
         keys = pygame.key.get_pressed()
         mouseButton = pygame.mouse.get_pressed()
-        self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot + 1
-        self.trueAnimSpeedForReload = game_clock.get_fps() // self.animSpeedForReload + 1
-        self.trueAnimSpeedForMelee = game_clock.get_fps() // self.animSpeedForMelee + 1
-        if (self.maxAmmo == self.ammo or keys[pygame.K_r]) and not self.shotFlag:
+        if (self.maxAmmo == self.ammo or keys[pygame.K_r]) and not self.shotFlag and not self.meleeFlag:
             self.reloadFlag = True
-        elif mouseButton[0] and not self.reloadFlag:
+        elif mouseButton[0] and not self.reloadFlag and not self.meleeFlag:
             self.shotFlag = True
-        elif keys[pygame.K_c]:
+        elif keys[pygame.K_c] and not self.reloadFlag and not self.shotFlag:
             self.meleeFlag = True
 
     def static(self):
@@ -137,13 +79,13 @@ class Weapon:
         self.animFrames += 1
 
     def melee(self):
-        self.trueAnimSpeedForMelee = game_clock.get_fps() // self.animSpeedForMelee + 1
-        screen.blit(self.spritesMelee[self.animCount], (
-            data.screen_width / 2 - self.spritesMelee[self.animCount].get_width() / 2,
-            data.screen_height - self.spritesMelee[self.animCount].get_height()))
+        self.trueAnimSpeedForMelee = game_clock.get_fps() // data.animSpeedForMelee + 1
+        screen.blit(data.spritesMelee[self.animCount], (
+            data.screen_width / 2 - data.spritesMelee[self.animCount].get_width() / 2,
+            data.screen_height - data.spritesMelee[self.animCount].get_height()))
         if self.animFrames == 1:
-            self.meleeSound.play()
-        if self.animCount == len(self.spritesMelee) - 1 and self.animFrames % self.trueAnimSpeedForMelee == 0:
+            data.meleeSound.play()
+        if self.animCount == len(data.spritesMelee) - 1 and self.animFrames % self.trueAnimSpeedForMelee == 0:
             self.meleeFlag = False
             self.animCount = 0
             self.animFrames = 0
@@ -162,8 +104,8 @@ class Weapon:
         elif not self.shotFlag:
             self.static()
 
-pistol = Weapon(damage=damageForPistol, spritesShot=spritesPistolShot, spritesReload=spritesPistolReload, maxAmmo=maxAmmoPistol, animSpeedForShot=animSpeedForShotPistol, animSpeedForReload=animSpeedForReloadPistol, spritesMelee=spritesMelee, shotSound=pistol_shot_sound, reloadSound=pistol_reload_sound, meleeSound=meleeSound, animSpeedForMelee=animSpeedForMelee)
-m4 = Weapon(damage=damageForPistol, spritesShot=spritesPistolShot, spritesReload=spritesPistolReload, maxAmmo=maxAmmoM4, animSpeedForShot=animSpeedForShotM4, animSpeedForReload=animSpeedForReloadM4, spritesMelee=spritesMelee, shotSound=pistol_shot_sound, reloadSound=pistol_reload_sound, meleeSound=meleeSound, animSpeedForMelee=animSpeedForMelee)
+pistol = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoPistol, data.animSpeedForShotPistol, data.animSpeedForReloadPistol, data.pistolShotSound, data.pistolReloadSound)
+m4 = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.pistolShotSound, data.pistolReloadSound)
 
 class Selector:
     def __init__(self, first, second):
