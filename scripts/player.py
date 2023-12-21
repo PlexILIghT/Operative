@@ -9,7 +9,8 @@ rotation = -pi * 3 / 2
 movement_speed = 11
 rotation_speed = 5 * 10 ** 2
 
-damage = 20
+damage = 35
+health = 100
 
 self_distance = data.blockSize // 5
 
@@ -43,3 +44,7 @@ def movement():
     mouse_direction = mouse_rel[0]
     pygame.mouse.set_pos(data.screen_width // 2, data.screen_height // 2)
     rotation += mouse_direction / rotation_speed
+
+def get_hit(damage):
+    global health
+    health -= damage

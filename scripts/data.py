@@ -29,6 +29,8 @@ textures = {
     "c": pygame.image.load("images/textures/breakable_brick_wall.jpg").convert(),
     "r": pygame.image.load("images/textures/brick_wall_rusty.jpg").convert(),
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
+    "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
+    "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
     "background": pygame.image.load("images/background.png").convert(),
     "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
     "hurt_enemy": [pygame.image.load("images/hurt_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 27)],
@@ -63,17 +65,18 @@ animSpeedForMelee = 4
 
 # map data
 # b - Brick wall
+# w - weapons cases
 
-flat_objects_prefabs = []
+flat_objects_prefabs = ["w", "q"]
 
 map = [
     "bbbbbbrrrbbb           ",
-    "b          b           ",
-    "b          d           ",
-    "b          bbccbb      ",
+    "b        w b           ",
+    "b         qd           ",
+    "bw         bbccbb      ",
     "r               b      ",
     "r e     e  b    c      ",
-    "b     e    d    b      ",
+    "b  q  e    d    b      ",
     "bbbcbbrrrrbbb bbbbbbbbb",
     "       b              b",
     "       b              b",
@@ -115,7 +118,7 @@ for y in range(len(map)):
         elif map[y][x] == "e":
             enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
         elif map[y][x] in flat_objects_prefabs:
-            environment.append([x, y])
+            environment.append((x, y))
 
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200
