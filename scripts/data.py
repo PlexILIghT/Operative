@@ -71,6 +71,7 @@ animSpeedForReloadPistol = 20
 animSpeedForSwap = 18
 
 #first weapon settings
+damageForM4 = 6
 maxAmmoM4 = 30
 animSpeedForShotM4 = 140
 animSpeedForReloadM4 = 20

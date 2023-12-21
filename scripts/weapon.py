@@ -106,7 +106,7 @@ class Weapon:
 
 
 pistol = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoPistol, data.animSpeedForShotPistol, data.animSpeedForReloadPistol, data.pistolShotSound, data.pistolReloadSound)
-m4 = Weapon(data.damageForPistol, data.m4Shot, data.m4reload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.m4shotSound, data.m4reloadSound)
+m4 = Weapon(data.damageForM4, data.m4Shot, data.m4reload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.m4shotSound, data.m4reloadSound)
 
 
 class Selector:
