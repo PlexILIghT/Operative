@@ -1,3 +1,4 @@
+import pygame
 import player
 import data
 from math import *
@@ -85,7 +86,7 @@ def raycast_all(angle):
 
 
 def raycast_all_by_vector(vector):
-    ray_angle = atan2(*vector) - (pi / 2)
+    ray_angle = -(atan2(*vector) - (pi / 2))
     start_ray_pos_x, start_ray_pos_y = player.position[0], player.position[1]
     floor_start_pos_x, floor_start_pos_y = (
     start_ray_pos_x // data.blockSize * data.blockSize, start_ray_pos_y // data.blockSize * data.blockSize)
@@ -119,8 +120,6 @@ def raycast_all_by_vector(vector):
             break
         y += dy * data.blockSize
 
-    depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < \
-                                                                                                         magnitude[
-                                                                                                             1] else (
-        magnitude[1], xh, current_texture_h, cur_coord[1])
+    depth, offset, current_texture, coordinates = (magnitude[0], yv, current_texture_v, cur_coord[0]) if magnitude[0] < magnitude[1] else (magnitude[1], xh, current_texture_h, cur_coord[1])
+
     return [depth, current_texture, tuple(coordinates)]

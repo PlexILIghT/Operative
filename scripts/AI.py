@@ -1,5 +1,7 @@
+import pygame
 import player
 import data
+import raycast
 
 
 class Enemy:
@@ -12,9 +14,12 @@ class Enemy:
         self.accuracy = 0.1
         self.frame = 0
 
+    def player_visible(self):
+        print((self.start_pos[0] + 0.5) * data.blockSize, (self.start_pos[1] + 0.5) * data.blockSize, player.position[0], player.position[1])
+        return raycast.raycast_all_by_vector((self.start_pos[0] * data.blockSize - player.position[0], self.start_pos[1] * data.blockSize - player.position[1]))[1] == "e"
+
     def shoot(self):
         player.get_hit(self.damage)
-        print(player.health)
 
     def dead(self):
         self.state = "dead_animation"
@@ -32,7 +37,7 @@ class Enemy:
         if self.state == "alive":
             if self.frame < 14:
                 self.frame += 1
-                if self.frame == 5:
+                if self.frame == 5 and self.player_visible():
                     self.shoot()
             else:
                 self.frame = 0
