@@ -85,7 +85,41 @@ swapFlag = False
 # q - weapons cases 2 (flat)
 
 flat_objects_prefabs = ["w", "q"]
-
+map_level2 = [
+"bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
+"b                    e    wb",
+"b      w  b         b     eb",
+"b     rbbbb         be     b",
+"b                          r",
+"b        q          bbbrbbbb",
+"b                         qb",
+"r                          b",
+"r                 bbb erbb r",
+"rrbbb                     wb",
+"b                 b       wb",
+"bbb r             rw      qb",
+"deb b             brrb rr rb",
+"b   r                   e  b",
+"bbbbbrbbrbbrbr bbrrbbbbrbrbb",
+"b                          b",
+"b bbbrbbbrbbrrbbrbbbrbbrbrer",
+"rbb        e  b  ew  q   b b",
+"b        bbrrbr   b  e     b",
+"b         e   bbbbbbbrbbbr r",
+"b                          r",
+"br rbbrbbbrbbrbbbbbbbbbrbrer",
+"bb b  e      b  r rw b   b b",
+"             b       b   e  "
+"b  wbb bbrrbbb  r    b     b",
+"r        e      b          r",
+"b brrbrbbrbbrbrbbbrbrrbbbrbr",
+"r w  errwbqrebwr bqbwbqrebwb",
+"b    ebbeb r b beb b r b beb",
+"b    w              e      b",
+"r  rbbbbrbrbbbrbbbbbbrbbbbbb",
+"         eb                 ",
+"rbrbbrbrbbb                 "
+]
 map = [
     "bbbbbbrrrbbb           ",
     "b        w b           ",
@@ -122,7 +156,7 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map)
+map = convert_map_to_list(map_level2)
 
 
 enemies = dict()
