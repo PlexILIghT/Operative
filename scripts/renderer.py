@@ -117,7 +117,7 @@ def draw_objects(screen, objects):
                     texture = pygame.transform.scale(data.enemies[object].get_frame(),
                                                      (texture_pixel_size, texture_pixel_size))
                 else:
-                    texture = pygame.transform.scale(data.textures[data.map[object[1], object[0]]],
+                    texture = pygame.transform.scale(data.textures[data.map[object[1]][object[0]]],
                                                      (texture_pixel_size, texture_pixel_size))
             offset = angle_between / data.padding_of_rays * data.ray_thickness + data.screen_width // 2
 

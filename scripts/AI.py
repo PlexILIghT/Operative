@@ -1,6 +1,7 @@
 import player
 import data
 
+
 class Enemy:
 
     def __init__(self, start_pos, damage, health):
@@ -10,6 +11,14 @@ class Enemy:
         self.state = "alive"
         self.accuracy = 0.1
         self.frame = 0
+
+    def shoot(self):
+        player.get_hit(self.damage)
+
+    def render_hp(font):
+        global health
+        text = font.render(str(health), True, "white")
+        data.screen.blit(text, (data.screen_width // 8, data.screen_height // 8))
 
     def dead(self):
         self.state = "dead_animation"
@@ -23,10 +32,13 @@ class Enemy:
         if self.health <= 0:
             self.dead()
 
+
     def get_frame(self):
         if self.state == "alive":
             if self.frame < 14:
                 self.frame += 1
+                if self.frame == 5:
+                    self.shoot()
             else:
                 self.frame = 0
             return data.textures["alive_enemy"][self.frame]
