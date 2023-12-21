@@ -57,18 +57,22 @@ swapToFirst = [pygame.transform.smoothscale(pygame.image.load(f"images/swap_to_f
 swapToSecond = [pygame.transform.smoothscale(pygame.image.load(f"images/swap_to_second/{i}.png"), (pygame.image.load(f"images/swap_to_second/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/swap_to_second/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 15, 1)]
 meleeSound = pygame.mixer.Sound("sounds/MeleeSound.mp3")
 pistolShotSound, pistolReloadSound = pygame.mixer.Sound("sounds/shot_pistol.mp3"), pygame.mixer.Sound("sounds/pistol_reload.mp3")
+m4shotSound = pygame.mixer.Sound("sounds/m4shot.mp3")
+m4reloadSound = pygame.mixer.Sound("sounds/m4reload.mp3")
+swapSound = pygame.mixer.Sound("sounds/swap_to_pistol.mp3")
+
 
 #second weapon settings
 damageForPistol = 10
 maxAmmoPistol = 6
 animSpeedForShotPistol = 50
 animSpeedForReloadPistol = 20
-animSpeedForSwap = 20
+
+animSpeedForSwap = 18
 
 #first weapon settings
 maxAmmoM4 = 30
 animSpeedForShotM4 = 140
-animSpeedForShotM4 = 100
 animSpeedForReloadM4 = 20
 
 #melee weapon settings
