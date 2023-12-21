@@ -35,6 +35,7 @@ textures = {
     "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
     "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
     "background": pygame.image.load("images/background.png").convert(),
+    "blood": pygame.image.load("images/blood.png").convert_alpha(),
     "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
     "hurt_enemy": [pygame.image.load("images/hurt_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 27)],
     "dead_enemy": [pygame.image.load("images/dead_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 31)]
@@ -61,14 +62,18 @@ animSpeedForReloadPistol = 16
 #first weapon settings
 maxAmmoM4 = 30
 animSpeedForShotM4 = 100
-animSpeedForReloadM4 = 12
+animSpeedForReloadM4 = 20
 
 #melee weapon settings
 animSpeedForMelee = 4
 
 # map data
 # b - Brick wall
-# w - weapons cases
+# r - rusty brick wall
+# d - wall with board
+# c - breakable wall
+# w - weapons cases 1 (flat)
+# q - weapons cases 2 (flat)
 
 flat_objects_prefabs = ["w", "q"]
 
@@ -76,25 +81,25 @@ map = [
     "bbbbbbrrrbbb           ",
     "b        w b           ",
     "b         qd           ",
-    "bw         bbccbb      ",
+    "bbbbbbb bbbbbccbb      ",
     "r               b      ",
     "r e     e  b    c      ",
-    "b  q  e    d    b      ",
+    "b  q  e    d   eb      ",
     "bbbcbbrrrrbbb bbbbbbbbb",
-    "       b              b",
-    "       b              b",
+    "       b           e  b",
+    "       b e            b",
     "       bbbbbbbbbbbb bbb",
     "                b     b",
     "                b     b",
     "                b     b",
     "                bb    b",
-    "                b    bb",
-    "                b     b",
+    "                be   bb",
+    "                b    eb",
     "            bbbbbb bbbb",
-    "            b         b",
-    "            b         b",
-    "            b         b",
-    "            b         b",
+    "            b  e      b",
+    "            b       e b",
+    "            b e       b",
+    "            b   e     b",
     "            bbbbbbbbbbb"]
 
 
