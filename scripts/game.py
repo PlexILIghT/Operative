@@ -16,6 +16,8 @@ pygame.mouse.set_visible(False)
 while game_running:
     player.movement()
     renderer.draw_scene(screen)
+    # text
+
     pygame.display.update()
     screen.fill("black")
 

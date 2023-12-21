@@ -28,6 +28,7 @@ class Enemy:
         if self.health <= 0:
             self.dead()
 
+
     def get_frame(self):
         if self.state == "alive":
             if self.frame < 14:
