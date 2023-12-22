@@ -137,7 +137,36 @@ map_level2 = [
     "rbrbbrbrbbb                 "
 ]
 
-map = [
+
+map_level22 = [
+    "bbbrrrbbbrbbrrbbbrrbbbb",
+    "r       w  e    we    r",
+    "b    bw qb  bw   be   b",
+    "b              q   w  b",
+    "r                     r",
+    "b                   e b",
+    "b                     b",
+    "r               e  e qb",
+    "bbrbdrbcccrbbrbrrbbrbbb",
+    "b             r     e b",
+    "b   w             q   b",
+    "r w          wb   e w b",
+    "b  e         qbbbrbbbbb",
+    "b             bw  e   b",
+    "r                     b",
+    "r             r  q  e b",
+    "b w           rdbcbbdrb",
+    "re    w            e  b",
+    "b   e                qb",
+    "b            q      w b",
+    "brddccbrdbr rbbrbrb bbb",
+    "b e          bq       b",
+    "b e         qb e      b",
+    "b  e ew      rq e w w b",
+    "bbbrbbrbrbrbbrbrbbrbrbb"]
+
+
+map_level1 = [
     "bbbbbbrrrbbb           ",
     "b        w b           ",
     "b         qd           ",
@@ -173,7 +202,7 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map_level2)
+map = convert_map_to_list(map_level22)
 
 
 enemies = dict()
