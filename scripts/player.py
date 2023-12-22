@@ -19,7 +19,7 @@ bleed = 0
 def clear_level():
     global health, position, rotation
     health = 100
-    data.map = data.convert_map_to_list(data.map_level2)
+    data.map = data.convert_map_to_list(data.map_level_2)
     data.generate_enemies_and_environment(data.map)
 
     x = (2 + 0.5) * data.blockSize

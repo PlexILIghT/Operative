@@ -37,6 +37,7 @@ textures = {
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
     "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
     "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
+    "m": pygame.image.load("images/textures/metal_wall.jpg").convert_alpha(),
     "background": pygame.image.load("images/background.png").convert(),
     "blood": pygame.image.load("images/blood.png").convert_alpha(),
     "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
@@ -92,7 +93,7 @@ swapFlag = False
 flat_objects_prefabs = ["w", "q"]
 
 map_level_2 = [
-    "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
+    "bmmmmmmbbbbbbrbbbbbbrrbbbbbb",
     "b         b        r e    wb",
     "b      w           b      eb",
     "bbrb  rbbrb        r       b",
@@ -117,7 +118,7 @@ map_level_2 = [
     "r                e         b",
     "b     brbrbbrrccdbbbrbbrbr r",
     "rbbbrbbw   e  b  ew  q e b b",
-    "b b           b          b b"
+    "b b           b          b b",
     "b b       we  r      e     b",
     "bbb      bbrbbbb  bbbrbbbrbr",
     "b                          r",
@@ -125,7 +126,7 @@ map_level_2 = [
     "br rbbrbbbrbbrbbbbbbbbbrbrer",
     "bb b  e      b  r rw b     b",
     "bb r         b  r rw b     b",
-    "             b       b   e b"
+    "             b       b   e b",
     "b  wbb bbrrbbb  r    b     b",
     "r        e      b          r",
     "bbbrrbrbbrbbrb bbbrbrrbbbrbr",
@@ -217,7 +218,7 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map_level_1)
+map = convert_map_to_list(map_level_2)
 
 
 enemies = dict()
