@@ -1,4 +1,3 @@
-import pygame
 import player
 import data
 from random import randint, random
@@ -23,8 +22,8 @@ class Enemy:
     def player_visible(self):
         # print((self.start_pos[0] + 0.5) * data.blockSize, (self.start_pos[1] + 0.5) * data.blockSize,
         #       player.position[0], player.position[1])
-        return raycast.raycast_all_by_vector((self.start_pos[0] * data.blockSize - player.position[0],
-                                              self.start_pos[1] * data.blockSize - player.position[1]))[1] == "e"
+        return raycast.raycast_all_by_vector(((self.start_pos[0] + 0.5) * data.blockSize - player.position[0],
+                                              (self.start_pos[1] + 0.5) * data.blockSize - player.position[1]))[1] == "e"
 
     def shoot(self):
         if self.accuracy > random():
