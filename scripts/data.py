@@ -74,7 +74,7 @@ anim_speed_for_swap = 18
 # first weapon settings
 damage_for_m4 = 30
 max_ammo_m4 = 30
-anim_speed_for_shot_m4 = 140
+anim_speed_for_shot_m4 = 10
 anim_speed_for_reload_m4 = 20
 
 selection_flag = False

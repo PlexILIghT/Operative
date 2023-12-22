@@ -19,7 +19,7 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 pygame.display.set_caption("Menu")
 background = pygame.image.load("images/menu_sprites/back4.png")
-pygame.mixer.music.load("images/menu_sprites/chemicals.wav")
+pygame.mixer.music.load("images/menu_sprites/menu_theme.mp3")
 pygame.mixer.music.play(-1, start=0.0, fade_ms=0)
 pygame.mixer.music.set_volume(data.volume)
 
