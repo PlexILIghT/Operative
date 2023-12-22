@@ -9,7 +9,7 @@ def render_hp(health):
 
 
 def render_ammo():
-    if selector.selectionFlag:
+    if data.selectionFlag:
         max_ammo = pistol.maxAmmo
         cur_ammo = pistol.maxAmmo - pistol.ammo
     else:

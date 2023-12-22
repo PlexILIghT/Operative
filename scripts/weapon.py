@@ -17,7 +17,6 @@ class Weapon:
         self.reloadSound = reloadSound
         self.reloadFlag = False
         self.shotFlag = False
-        self.meleeFlag = False
         self.ammo = 0
         self.animCount = 0
         self.animFrames = 0
@@ -25,12 +24,10 @@ class Weapon:
     def events(self):
         keys = pygame.key.get_pressed()
         mouseButton = pygame.mouse.get_pressed()
-        if keys[pygame.K_r] and not self.shotFlag and not self.meleeFlag and not data.swapFlag:
+        if keys[pygame.K_r] and not self.shotFlag and not data.swapFlag:
             self.reloadFlag = True
-        elif mouseButton[0] and not self.reloadFlag and not self.meleeFlag and not data.swapFlag:
+        elif mouseButton[0] and not self.reloadFlag and not data.swapFlag:
             self.shotFlag = True
-        elif keys[pygame.K_c] and not self.reloadFlag and not self.shotFlag and not data.swapFlag:
-            self.meleeFlag = True
 
     def static(self):
         screen.blit(self.spritesShot[0], (
@@ -56,7 +53,7 @@ class Weapon:
     def check_for_hit(self):
         ray_hit_info = raycast.raycast_all(0)
         if ray_hit_info[1] == "e":
-            data.enemies[tuple(ray_hit_info[2])].get_hit()
+            data.enemies[tuple(ray_hit_info[2])].get_hit(self.damage)
         elif ray_hit_info[1] == "c":
             data.map[ray_hit_info[2][1]][ray_hit_info[2][0]] = " "
             data.worldMap.pop((ray_hit_info[2][0] * data.blockSize, ray_hit_info[2][1] * data.blockSize))
@@ -82,29 +79,12 @@ class Weapon:
             self.static()
             self.shotFlag = False
 
-    def melee(self):
-        self.trueAnimSpeedForMelee = game_clock.get_fps() // data.animSpeedForMelee + 1
-        screen.blit(data.spritesMelee[self.animCount], (
-            data.screen_width / 2 - data.spritesMelee[self.animCount].get_width() / 2,
-            data.screen_height - data.spritesMelee[self.animCount].get_height()))
-        if self.animFrames == 1:
-            data.meleeSound.play()
-        if self.animCount == len(data.spritesMelee) - 1 and self.animFrames % self.trueAnimSpeedForMelee == 0:
-            self.meleeFlag = False
-            self.animCount = 0
-            self.animFrames = 0
-        elif self.animFrames % self.trueAnimSpeedForMelee == 0:
-            self.animCount += 1
-        self.animFrames += 1
-
     def draw_weapon(self):
         self.events()
         if self.reloadFlag:
             self.reload()
         elif self.shotFlag:
             self.shot()
-        elif self.meleeFlag:
-            self.melee()
         elif not self.shotFlag and not data.swapFlag:
             self.static()
 
@@ -118,7 +98,6 @@ class Selector:
     def __init__(self, first, second):
         self.first = first
         self.second = second
-        self.selectionFlag = False
         self.animCount = 0
         self.animFrames = 0
         self.swapToFirst = False
@@ -137,7 +116,7 @@ class Selector:
             self.animFrames = 0
             self.swapToFirst = False
             data.swapFlag = False
-            self.selectionFlag = False
+            data.selectionFlag = False
         elif self.animFrames % trueAnimSpeedForSwap == 0:
             self.animCount += 1
         self.animFrames += 1
@@ -155,17 +134,17 @@ class Selector:
             self.animFrames = 0
             self.swapToSecond = False
             data.swapFlag = False
-            self.selectionFlag = True
+            data.selectionFlag = True
         elif self.animFrames % trueAnimSpeedForSwap == 0:
             self.animCount += 1
         self.animFrames += 1
 
     def selection(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_1] and self.selectionFlag and not pistol.reloadFlag and not pistol.meleeFlag:
+        if keys[pygame.K_1] and data.selectionFlag and not pistol.reloadFlag:
             data.swapFlag = True
             self.swapToFirst = True
-        if keys[pygame.K_2] and not self.selectionFlag and not m4.reloadFlag and not pistol.meleeFlag:
+        if keys[pygame.K_2] and not data.selectionFlag and not m4.reloadFlag:
             data.swapFlag = True
             self.swapToSecond = True
 
@@ -175,7 +154,7 @@ class Selector:
             self.swap_to_first()
         elif self.swapToSecond:
             self.swap_to_second()
-        elif self.selectionFlag:
+        elif data.selectionFlag:
             pistol.draw_weapon()
         else:
             m4.draw_weapon()

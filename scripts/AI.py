@@ -1,8 +1,8 @@
-import pygame
 import player
 import data
 from random import randint, random
 import raycast
+
 
 
 class Enemy:
@@ -22,8 +22,8 @@ class Enemy:
     def player_visible(self):
         # print((self.start_pos[0] + 0.5) * data.blockSize, (self.start_pos[1] + 0.5) * data.blockSize,
         #       player.position[0], player.position[1])
-        return raycast.raycast_all_by_vector((self.start_pos[0] * data.blockSize - player.position[0],
-                                              self.start_pos[1] * data.blockSize - player.position[1]))[1] == "e"
+        return raycast.raycast_all_by_vector(((self.start_pos[0] + 0.5) * data.blockSize - player.position[0],
+                                              (self.start_pos[1] + 0.5) * data.blockSize - player.position[1]))[1] == "e"
 
     def shoot(self):
         if self.accuracy > random():
@@ -40,9 +40,9 @@ class Enemy:
         data.map[self.start_pos[1]][self.start_pos[0]] = " "
         data.cur_amount_of_enemies -= 1
 
-    def get_hit(self):
+    def get_hit(self, damage):
         self.frame = 0
-        self.health -= player.damage * randint(30, 70) // 50
+        self.health -= damage * randint(30, 70) // 50
         self.state = "hurt"
         if self.health <= 0:
             self.dead()
@@ -50,7 +50,6 @@ class Enemy:
 
     def get_frame(self):
         if self.state == "alive":
-
             if self.frame < 14:
                 self.frame += 1
                 if self.frame == 5 and self.player_visible():
