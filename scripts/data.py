@@ -9,6 +9,7 @@ volume = 0.5
 # menu data
 black = (0, 0, 0)
 white = (255, 255, 255)
+back_flag = False
 
 # general data
 fps = 300
@@ -118,7 +119,7 @@ map_level_1 = [
     "            bbbbbbbbbbb"]
 
 
-map_level22 = [
+map_level_2 = [
     "bbbrrrbbbrbbrrbbbrrbbbb",
     "r       w  e    we    r",
     "b    bw qb  bw   be   b",

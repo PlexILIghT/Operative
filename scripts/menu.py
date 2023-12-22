@@ -166,7 +166,11 @@ def main_menu():
             if event.type == pygame.USEREVENT and event.button == start_button:
                 fade()
                 player.clear_level()
-                game_run()
+                choosing_level_menu()
+                if data.back_flag:
+                    data.back_flag = False
+                else:
+                    game_run()
 
             if event.type == pygame.USEREVENT and event.button == settings_button:
                 fade()
@@ -190,6 +194,76 @@ def main_menu():
 
         pygame.display.flip()
 
+
+def choosing_level_menu():
+    mission_button_lvl_1 = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 - 2 * offset_between_buttons, button_width, button_height,
+                                        "LVL 1",
+                                        "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
+                                        "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    mission_button_lvl_2 = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 - offset_between_buttons, button_width,
+                                        button_height,
+                                        "LVL 2",
+                                        "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
+                                        "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    mission_button_lvl_3 = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width,
+                                        button_height,
+                                        "LVL 3",
+                                        "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
+                                        "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    back_button = CreateButton(WIDTH // 2 - button_width // 2,
+                               HEIGHT // 2 + 2 * offset_between_buttons, button_width,
+                               button_height, "Back to menu",
+                               "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
+                               "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    running = True
+    while running:
+
+        screen.fill("black")
+        screen.blit(background, (0, 0))
+
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 115)
+        text_surface = font.render("MISSIONS", True, "white")
+        text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 4.5))
+        screen.blit(text_surface, text_rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+            for btn in [back_button, mission_button_lvl_1, mission_button_lvl_2, mission_button_lvl_3]:
+                btn.handle_event(event)
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    fade()
+                    running = False
+
+            if event.type == pygame.USEREVENT and event.button == back_button:
+                running = False
+                data.back_flag = True
+                fade()
+
+            if event.type == pygame.USEREVENT and event.button == mission_button_lvl_1:
+                fade()
+                running = False
+
+            if event.type == pygame.USEREVENT and event.button == mission_button_lvl_2:
+                fade()
+                running = False
+
+            if event.type == pygame.USEREVENT and event.button == mission_button_lvl_3:
+                fade()
+                running = False
+
+        for btn in [mission_button_lvl_3, mission_button_lvl_2, mission_button_lvl_1, back_button]:
+            btn.check_hover(pygame.mouse.get_pos())
+            btn.draw(screen)
+
+        for btn in [back_button, mission_button_lvl_1, mission_button_lvl_2, mission_button_lvl_3]:
+            btn.check_hover(pygame.mouse.get_pos())
+            btn.draw(screen)
+        pygame.display.flip()
 
 def settings_menu():
     audio_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Audio", "fonts/Disket-Mono-Regular.ttf",
