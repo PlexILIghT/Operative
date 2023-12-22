@@ -10,27 +10,35 @@ from buttons import CreateButton
 pygame.init()
 
 sliding = False
-WIDTH, HEIGHT = 1280, 720
+WIDTH, HEIGHT = data.screen_width, data.screen_height
 MAX_FPS = 60
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.FULLSCREEN)
-black = (0, 0, 0)
-white = (255, 255, 255)
+button_width = WIDTH // 5
+button_height = HEIGHT // 10
+offset_between_buttons = button_height + button_height // 8
+bar_width = WIDTH // 4
+bar_height = HEIGHT // 30
+knob_width = bar_width // 25
+knob_height = round(bar_height * 1.5)
 pygame.display.set_caption("Menu")
 background = pygame.image.load("images/menu_sprites/back4.png")
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 pygame.mixer.music.load("images/menu_sprites/menu_theme.mp3")
 pygame.mixer.music.play(-1, start=0.0, fade_ms=0)
 pygame.mixer.music.set_volume(data.volume)
 
+pygame.display.set_caption("OPERATIVE")
+# gameIcon = pygame.image.load("images/icon.png")
+# pygame.display.set_icon(gameIcon)
 
 def overlay():
-    continue_button = CreateButton(WIDTH / 2 - (252*3), 450, 252, 74, "Continue",
-                                   "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    continue_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Continue",
+                                   "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    settings_button = CreateButton(WIDTH / 2 - (252 / 2), 550, 252, 74, "Settings",
-                                   "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    settings_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + offset_between_buttons, button_width, button_height, "Settings",
+                                   "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    exit_button = CreateButton(WIDTH / 2 - (252 / 2), 650, 252, 74, "Exit", "images/menu_sprites/DischargePro.ttf",
+    exit_button = CreateButton(WIDTH / 2 - button_width // 2, HEIGHT // 2 + 2 * offset_between_buttons, button_width, button_height, "Exit", "fonts/Disket-Mono-Regular.ttf",
                                "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
@@ -38,11 +46,11 @@ def overlay():
     pause = True
     while pause:
         pygame.mouse.set_visible(True)
-        screen.fill(black)
+        screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
-        text_surface = font.render("Pause", True, white)
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
+        text_surface = font.render("PAUSE", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
 
@@ -77,21 +85,21 @@ def overlay():
 
 
 def dead_menu():
-    try_again_button = CreateButton(WIDTH / 2 - (252 / 2), 350, 252, 74, "Try again",
-                                    "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    try_again_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Try again",
+                                    "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                     "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    back_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Back to menu",
-                               "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + offset_between_buttons, button_width, button_height, "Back to menu",
+                               "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
     fade()
     running = True
     while running:
         pygame.mouse.set_visible(True)
-        screen.fill(black)
+        screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
-        text_surface = font.render("You are dead", True, white)
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
+        text_surface = font.render("YOU ARE DEAD", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
 
@@ -126,27 +134,27 @@ def dead_menu():
 
 
 def main_menu():
-    start_button = CreateButton(WIDTH / 2 - (252 * 3)+(252 / 2), 350, 252, 74, "Start mission",
-                                "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    start_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Start mission",
+                                "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                 "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    settings_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Settings",
-                                   "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    settings_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + offset_between_buttons, button_width, button_height, "Settings",
+                                   "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    exit_button = CreateButton(WIDTH / 2 - (252 / 2), 650, 252, 74, "Exit", "images/menu_sprites/DischargePro.ttf",
-                               "images/menu_sprites/button3.png",
-                               "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    about_button = CreateButton(WIDTH / 2 - (252 / 2), 550, 252, 74, "About", "images/menu_sprites/DischargePro.ttf",
+    statistics_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + 2 * offset_between_buttons, button_width, button_height, "Statistics", "fonts/Disket-Mono-Regular.ttf",
                                 "images/menu_sprites/button3.png",
                                 "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    exit_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + 3 * offset_between_buttons, button_width, button_height, "Exit", "fonts/Disket-Mono-Regular.ttf",
+                               "images/menu_sprites/button3.png",
+                               "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
     running = True
     while running:
-        screen.fill(black)
+        screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
-        text_surface = font.render("Street of brocken lanterns", True, white)
-        text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 120)
+        text_surface = font.render("OPERATIVE", True, "white")
+        text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 3.5))
         screen.blit(text_surface, text_rect)
 
         for event in pygame.event.get():
@@ -164,7 +172,7 @@ def main_menu():
                 fade()
                 settings_menu()
 
-            if event.type == pygame.USEREVENT and event.button == about_button:
+            if event.type == pygame.USEREVENT and event.button == statistics_button:
                 fade()
                 about_menu()
 
@@ -173,10 +181,10 @@ def main_menu():
                 pygame.quit()
                 sys.exit()
 
-            for btn in [start_button, settings_button, exit_button, about_button]:
+            for btn in [start_button, settings_button, exit_button, statistics_button]:
                 btn.handle_event(event)
 
-        for btn in [start_button, settings_button, exit_button, about_button]:
+        for btn in [start_button, settings_button, exit_button, statistics_button]:
             btn.check_hover(pygame.mouse.get_pos())
             btn.draw(screen)
 
@@ -184,20 +192,20 @@ def main_menu():
 
 
 def settings_menu():
-    audio_button = CreateButton(WIDTH / 2 - (252 / 2), 350, 252, 74, "Audio", "images/menu_sprites/DischargePro.ttf",
+    audio_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Audio", "fonts/Disket-Mono-Regular.ttf",
                                 "images/menu_sprites/button3.png",
                                 "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    back_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Back to menu",
-                               "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + offset_between_buttons, button_width, button_height, "Back to menu",
+                               "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
     running = True
     while running:
-        screen.fill(black)
+        screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
-        text_surface = font.render("Settings", True, white)
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
+        text_surface = font.render("SETTINGS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
 
@@ -230,22 +238,20 @@ def settings_menu():
 
 
 def audio_settings(sliding):
-    back_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Back to menu",
-                               "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + 2 * offset_between_buttons, button_width, button_height, "Back to menu",
+                               "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
-    slider_bar_rect = pygame.Rect(100, 200, 400, 10)
-    slider_knob_rect = pygame.Rect(400*data.volume+100, 180, 20, 40)
-    # output = TextBox(screen, WIDTH / 2 - (252 / 2) + 280, 150 + 50, 50, 50, fontSize=30)
-    # output.disable()
+    slider_bar_rect = pygame.Rect(WIDTH // 2 - bar_width // 2, HEIGHT // 2 - bar_height // 2, bar_width, bar_height)
+    slider_knob_rect = pygame.Rect(WIDTH // 2 + data.volume * bar_width - bar_width // 2, HEIGHT // 2 - knob_height // 2, knob_width, knob_height)
 
     running = True
     while running:
-        screen.fill(black)
+        screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
-        text_surface = font.render("Audio settings", True, white)
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
+        text_surface = font.render("AUDIO SETTINGS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
 
@@ -257,13 +263,12 @@ def audio_settings(sliding):
             if event.type == pygame.MOUSEMOTION and sliding:
                 mouse_pos_x = pygame.mouse.get_pos()[0]
                 slider_knob_rect.x = mouse_pos_x - 10
-                if slider_knob_rect.x > 500:
-                    slider_knob_rect.x = 500
-                if slider_knob_rect.x < 100:
-                    slider_knob_rect.x = 100
-                data.volume = (slider_knob_rect.x - 100) / 400
+                if slider_knob_rect.x > WIDTH // 2 + bar_width // 2:
+                    slider_knob_rect.x = WIDTH // 2 + bar_width // 2
+                if slider_knob_rect.x < WIDTH // 2 - bar_width // 2:
+                    slider_knob_rect.x = WIDTH // 2 - bar_width // 2
+                data.volume = (slider_knob_rect.x - WIDTH / 2 + bar_width / 2) / bar_width
             pygame.mixer.music.set_volume(data.volume)
-
 
             if event.type == pygame.QUIT:
                 running = False
@@ -285,32 +290,32 @@ def audio_settings(sliding):
             btn.check_hover(pygame.mouse.get_pos())
             btn.draw(screen)
 
-        pygame.draw.rect(screen, (255, 255, 255), slider_bar_rect)
-        pygame.draw.rect(screen, (0, 0, 255), slider_knob_rect)
-        sound_font = pygame.font.SysFont(None, 24)
+        pygame.draw.rect(screen, "white", slider_bar_rect)
+        pygame.draw.rect(screen, "gray", slider_knob_rect)
+        sound_font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 24)
         sound_text = sound_font.render("Volume: " + str(int(data.volume * 100)) + "%", True, (255, 255, 255))
-        screen.blit(sound_text, (280, 130))
+        screen.blit(sound_text, (WIDTH // 2 - bar_width // 2, HEIGHT // 2 - bar_height * 2))
 
         pygame.display.flip()
 
 
 def about_menu():
-    back_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Back to menu",
-                               "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+    back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Back to menu",
+                               "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
     running = True
     while running:
-        screen.fill(black)
+        screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
-        text_surface = font.render("About", True, white)
+        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
+        text_surface = font.render("STATISTICS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
 
-        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 42)
-        text_surface = font.render("a game made using the pygame library", True, white)
+        font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 42)
+        text_surface = font.render("*statistics*", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 350))
         screen.blit(text_surface, text_rect)
 
@@ -386,7 +391,7 @@ def fade():
                 running = False
 
         fade_surface = pygame.Surface((WIDTH, HEIGHT))
-        fade_surface.fill(black)
+        fade_surface.fill("black")
         fade_surface.set_alpha(fade_alpha)
         screen.blit(fade_surface, (0, 0))
 
