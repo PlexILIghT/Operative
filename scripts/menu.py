@@ -6,15 +6,14 @@ from UI import render_all_UI
 from data import screen
 import sys
 from buttons import CreateButton
-from player import health
 
 pygame.init()
 
 sliding = False
-WIDTH, HEIGHT = 1920, 1080
+WIDTH, HEIGHT = 1280, 720
 MAX_FPS = 60
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.FULLSCREEN)
 black = (0, 0, 0)
 white = (255, 255, 255)
 pygame.display.set_caption("Menu")
@@ -35,6 +34,7 @@ def overlay():
                                "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
+    player.paused_time = pygame.time.get_ticks()
     pause = True
     while pause:
         pygame.mouse.set_visible(True)
@@ -53,9 +53,10 @@ def overlay():
                 sys.exit()
 
             if event.type == pygame.USEREVENT and event.button == continue_button:
-                fade()
+                pygame.mouse.set_visible(False)
                 pause = False
-
+                player.start_time += pygame.time.get_ticks() - player.paused_time
+                fade()
             if event.type == pygame.USEREVENT and event.button == settings_button:
                 fade()
                 settings_menu()
@@ -341,11 +342,18 @@ def about_menu():
 def game_run():
     game_running = True
     pygame.mouse.set_visible(False)
-
+    player.flag_time = True
+    player.start_time = pygame.time.get_ticks()
     while game_running:
+        if player.flag_time:
+            player.start_time = pygame.time.get_ticks()
+            player.flag_time = False
         player.movement()
+
+        print(player.start_time, player.paused_time)
         renderer.draw_scene(screen)
-        render_all_UI(player.health)
+        player.blood_animation()
+        render_all_UI(player.health, player.start_time)
 
         pygame.display.update()
         screen.fill("black")
@@ -354,6 +362,7 @@ def game_run():
 
         for event in pygame.event.get():
             if player.health < 0:
+                game_running = False
                 dead_menu()
 
             if event.type == pygame.QUIT:

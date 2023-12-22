@@ -36,9 +36,10 @@ textures = {
     "c": pygame.image.load("images/textures/breakable_brick_wall.jpg").convert(),
     "r": pygame.image.load("images/textures/brick_wall_rusty.jpg").convert(),
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
+    "f": pygame.image.load("images/textures/door.png").convert(),
     "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
     "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
-    "m": pygame.image.load("images/textures/metal_wall.jpg").convert_alpha(),
+    "m": pygame.image.load("images/textures/metal_wall1.jpg").convert_alpha(),
     "background": pygame.image.load("images/background.png").convert(),
     "blood": pygame.image.load("images/blood.png").convert_alpha(),
     "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
@@ -74,7 +75,7 @@ anim_speed_for_swap = 18
 # first weapon settings
 damage_for_m4 = 30
 max_ammo_m4 = 30
-anim_speed_for_shot_m4 = 10
+anim_speed_for_shot_m4 = 140
 anim_speed_for_reload_m4 = 20
 
 selection_flag = False
@@ -84,7 +85,8 @@ swap_flag = False
 # b - Brick wall
 # r - rusty brick wall
 # d - wall with board
-# c - breakable wall
+# c - brick wall with boards (breakable)
+# f - door (breakable)
 # w - weapons cases 1 (flat)
 # q - weapons cases 2 (flat)
 
@@ -115,7 +117,8 @@ map_level_1 = [
     "            b   e     b",
     "            bbbbbbbbbbb"]
 
-map_level_2 = [
+
+map_level22 = [
     "bbbrrrbbbrbbrrbbbrrbbbb",
     "r       w  e    we    r",
     "b    bw qb  bw   be   b",
@@ -143,6 +146,30 @@ map_level_2 = [
     "bbbrbbrbrbrbbrbrbbrbrbb"]
 
 
+map_level_1 = [
+    "bmmmmmrrrbbb           ",
+    "b        w b           ",
+    "b         qd           ",
+    "bbbfbbb bbbbbccbb      ",
+    "r               b      ",
+    "r e q   e  b    c      ",
+    "b     e    d   eb      ",
+    "bbbcbbrrrrbbb bbbbbbbbb",
+    "       b           e  b",
+    "       b e            b",
+    "       bbbbbbbbbbbb bbb",
+    "                b     b",
+    "                b     b",
+    "                b     b",
+    "                bb    b",
+    "                be   bb",
+    "                b    eb",
+    "            bbbbbb bbbb",
+    "            b  e      b",
+    "            b       e b",
+    "            b e       b",
+    "            b   e     b",
+    "            bbbbbbbbbbb"]
 
 map_level_3 = [
     "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
@@ -199,7 +226,7 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map_level_2)
+map = convert_map_to_list(map_level_1)
 
 
 enemies = dict()
@@ -218,7 +245,9 @@ def generate_enemies_and_environment(map):
             elif map[y][x] in flat_objects_prefabs:
                 environment.append((x, y))
 
+
 generate_enemies_and_environment(map)
+
 cur_amount_of_enemies = len(enemies)
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200

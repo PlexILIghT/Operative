@@ -19,10 +19,10 @@ while game_running:
         flag_time = False
     player.movement()
 
+
     renderer.draw_scene(data.screen)
     render_all_UI(player.health, start_time)
     player.blood_animation()
-
     pygame.display.update()
     data.screen.fill("black")
 

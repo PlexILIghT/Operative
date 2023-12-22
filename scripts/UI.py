@@ -3,7 +3,7 @@ from datetime import time, timedelta
 import data
 from player import health
 from weapon import selector, m4, pistol
-#from game import start_time
+# from game import start_time
 
 
 def render_hp(health):
@@ -29,7 +29,7 @@ def render_ammo():
 
 def display_time(start_time):
     time_since_enter = pygame.time.get_ticks() - start_time
-    text = data.font.render(f"TIME   {timedelta(milliseconds=pygame.time.get_ticks())}", True, "white")
+    text = data.font.render(f"TIME:   {timedelta(milliseconds=time_since_enter)}"[:-7], True, "white")
     data.screen.blit(text, (data.screen_width // 8, data.screen_height // 14))
 
 def render_enemy_amount():

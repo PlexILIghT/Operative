@@ -58,7 +58,7 @@ class Weapon:
         ray_hit_info = raycast.raycast_all(0)
         if ray_hit_info[1] == "e":
             data.enemies[tuple(ray_hit_info[2])].get_hit(self.damage)
-        elif ray_hit_info[1] == "c":
+        elif ray_hit_info[1] == "c" or ray_hit_info[1] == "f":
             data.map[ray_hit_info[2][1]][ray_hit_info[2][0]] = " "
             data.worldMap.pop((ray_hit_info[2][0] * data.blockSize, ray_hit_info[2][1] * data.blockSize))
 

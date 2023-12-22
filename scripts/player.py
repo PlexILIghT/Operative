@@ -1,6 +1,8 @@
 import data
 from math import *
 import pygame
+import weapon
+
 
 x = (2 + 0.5) * data.blockSize
 y = (2 + 0.5) * data.blockSize
@@ -12,20 +14,30 @@ rotation_speed = 5 * 10 ** 2
 damage = 35
 health = 100
 
+flag_time = False
+start_time = 0
+paused_time = 0
 self_distance = data.blockSize // 5
 blood_animation_frame = 0
 bleed = 0
 
-def clear_level():
-    global health, position, rotation
-    health = 100
-    data.map = data.convert_map_to_list(data.map_level_2)
-    data.generate_enemies_and_environment(data.map)
 
+def clear_level():
+    global health, position, rotation, flag_time, start_time
+    health = 100
+    data.map = data.convert_map_to_list(data.map_level_1)
+    data.generate_enemies_and_environment(data.map)
+    weapon.pistol.ammo = 0
+    weapon.m4.ammo = 0
     x = (2 + 0.5) * data.blockSize
     y = (2 + 0.5) * data.blockSize
     position = [x, y]
     rotation = -pi * 3 / 2
+    flag_time = True
+    start_time = 0
+    data.cur_amount_of_enemies = len(data.enemies)
+
+
 
 
 def movement():
@@ -81,6 +93,7 @@ def blood_animation():
             bleed = 2
     if bleed == 2:
         blood_texture = data.textures["blood"].convert_alpha()
+        pygame.transform.scale(blood_texture, (data.screen_width, data.screen_height))
         surface = pygame.Surface((data.screen_width, data.screen_height), flags=pygame.SRCALPHA)
         if blood_animation_frame > 0:
             surface.blit(blood_texture, (0, 0, data.screen_width, data.screen_height))
