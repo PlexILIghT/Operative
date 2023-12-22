@@ -5,50 +5,54 @@ from data import screen, game_clock
 
 pygame.init()
 
+
 class Weapon:
-    def __init__(self, damage, spritesShot, spritesReload, maxAmmo, animSpeedForShot, animSpeedForReload, shotSound, reloadSound):
+    def __init__(self, damage, sprites_shot, sprites_reload, max_ammo, anim_speed_for_shot, anim_speed_for_reload,
+                 shot_sound, reload_sound):
         self.damage = damage
-        self.spritesShot = list(spritesShot)
-        self.spritesReload = list(spritesReload)
-        self.maxAmmo = maxAmmo
-        self.animSpeedForShot = animSpeedForShot
-        self.animSpeedForReload = animSpeedForReload
-        self.shotSound = shotSound
-        self.reloadSound = reloadSound
-        self.reloadFlag = False
-        self.shotFlag = False
+        self.sprites_shot = list(sprites_shot)
+        self.sprites_reload = list(sprites_reload)
+        self.max_ammo = max_ammo
+        self.anim_speed_for_shot = anim_speed_for_shot
+        self.anim_speed_for_reload = anim_speed_for_reload
+        self.true_anim_speed_for_shot = game_clock.get_fps() // self.anim_speed_for_shot + 1
+        self.true_anim_speed_for_reload = game_clock.get_fps() // self.anim_speed_for_reload + 1
+        self.shot_sound = shot_sound
+        self.reload_sound = reload_sound
+        self.reload_flag = False
+        self.shot_flag = False
         self.ammo = 0
-        self.animCount = 0
-        self.animFrames = 0
+        self.anim_count = 0
+        self.anim_frames = 0
 
     def events(self):
         keys = pygame.key.get_pressed()
-        mouseButton = pygame.mouse.get_pressed()
-        if keys[pygame.K_r] and not self.shotFlag and not data.swapFlag:
-            self.reloadFlag = True
-        elif mouseButton[0] and not self.reloadFlag and not data.swapFlag:
-            self.shotFlag = True
+        mouse_button = pygame.mouse.get_pressed()
+        if keys[pygame.K_r] and not self.shot_flag and not data.swap_flag:
+            self.reload_flag = True
+        elif mouse_button[0] and not self.reload_flag and not data.swap_flag:
+            self.shot_flag = True
 
     def static(self):
-        screen.blit(self.spritesShot[0], (
-            data.screen_width / 2 - self.spritesShot[0].get_width()/2,
-            data.screen_height - self.spritesShot[0].get_height()))
+        screen.blit(self.sprites_shot[0], (
+            data.screen_width / 2 - self.sprites_shot[0].get_width()/2,
+            data.screen_height - self.sprites_shot[0].get_height()))
 
     def reload(self):
-        self.trueAnimSpeedForReload = game_clock.get_fps() // self.animSpeedForReload + 1
-        screen.blit(self.spritesReload[self.animCount], (
-            data.screen_width / 2 - self.spritesReload[self.animCount].get_width()/2,
-            data.screen_height - self.spritesReload[self.animCount].get_height()))
-        if self.animFrames == 1:
-            self.reloadSound.play()
-        if self.animCount == len(self.spritesReload) - 1 and self.animFrames % self.trueAnimSpeedForReload == 0:
-            self.animCount = 0
-            self.animFrames = 0
+        self.true_anim_speed_for_reload = game_clock.get_fps() // self.anim_speed_for_reload + 1
+        screen.blit(self.sprites_reload[self.anim_count], (
+            data.screen_width / 2 - self.sprites_reload[self.anim_count].get_width()/2,
+            data.screen_height - self.sprites_reload[self.anim_count].get_height()))
+        if self.anim_frames == 1:
+            self.reload_sound.play()
+        if self.anim_count == len(self.sprites_reload) - 1 and self.anim_frames % self.true_anim_speed_for_reload == 0:
+            self.anim_count = 0
+            self.anim_frames = 0
             self.ammo = 0
-            self.reloadFlag = False
-        elif self.animFrames % self.trueAnimSpeedForReload == 0:
-            self.animCount += 1
-        self.animFrames += 1
+            self.reload_flag = False
+        elif self.anim_frames % self.true_anim_speed_for_reload == 0:
+            self.anim_count += 1
+        self.anim_frames += 1
 
     def check_for_hit(self):
         ray_hit_info = raycast.raycast_all(0)
@@ -59,104 +63,108 @@ class Weapon:
             data.worldMap.pop((ray_hit_info[2][0] * data.blockSize, ray_hit_info[2][1] * data.blockSize))
 
     def shot(self):
-        if self.ammo != self.maxAmmo:
-            self.trueAnimSpeedForShot = game_clock.get_fps() // self.animSpeedForShot + 1
-            screen.blit(self.spritesShot[self.animCount], (
-                data.screen_width / 2 - self.spritesShot[0].get_width()/2,
-                data.screen_height - self.spritesShot[self.animCount].get_height()))
-            if self.animFrames == 1:
-                self.shotSound.play()
+        if self.ammo != self.max_ammo:
+            self.true_anim_speed_for_shot = game_clock.get_fps() // self.anim_speed_for_shot + 1
+            screen.blit(self.sprites_shot[self.anim_count], (
+                data.screen_width / 2 - self.sprites_shot[0].get_width()/2,
+                data.screen_height - self.sprites_shot[self.anim_count].get_height()))
+            if self.anim_frames == 1:
+                self.shot_sound.play()
                 self.check_for_hit()
-            if self.animCount == len(self.spritesShot) - 1 and self.animFrames % self.trueAnimSpeedForShot == 0:
-                self.animCount = 0
-                self.animFrames = 0
+            if self.anim_count == len(self.sprites_shot) - 1 and self.anim_frames % self.true_anim_speed_for_shot == 0:
+                self.anim_count = 0
+                self.anim_frames = 0
                 self.ammo += 1
-                self.shotFlag = False
-            elif self.animFrames % self.trueAnimSpeedForShot == 0:
-                self.animCount += 1
-            self.animFrames += 1
+                self.shot_flag = False
+            elif self.anim_frames % self.true_anim_speed_for_shot == 0:
+                self.anim_count += 1
+            self.anim_frames += 1
         else:
             self.static()
-            self.shotFlag = False
+            self.shot_flag = False
 
     def draw_weapon(self):
         self.events()
-        if self.reloadFlag:
+        if self.reload_flag:
             self.reload()
-        elif self.shotFlag:
+        elif self.shot_flag:
             self.shot()
-        elif not self.shotFlag and not data.swapFlag:
+        elif not self.shot_flag and not data.swap_flag:
             self.static()
 
 
-pistol = Weapon(data.damageForPistol, data.spritesPistolShot, data.spritesPistolReload, data.maxAmmoPistol, data.animSpeedForShotPistol, data.animSpeedForReloadPistol, data.pistolShotSound, data.pistolReloadSound)
-m4 = Weapon(data.damageForM4, data.m4Shot, data.m4reload, data.maxAmmoM4, data.animSpeedForShotM4, data.animSpeedForReloadM4, data.m4shotSound, data.m4reloadSound)
+pistol = Weapon(data.damage_for_pistol, data.sprites_pistol_shot, data.sprites_pistol_reload, data.max_ammo_pistol,
+                data.anim_speed_for_shot_pistol, data.anim_speed_for_reload_pistol, data.pistol_shot_sound,
+                data.pistol_reload_sound)
+m4 = Weapon(data.damage_for_m4, data.m4_shot, data.m4_reload, data.max_ammo_m4, data.anim_speed_for_shot_m4,
+            data.anim_speed_for_reload_m4, data.m4_shot_sound, data.m4_reload_sound)
 
 
 class Selector:
-
     def __init__(self, first, second):
         self.first = first
         self.second = second
-        self.animCount = 0
-        self.animFrames = 0
-        self.swapToFirst = False
-        self.swapToSecond = False
+        self.anim_count = 0
+        self.anim_frames = 0
+        self.swap_to_first = False
+        self.swap_to_second = False
+        self.true_anim_speed_for_swap = game_clock.get_fps() // data.anim_speed_for_swap + 1
 
-    def swap_to_first(self):
-        trueAnimSpeedForSwap = game_clock.get_fps() // data.animSpeedForSwap + 1
-        screen.blit(data.swapToFirst[self.animCount], (
-            data.screen_width / 2 - data.swapToFirst[0].get_width() / 2,
-            data.screen_height - data.swapToFirst[0].get_height()))
-        if self.animCount == 1:
-            data.swapSound.play()
-            self.animCount += 1
-        elif self.animCount == len(data.swapToFirst) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
-            self.animCount = 0
-            self.animFrames = 0
-            self.swapToFirst = False
-            data.swapFlag = False
-            data.selectionFlag = False
-        elif self.animFrames % trueAnimSpeedForSwap == 0:
-            self.animCount += 1
-        self.animFrames += 1
+    def swap_to_first_weapon(self):
+        self.true_anim_speed_for_swap = game_clock.get_fps() // data.anim_speed_for_swap + 1
+        screen.blit(data.swap_to_first[self.anim_count], (
+            data.screen_width / 2 - data.swap_to_first[0].get_width() / 2,
+            data.screen_height - data.swap_to_first[0].get_height()))
+        if self.anim_count == 1:
+            data.swap_sound.play()
+            self.anim_count += 1
+        elif self.anim_count == len(data.swap_to_first) - 1 and self.anim_frames % self.true_anim_speed_for_swap == 0:
+            self.anim_count = 0
+            self.anim_frames = 0
+            self.swap_to_first = False
+            data.swap_flag = False
+            data.selection_flag = False
+        elif self.anim_frames % self.true_anim_speed_for_swap == 0:
+            self.anim_count += 1
+        self.anim_frames += 1
 
-    def swap_to_second(self):
-        trueAnimSpeedForSwap = game_clock.get_fps() // data.animSpeedForSwap + 1
-        screen.blit(data.swapToSecond[self.animCount], (
-            data.screen_width / 2 - data.swapToSecond[0].get_width() / 2,
-            data.screen_height - data.swapToSecond[0].get_height()))
-        if self.animCount == 1:
-            data.swapSound.play()
-            self.animCount += 1
-        elif self.animCount == len(data.swapToSecond) - 1 and self.animFrames % trueAnimSpeedForSwap == 0:
-            self.animCount = 0
-            self.animFrames = 0
-            self.swapToSecond = False
-            data.swapFlag = False
-            data.selectionFlag = True
-        elif self.animFrames % trueAnimSpeedForSwap == 0:
-            self.animCount += 1
-        self.animFrames += 1
+    def swap_to_second_weapon(self):
+        true_anim_speed_for_swap = game_clock.get_fps() // data.anim_speed_for_swap + 1
+        screen.blit(data.swap_to_second[self.anim_count], (
+            data.screen_width / 2 - data.swap_to_second[0].get_width() / 2,
+            data.screen_height - data.swap_to_second[0].get_height()))
+        if self.anim_count == 1:
+            data.swap_sound.play()
+            self.anim_count += 1
+        elif self.anim_count == len(data.swap_to_second) - 1 and self.anim_frames % true_anim_speed_for_swap == 0:
+            self.anim_count = 0
+            self.anim_frames = 0
+            self.swap_to_second = False
+            data.swap_flag = False
+            data.selection_flag = True
+        elif self.anim_frames % true_anim_speed_for_swap == 0:
+            self.anim_count += 1
+        self.anim_frames += 1
 
     def selection(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_1] and data.selectionFlag and not pistol.reloadFlag:
-            data.swapFlag = True
-            self.swapToFirst = True
-        if keys[pygame.K_2] and not data.selectionFlag and not m4.reloadFlag:
-            data.swapFlag = True
-            self.swapToSecond = True
+        if keys[pygame.K_1] and data.selection_flag and not pistol.reload_flag:
+            data.swap_flag = True
+            self.swap_to_first = True
+        if keys[pygame.K_2] and not data.selection_flag and not m4.reload_flag:
+            data.swap_flag = True
+            self.swap_to_second = True
 
     def draw_selected_weapon(self):
         self.selection()
-        if self.swapToFirst:
-            self.swap_to_first()
-        elif self.swapToSecond:
-            self.swap_to_second()
-        elif data.selectionFlag:
+        if self.swap_to_first:
+            self.swap_to_first_weapon()
+        elif self.swap_to_second:
+            self.swap_to_second_weapon()
+        elif data.selection_flag:
             pistol.draw_weapon()
         else:
             m4.draw_weapon()
+
 
 selector = Selector(m4, pistol)

@@ -12,12 +12,12 @@ def render_hp(health):
 
 
 def render_ammo():
-    if data.selectionFlag:
-        max_ammo = pistol.maxAmmo
-        cur_ammo = pistol.maxAmmo - pistol.ammo
+    if data.selection_flag:
+        max_ammo = pistol.max_ammo
+        cur_ammo = pistol.max_ammo - pistol.ammo
     else:
-        max_ammo = m4.maxAmmo
-        cur_ammo = m4.maxAmmo - m4.ammo
+        max_ammo = m4.max_ammo
+        cur_ammo = m4.max_ammo - m4.ammo
 
     text = data.font.render(f"MAG   {cur_ammo} / {max_ammo}", True, "white")
     data.screen.blit(text, (data.screen_width * 0.8, data.screen_height * 0.8))
