@@ -92,54 +92,32 @@ swapFlag = False
 
 flat_objects_prefabs = ["w", "q"]
 
+map_level_1 = [
+    "bbbbbbrrrbbb           ",
+    "b        w b           ",
+    "b         qd           ",
+    "bbbbbbb bbbbbccbb      ",
+    "r               b      ",
+    "r e q   e  b    c      ",
+    "b     e    d   eb      ",
+    "bbbcbbrrrrbbb bbbbbbbbb",
+    "       b           e  b",
+    "       b e            b",
+    "       bbbbbbbbbbbb bbb",
+    "                b     b",
+    "                b     b",
+    "                b     b",
+    "                bb    b",
+    "                be   bb",
+    "                b    eb",
+    "            bbbbbb bbbb",
+    "            b  e      b",
+    "            b       e b",
+    "            b e       b",
+    "            b   e     b",
+    "            bbbbbbbbbbb"]
+
 map_level_2 = [
-    "bmmmmmmbbbbbbrbbbbbbrrbbbbbb",
-    "b         b        r e    wb",
-    "b      w           b      eb",
-    "bbrb  rbbrb        r       b",
-    "b                  r    e  r",
-    "b                    rbrbbbb",
-    "b                         qb",
-    "r                          b",
-    "b                          r",
-    "r                          b",
-    "rw                  r erbb r",
-    "rrbbbrbbr           b   e wb",
-    "b                   b     wb",
-    "bbb  e r                  qb",
-    "deb    b            b rbbr b",
-    "b                      e   r",
-    "b                          b",
-    "bbbrbbrb            ww     b",
-    "r                 q  e     r",
-    "b      e                   b",
-    "bbbbbrbbrbbrr  bbrrbbbbrbrbb",
-    "b                          b",
-    "r                e         b",
-    "b     brbrbbrrccdbbbrbbrbr r",
-    "rbbbrbbw   e  b  ew  q e b b",
-    "b b           b          b b",
-    "b b       we  r      e     b",
-    "bbb      bbrbbbb  bbbrbbbrbr",
-    "b                          r",
-    "r             b            b",
-    "br rbbrbbbrbbrbbbbbbbbbrbrer",
-    "bb b  e      b  r rw b     b",
-    "bb r         b  r rw b     b",
-    "             b       b   e b",
-    "b  wbb bbrrbbb  r    b     b",
-    "r        e      b          r",
-    "bbbrrbrbbrbbrb bbbrbrrbbbrbr",
-    "r w  errwbqreb r bqbwbqrebwb",
-    "b    ebbeb r b beb b r b beb",
-    "b    w              e      b",
-    "r  rbbbbrbrbbbrbbbbbbrbbbbbb",
-    "b        eb                 ",
-    "rbrbbrbrbbb                 "
-]
-
-
-map_level22 = [
     "bbbrrrbbbrbbrrbbbrrbbbb",
     "r       w  e    we    r",
     "b    bw qb  bw   be   b",
@@ -167,30 +145,6 @@ map_level22 = [
     "bbbrbbrbrbrbbrbrbbrbrbb"]
 
 
-map_level_1 = [
-    "bbbbbbrrrbbb           ",
-    "b        w b           ",
-    "b         qd           ",
-    "bbbbbbb bbbbbccbb      ",
-    "r               b      ",
-    "r e q   e  b    c      ",
-    "b     e    d   eb      ",
-    "bbbcbbrrrrbbb bbbbbbbbb",
-    "       b           e  b",
-    "       b e            b",
-    "       bbbbbbbbbbbb bbb",
-    "                b     b",
-    "                b     b",
-    "                b     b",
-    "                bb    b",
-    "                be   bb",
-    "                b    eb",
-    "            bbbbbb bbbb",
-    "            b  e      b",
-    "            b       e b",
-    "            b e       b",
-    "            b   e     b",
-    "            bbbbbbbbbbb"]
 
 map_level_3 = [
     "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
@@ -247,7 +201,7 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map_level22)
+map = convert_map_to_list(map_level_2)
 
 
 enemies = dict()

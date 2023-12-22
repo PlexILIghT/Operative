@@ -19,8 +19,8 @@ while game_running:
         flag_time = False
     player.movement()
 
-    render_all_UI(player.health, start_time)
     renderer.draw_scene(data.screen)
+    render_all_UI(player.health, start_time)
     player.blood_animation()
 
     pygame.display.update()
