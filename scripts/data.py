@@ -4,6 +4,8 @@ import AI
 
 pygame.init()
 
+volume = 0.5
+
 # menu data
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -179,15 +181,20 @@ map = convert_map_to_list(map_level2)
 enemies = dict()
 environment = []
 worldMap = dict()
-for y in range(len(map)):
-    for x in range(len(map[0])):
-        if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
-            worldMap[(x * blockSize, y * blockSize)] = map[y][x]
-        elif map[y][x] == "e":
-            enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
-        elif map[y][x] in flat_objects_prefabs:
-            environment.append((x, y))
 
+
+def generate_enemies_and_environment(map):
+    global enemies, environment, worldMap
+    for y in range(len(map)):
+        for x in range(len(map[0])):
+            if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
+                worldMap[(x * blockSize, y * blockSize)] = map[y][x]
+            elif map[y][x] == "e":
+                enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
+            elif map[y][x] in flat_objects_prefabs:
+                environment.append((x, y))
+
+generate_enemies_and_environment(map)
 cur_amount_of_enemies = len(enemies)
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200
@@ -196,3 +203,4 @@ ray_thickness = screen_width / accuracy_of_draw
 textureWidth = 800
 textureHeight = 800
 textureScale = textureWidth / blockSize
+

@@ -15,6 +15,18 @@ health = 100
 self_distance = data.blockSize // 5
 
 
+def clear_level():
+    global health, position, rotation
+    health = 100
+    data.map = data.convert_map_to_list(data.map_level2)
+    data.generate_enemies_and_environment(data.map)
+
+    x = (2 + 0.5) * data.blockSize
+    y = (2 + 0.5) * data.blockSize
+    position = [x, y]
+    rotation = -pi * 3 / 2
+
+
 def movement():
     global rotation
     key_pressed = pygame.key.get_pressed()
