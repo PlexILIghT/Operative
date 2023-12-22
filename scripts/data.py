@@ -4,6 +4,8 @@ import AI
 
 pygame.init()
 
+volume = 0.5
+
 # menu data
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -35,6 +37,7 @@ textures = {
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
     "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
     "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
+    "m": pygame.image.load("images/textures/metal_wall.jpg").convert_alpha(),
     "background": pygame.image.load("images/background.png").convert(),
     "blood": pygame.image.load("images/blood.png").convert_alpha(),
     "alive_enemy": [pygame.image.load("images/alive_enemy/" + str(x) + ".png").convert_alpha() for x in range(1, 16)],
@@ -50,13 +53,10 @@ weaponMeleeScaleHeight = screen_height/(screen_height * 0.5)
 
 m4Shot = [pygame.transform.smoothscale(pygame.image.load(f"images/m4_shot/{i}.png"), (pygame.image.load(f"images/m4_shot/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/m4_shot/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 4, 1)]
 m4reload = [pygame.transform.smoothscale(pygame.image.load(f"images/m4_reload/{i}.png"), (pygame.image.load(f"images/m4_reload/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/m4_reload/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 53, 1)]
-
 spritesPistolShot = [pygame.transform.smoothscale(pygame.image.load(f"images/pistol_sprites/{i}.png"), (pygame.image.load(f"images/pistol_sprites/{i}.png").get_width() * weaponScaleWidth, pygame.image.load(f"images/pistol_sprites/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 11, 1)]
 spritesPistolReload = [pygame.transform.smoothscale(pygame.image.load(f"images/reload/{i}.png"), (pygame.image.load(f"images/reload/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/reload/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 47, 1)]
-spritesMelee = [pygame.transform.smoothscale(pygame.image.load(f"images/melee_sprites/{i}.png"), (pygame.image.load(f"images/melee_sprites/{i}.png").get_width() * weaponMeleeScaleWidth, pygame.image.load(f"images/melee_sprites/{i}.png").get_height() * weaponMeleeScaleHeight)) for i in range(1, 7, 1)]
 swapToFirst = [pygame.transform.smoothscale(pygame.image.load(f"images/swap_to_first/{i}.png"), (pygame.image.load(f"images/swap_to_first/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/swap_to_first/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 15, 1)]
 swapToSecond = [pygame.transform.smoothscale(pygame.image.load(f"images/swap_to_second/{i}.png"), (pygame.image.load(f"images/swap_to_second/{i}.png").get_width() * weaponScaleWidth,pygame.image.load(f"images/swap_to_second/{i}.png").get_height() * weaponScaleHeight)) for i in range(1, 15, 1)]
-meleeSound = pygame.mixer.Sound("sounds/MeleeSound.mp3")
 pistolShotSound, pistolReloadSound = pygame.mixer.Sound("sounds/shot_pistol.mp3"), pygame.mixer.Sound("sounds/pistol_reload.mp3")
 m4shotSound = pygame.mixer.Sound("sounds/m4shot.mp3")
 m4reloadSound = pygame.mixer.Sound("sounds/m4reload.mp3")
@@ -79,6 +79,7 @@ animSpeedForReloadM4 = 20
 #melee weapon settings
 animSpeedForMelee = 4
 
+selectionFlag = False
 swapFlag = False
 
 # map data
@@ -91,8 +92,8 @@ swapFlag = False
 
 flat_objects_prefabs = ["w", "q"]
 
-map_level2 = [
-    "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
+map_level_2 = [
+    "bmmmmmmbbbbbbrbbbbbbrrbbbbbb",
     "b         b        r e    wb",
     "b      w           b      eb",
     "bbrb  rbbrb        r       b",
@@ -117,7 +118,7 @@ map_level2 = [
     "r                e         b",
     "b     brbrbbrrccdbbbrbbrbr r",
     "rbbbrbbw   e  b  ew  q e b b",
-    "b b           b          b b"
+    "b b           b          b b",
     "b b       we  r      e     b",
     "bbb      bbrbbbb  bbbrbbbrbr",
     "b                          r",
@@ -125,7 +126,7 @@ map_level2 = [
     "br rbbrbbbrbbrbbbbbbbbbrbrer",
     "bb b  e      b  r rw b     b",
     "bb r         b  r rw b     b",
-    "             b       b   e b"
+    "             b       b   e b",
     "b  wbb bbrrbbb  r    b     b",
     "r        e      b          r",
     "bbbrrbrbbrbbrb bbbrbrrbbbrbr",
@@ -166,14 +167,14 @@ map_level22 = [
     "bbbrbbrbrbrbbrbrbbrbrbb"]
 
 
-map_level1 = [
+map_level_1 = [
     "bbbbbbrrrbbb           ",
     "b        w b           ",
     "b         qd           ",
     "bbbbbbb bbbbbccbb      ",
     "r               b      ",
-    "r e     e  b    c      ",
-    "b  q  e    d   eb      ",
+    "r e q   e  b    c      ",
+    "b     e    d   eb      ",
     "bbbcbbrrrrbbb bbbbbbbbb",
     "       b           e  b",
     "       b e            b",
@@ -191,7 +192,51 @@ map_level1 = [
     "            b   e     b",
     "            bbbbbbbbbbb"]
 
-
+map_level_3 = [
+    "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
+    "b         b        r       b",
+    "b                  b       b",
+    "bbrb  rbbrb        r       b",
+    "b                  r       r",
+    "b                    rbrbbbb",
+    "b                          b",
+    "r                          b",
+    "b                          r",
+    "r                          b",
+    "r                   r  rbb r",
+    "rrbbbrbbr           b      b",
+    "b                   b      b",
+    "bbb    r                   b",
+    "d b    b            b rbbr b",
+    "b                          r",
+    "b                          b",
+    "bbbrbbrb                   b",
+    "r                          r",
+    "b                          b",
+    "bbbbbrbbrbbrr  bbrrbbbbrbrbb",
+    "b                          b",
+    "r                          b",
+    "b     brbrbbrrccdbbbrbbrbr r",
+    "rbbbrbb       b          b b",
+    "b b           b          b b",
+    "b b           r            b",
+    "bbb      bbrbbbb  bbbrbbbrbr",
+    "b                          r",
+    "r             b            b",
+    "br rbbrbbbrbbrbbbbbbbbbrbr r",
+    "bb b         b  r r  b     b",
+    "bb r         b  r r  b     b",
+    "             b       b     b"
+    "b   bb bbrrbbb  r    b     b",
+    "r               b          r",
+    "bbbrrbrbbrbbrb bbbrbrrbbbrbr",
+    "r     rr b r b r b b b r b b",
+    "b     bb b r b b b b r b b b",
+    "b                          b",
+    "r  rbbbbrbrbbbrbbbbbbrbbbbbb",
+    "b         b                 ",
+    "rbrbbrbrbbb                 "
+]
 def convert_map_to_list(cur_map):
     res_map = []
     for y in range(len(cur_map)):
@@ -208,15 +253,20 @@ map = convert_map_to_list(map_level22)
 enemies = dict()
 environment = []
 worldMap = dict()
-for y in range(len(map)):
-    for x in range(len(map[0])):
-        if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
-            worldMap[(x * blockSize, y * blockSize)] = map[y][x]
-        elif map[y][x] == "e":
-            enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
-        elif map[y][x] in flat_objects_prefabs:
-            environment.append((x, y))
 
+
+def generate_enemies_and_environment(map):
+    global enemies, environment, worldMap
+    for y in range(len(map)):
+        for x in range(len(map[0])):
+            if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
+                worldMap[(x * blockSize, y * blockSize)] = map[y][x]
+            elif map[y][x] == "e":
+                enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
+            elif map[y][x] in flat_objects_prefabs:
+                environment.append((x, y))
+
+generate_enemies_and_environment(map)
 cur_amount_of_enemies = len(enemies)
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200
@@ -225,3 +275,4 @@ ray_thickness = screen_width / accuracy_of_draw
 textureWidth = 800
 textureHeight = 800
 textureScale = textureWidth / blockSize
+

@@ -6,12 +6,11 @@ from UI import render_all_UI
 from data import screen
 import sys
 from buttons import CreateButton
-from pygame_widgets.slider import Slider
-import pygame_widgets
-from pygame_widgets.textbox import TextBox
+from player import health
 
 pygame.init()
 
+sliding = False
 WIDTH, HEIGHT = 1920, 1080
 MAX_FPS = 60
 clock = pygame.time.Clock()
@@ -19,15 +18,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 black = (0, 0, 0)
 white = (255, 255, 255)
 pygame.display.set_caption("Menu")
-background = pygame.image.load("images/menu_sprites/back.png")
+background = pygame.image.load("images/menu_sprites/back4.png")
 pygame.mixer.music.load("images/menu_sprites/chemicals.wav")
 pygame.mixer.music.play(-1, start=0.0, fade_ms=0)
+pygame.mixer.music.set_volume(data.volume)
 
 
 def overlay():
-    continue_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Continue",
-                                "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
-                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    continue_button = CreateButton(WIDTH / 2 - (252*3), 450, 252, 74, "Continue",
+                                   "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+                                   "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
     settings_button = CreateButton(WIDTH / 2 - (252 / 2), 550, 252, 74, "Settings",
                                    "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -75,8 +75,57 @@ def overlay():
         pygame.display.flip()
 
 
+def dead_menu():
+    try_again_button = CreateButton(WIDTH / 2 - (252 / 2), 350, 252, 74, "Try again",
+                                    "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    back_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Back to menu",
+                               "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
+                               "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    fade()
+    running = True
+    while running:
+        pygame.mouse.set_visible(True)
+        screen.fill(black)
+        screen.blit(background, (0, 0))
+
+        font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
+        text_surface = font.render("You are dead", True, white)
+        text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
+        screen.blit(text_surface, text_rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+
+            for btn in [try_again_button, back_button]:
+                btn.handle_event(event)
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    fade()
+                    running = False
+
+            if event.type == pygame.USEREVENT and event.button == back_button:
+                fade()
+                main_menu()
+
+            if event.type == pygame.USEREVENT and event.button == try_again_button:
+                fade()
+                player.clear_level()
+                game_run()
+
+        for btn in [try_again_button, back_button]:
+            btn.check_hover(pygame.mouse.get_pos())
+            btn.draw(screen)
+
+        pygame.display.flip()
+
+
 def main_menu():
-    start_button = CreateButton(WIDTH / 2 - (252 / 2), 350, 252, 74, "Start mission",
+    start_button = CreateButton(WIDTH / 2 - (252 * 3)+(252 / 2), 350, 252, 74, "Start mission",
                                 "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
                                 "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
     settings_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Settings",
@@ -107,6 +156,7 @@ def main_menu():
 
             if event.type == pygame.USEREVENT and event.button == start_button:
                 fade()
+                player.clear_level()
                 game_run()
 
             if event.type == pygame.USEREVENT and event.button == settings_button:
@@ -169,7 +219,7 @@ def settings_menu():
 
             if event.type == pygame.USEREVENT and event.button == audio_button:
                 fade()
-                audio_settings()
+                audio_settings(sliding)
 
         for btn in [audio_button, back_button]:
             btn.check_hover(pygame.mouse.get_pos())
@@ -178,12 +228,13 @@ def settings_menu():
         pygame.display.flip()
 
 
-def audio_settings():
+def audio_settings(sliding):
     back_button = CreateButton(WIDTH / 2 - (252 / 2), 450, 252, 74, "Back to menu",
                                "images/menu_sprites/DischargePro.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
-    slider = Slider(screen, WIDTH / 2 - (252 / 2), 200, 252, 37, min=0.0, max=1, step=0.1)
+    slider_bar_rect = pygame.Rect(100, 200, 400, 10)
+    slider_knob_rect = pygame.Rect(400*data.volume+100, 180, 20, 40)
     # output = TextBox(screen, WIDTH / 2 - (252 / 2) + 280, 150 + 50, 50, 50, fontSize=30)
     # output.disable()
 
@@ -191,8 +242,6 @@ def audio_settings():
     while running:
         screen.fill(black)
         screen.blit(background, (0, 0))
-        # output.setText(slider.getValue())
-        events = pygame.event.get()
 
         font = pygame.font.Font("images/menu_sprites/DischargePro.ttf", 100)
         text_surface = font.render("Audio settings", True, white)
@@ -200,8 +249,20 @@ def audio_settings():
         screen.blit(text_surface, text_rect)
 
         for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and slider_knob_rect.collidepoint(event.pos):
+                sliding = True
+            if event.type == pygame.MOUSEBUTTONUP:
+                sliding = False
+            if event.type == pygame.MOUSEMOTION and sliding:
+                mouse_pos_x = pygame.mouse.get_pos()[0]
+                slider_knob_rect.x = mouse_pos_x - 10
+                if slider_knob_rect.x > 500:
+                    slider_knob_rect.x = 500
+                if slider_knob_rect.x < 100:
+                    slider_knob_rect.x = 100
+                data.volume = (slider_knob_rect.x - 100) / 400
+            pygame.mixer.music.set_volume(data.volume)
 
-            pygame.mixer.music.set_volume(slider.getValue())
 
             if event.type == pygame.QUIT:
                 running = False
@@ -223,7 +284,12 @@ def audio_settings():
             btn.check_hover(pygame.mouse.get_pos())
             btn.draw(screen)
 
-        pygame_widgets.update(events)
+        pygame.draw.rect(screen, (255, 255, 255), slider_bar_rect)
+        pygame.draw.rect(screen, (0, 0, 255), slider_knob_rect)
+        sound_font = pygame.font.SysFont(None, 24)
+        sound_text = sound_font.render("Volume: " + str(int(data.volume * 100)) + "%", True, (255, 255, 255))
+        screen.blit(sound_text, (280, 130))
+
         pygame.display.flip()
 
 
@@ -287,6 +353,9 @@ def game_run():
         renderer.animation_frame = pygame.time.get_ticks() // 60
 
         for event in pygame.event.get():
+            if player.health < 0:
+                dead_menu()
+
             if event.type == pygame.QUIT:
                 game_running = False
                 pygame.quit()

@@ -58,7 +58,7 @@ def raycast_all(angle):
         rounded = [int((x + dx) // data.blockSize), int(yv // data.blockSize)]
         current_texture_v = 0
         if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
-                data.map[rounded[1]][rounded[0]] != " ":
+                data.map[rounded[1]][rounded[0]] not in ([" "] + data.flat_objects_prefabs):
             current_texture_v = data.map[rounded[1]][rounded[0]]
             cur_coord[0] = [rounded[0], rounded[1]]
             break
@@ -72,7 +72,7 @@ def raycast_all(angle):
         rounded = [int(xh // data.blockSize), int((y + dy) // data.blockSize)]
         current_texture_h = 0
         if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
-                data.map[rounded[1]][rounded[0]] != " ":
+                data.map[rounded[1]][rounded[0]] not in ([" "] + data.flat_objects_prefabs):
             current_texture_h = data.map[rounded[1]][rounded[0]]
             cur_coord[1] = [rounded[0], rounded[1]]
             break
@@ -100,7 +100,7 @@ def raycast_all_by_vector(vector):
         rounded = [int((x + dx) // data.blockSize), int(yv // data.blockSize)]
         current_texture_v = 0
         if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
-                data.map[rounded[1]][rounded[0]] != " ":
+                data.map[rounded[1]][rounded[0]] not in ([" "] + data.flat_objects_prefabs):
             current_texture_v = data.map[rounded[1]][rounded[0]]
             cur_coord[0] = [rounded[0], rounded[1]]
             break
@@ -114,7 +114,7 @@ def raycast_all_by_vector(vector):
         rounded = [int(xh // data.blockSize), int((y + dy) // data.blockSize)]
         current_texture_h = 0
         if rounded[1] < len(data.map) and rounded[0] < len(data.map[0]) and rounded[1] >= 0 and rounded[0] >= 0 and \
-                data.map[rounded[1]][rounded[0]] != " ":
+                data.map[rounded[1]][rounded[0]] not in ([" "] + data.flat_objects_prefabs):
             current_texture_h = data.map[rounded[1]][rounded[0]]
             cur_coord[1] = [rounded[0], rounded[1]]
             break

@@ -13,6 +13,19 @@ damage = 35
 health = 100
 
 self_distance = data.blockSize // 5
+blood_animation_frame = 0
+bleed = 0
+
+def clear_level():
+    global health, position, rotation
+    health = 100
+    data.map = data.convert_map_to_list(data.map_level_2)
+    data.generate_enemies_and_environment(data.map)
+
+    x = (2 + 0.5) * data.blockSize
+    y = (2 + 0.5) * data.blockSize
+    position = [x, y]
+    rotation = -pi * 3 / 2
 
 
 def movement():
@@ -47,6 +60,33 @@ def movement():
 
 
 def get_hit(damage):
-    global health
+    global health, bleed
     health -= damage
-    data.screen.blit(data.textures["blood"], (0, 0))
+    bleed = 1
+
+
+
+def blood_animation():
+    global blood_animation_frame, bleed
+    if bleed == 1:
+        blood_texture = data.textures["blood"].convert_alpha()
+        surface = pygame.Surface((data.screen_width, data.screen_height), flags=pygame.SRCALPHA)
+        if blood_animation_frame < 255:
+            surface.blit(blood_texture, (0, 0, data.screen_width, data.screen_height))
+            surface.set_alpha(blood_animation_frame)
+            data.screen.blit(surface, (0, 0, 0, 0))
+            blood_animation_frame += 100
+        elif blood_animation_frame >= 255:
+            blood_animation_frame = 255
+            bleed = 2
+    if bleed == 2:
+        blood_texture = data.textures["blood"].convert_alpha()
+        surface = pygame.Surface((data.screen_width, data.screen_height), flags=pygame.SRCALPHA)
+        if blood_animation_frame > 0:
+            surface.blit(blood_texture, (0, 0, data.screen_width, data.screen_height))
+            surface.set_alpha(blood_animation_frame)
+            data.screen.blit(surface, (0, 0, 0, 0))
+            blood_animation_frame -= 100
+        elif blood_animation_frame <= 0:
+            blood_animation_frame = 0
+            bleed = 0

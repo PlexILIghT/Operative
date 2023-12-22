@@ -13,20 +13,22 @@ game_running = True
 flag_time = True
 pygame.mouse.set_visible(False)
 
-
 while game_running:
     if flag_time == True:
         start_time = pygame.time.get_ticks()
         flag_time = False
     player.movement()
-    renderer.draw_scene(data.screen)
-    render_all_UI(player.health, start_time)
 
+    render_all_UI(player.health, start_time)
+    renderer.draw_scene(data.screen)
+    player.blood_animation()
 
     pygame.display.update()
     data.screen.fill("black")
 
     renderer.animation_frame = pygame.time.get_ticks() // 60
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
