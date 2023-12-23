@@ -27,7 +27,7 @@ object_scale_coefficient = 150
 font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 50)
 font2 = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
 
-screen = pygame.display.set_mode((0, 0), flags=pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080))
 screen_width = screen.get_width()
 screen_height = screen.get_height()
 
@@ -145,7 +145,7 @@ def generate_enemies_and_environment(map):
             if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
                 worldMap[(x * blockSize, y * blockSize)] = map[y][x]
             elif map[y][x] == "e":
-                enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
+                enemies[(x, y)] = AI.Enemy((x, y), 6, 100)
             elif map[y][x] in flat_objects_prefabs:
                 environment.append((x, y))
     cur_amount_of_enemies = len(enemies)
