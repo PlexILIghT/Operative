@@ -11,6 +11,8 @@ back_flag = False
 mein_menu_flag = False
 dead = False
 tryagain = False
+win_flag = False
+time = 0
 
 # general data
 fps = 300

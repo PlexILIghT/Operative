@@ -6,6 +6,7 @@ from UI import render_all_UI
 from data import screen
 import sys
 from buttons import CreateButton
+from datetime import time, timedelta
 
 pygame.init()
 
@@ -180,6 +181,8 @@ def main_menu(font):
                         while data.tryagain:
                             data.tryagain = False
                             game_run()
+                    if data.win_flag:
+                        win_menu(data.font2, data.font)
 
             if event.type == pygame.USEREVENT and event.button == settings_button:
                 fade()
@@ -281,6 +284,53 @@ def choosing_level_menu(font):
             btn.draw(screen)
         pygame.display.flip()
 
+
+def win_menu(font, font2):
+    back_button = CreateButton(WIDTH // 2 - button_width // 2,
+                               HEIGHT // 2 + 2 * offset_between_buttons, button_width,
+                               button_height, "Back to menu",
+                               "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
+                               "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
+    running = True
+    while running:
+
+        pygame.mouse.set_visible(True)
+
+        screen.fill("black")
+        screen.blit(background, (0, 0))
+
+        text_surface = font.render("MISSION COMPLETED", True, "white")
+        text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 4.5))
+        screen.blit(text_surface, text_rect)
+
+        text_surface2 = data.font2.render(f"TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_rect2 = text_surface2.get_rect(center=(WIDTH / 2, HEIGHT // 2))
+        screen.blit(text_surface2, text_rect2)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+            for btn in [back_button]:
+                btn.handle_event(event)
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    fade()
+                    running = False
+
+            if event.type == pygame.USEREVENT and event.button == back_button:
+                fade()
+                running = False
+
+        for btn in [back_button]:
+            btn.check_hover(pygame.mouse.get_pos())
+            btn.draw(screen)
+
+            pygame.display.flip()
+
+
 def settings_menu(font):
     audio_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Audio", "fonts/Disket-Mono-Regular.ttf",
                                 "images/menu_sprites/button3.png",
@@ -293,7 +343,6 @@ def settings_menu(font):
     while running:
         screen.fill("black")
         screen.blit(background, (0, 0))
-
 
         text_surface = font.render("SETTINGS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
@@ -457,6 +506,12 @@ def game_run():
         for event in pygame.event.get():
             if player.health < 0:
                 data.dead = True
+                game_running = False
+                break
+
+            if data.cur_amount_of_enemies == 0:
+                data.win_flag = True
+                data.time = pygame.time.get_ticks() - player.start_time
                 game_running = False
                 break
 
