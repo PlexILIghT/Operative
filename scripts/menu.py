@@ -24,6 +24,9 @@ knob_height = round(bar_height * 1.5)
 pygame.display.set_caption("Menu")
 background = pygame.image.load("images/menu_sprites/back4.png")
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
+data.load_data()
+
 pygame.mixer.music.load("images/menu_sprites/menu_theme.mp3")
 pygame.mixer.music.play(-1, start=0.0, fade_ms=0)
 pygame.mixer.music.set_volume(data.volume)
@@ -32,7 +35,7 @@ pygame.display.set_caption("OPERATIVE")
 # gameIcon = pygame.image.load("images/icon.png")
 # pygame.display.set_icon(gameIcon)
 
-data.load_data()
+
 selected_level = 0
 
 def overlay(font):
@@ -285,7 +288,32 @@ def choosing_level_menu(font):
         pygame.display.flip()
 
 
-def win_menu(font, font_2):
+def win_menu(font, font2):
+    global selected_level
+    saved_data = open("saved_data.txt", "w")
+    if selected_level == data.map_level_1:
+        for i in range(4, -1, -1):
+            data.level_1_results[i] = data.level_1_results[i - 1]
+        data.level_1_results[0] = data.last_time + "\n"
+    elif selected_level == data.map_level_2:
+        for i in range(4, -1, -1):
+            data.level_2_results[i] = data.level_2_results[i - 1]
+        data.level_2_results[0] = data.last_time + "\n"
+    elif selected_level == data.map_level_3:
+        for i in range(4, -1, -1):
+            data.level_3_results[i] = data.level_3_results[i - 1]
+        data.level_3_results[0] = data.last_time + "\n"
+    saved_str = str(data.volume) + "\n"
+    for i in range(5):
+        saved_str += str(data.level_1_results[i])
+    for i in range(5):
+        saved_str += str(data.level_2_results[i])
+    for i in range(5):
+        saved_str += str(data.level_3_results[i])
+    saved_str += "end"
+    saved_data.write(saved_str)
+    saved_data.close()
+
     back_button = CreateButton(WIDTH // 2 - button_width // 2,
                                HEIGHT // 2 + 2 * offset_between_buttons, button_width,
                                button_height, "Back to menu",
@@ -303,11 +331,11 @@ def win_menu(font, font_2):
         text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 4.5))
         screen.blit(text_surface, text_rect)
 
-        text_surface2 = font_2.render(f"TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_surface2 = font2.render(f"TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
         text_rect2 = text_surface2.get_rect(center=(WIDTH / 2, HEIGHT // 2.5))
         screen.blit(text_surface2, text_rect2)
 
-        text_surface3 = font_2.render(f"BEST TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_surface3 = font2.render(f"BEST TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
         text_rect3 = text_surface3.get_rect(center=(WIDTH / 2, HEIGHT // 2))
         screen.blit(text_surface3, text_rect3)
 
@@ -410,6 +438,8 @@ def audio_settings(sliding, font):
                 if slider_knob_rect.x < WIDTH // 2 - bar_width // 2:
                     slider_knob_rect.x = WIDTH // 2 - bar_width // 2
                 data.volume = (slider_knob_rect.x - WIDTH / 2 + bar_width / 2) / bar_width
+                saved_data = open("saved_data.txt", "w")
+                saved_data.write(str(data.volume))
             pygame.mixer.music.set_volume(data.volume)
 
             if event.type == pygame.QUIT:
@@ -442,7 +472,7 @@ def audio_settings(sliding, font):
 
 
 def about_menu(font):
-    back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Back to menu",
+    back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 1.2, button_width, button_height, "Back to menu",
                                "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
@@ -457,9 +487,22 @@ def about_menu(font):
         screen.blit(text_surface, text_rect)
 
         font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 42)
-        text_surface = font.render("*statistics*", True, "white")
-        text_rect = text_surface.get_rect(center=(WIDTH / 2, 350))
-        screen.blit(text_surface, text_rect)
+
+        for i in range(5):
+            font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 42)
+            text_surface = font.render(str(data.level_1_results[i][:-1]), True, "white")
+            text_rect = text_surface.get_rect(center=(WIDTH / 2 - WIDTH // 4, HEIGHT // 3 + i * 75))
+            screen.blit(text_surface, text_rect)
+        for i in range(5):
+            font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 42)
+            text_surface = font.render(str(data.level_2_results[i][:-1]), True, "white")
+            text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 3 + i * 75))
+            screen.blit(text_surface, text_rect)
+        for i in range(5):
+            font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 42)
+            text_surface = font.render(str(data.level_3_results[i][:-1]), True, "white")
+            text_rect = text_surface.get_rect(center=(WIDTH / 2 + WIDTH // 4, HEIGHT // 3 + i * 75))
+            screen.blit(text_surface, text_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -497,7 +540,6 @@ def game_run():
             player.flag_time = False
         player.movement()
 
-        print(player.start_time, player.paused_time)
         renderer.draw_scene(screen)
         player.blood_animation()
         render_all_UI(player.health, player.start_time)
@@ -515,7 +557,7 @@ def game_run():
 
             if data.cur_amount_of_enemies == 0:
                 data.win_flag = True
-                data.time = pygame.time.get_ticks() - player.start_time
+                data.last_time = str(timedelta(milliseconds=(pygame.time.get_ticks() - player.start_time)))[:-7]# + "\n"
                 game_running = False
 
             if event.type == pygame.QUIT:

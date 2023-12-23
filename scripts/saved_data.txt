@@ -1,103 +1,17 @@
-31
-bbbbbbrrrbbb          b
-b        w b          b
-b         qb          b
-bbbbbbb bbbbbbbbb     b
-r               b     b
-r e q   e  b    b     b
-b     e    b   eb     b
-bbbcbbrrcrbbb bbbbbbbbb
-       b           e  b
-       b e            b
-       bbbbbbbbbbbb bbb
-                b     b
-                b     b
-                b     b
-                bb    b
-                be   bb
-                b    eb
-            bbbbbb bbbb
-bbbbbbbbb   b  e      b
-b   e   bbbbb        eb
-b             e       b
-b  eb   bbbbb         b
-bbbbb   bbbbbbbbbbbbbbb
-  bbb      e b        b
-  be         b        b
-  bbbbbbbb  bb        b
-         b  b         b
-       bbb  bbbbbbbbbbb
-       b         e    b
-       be             b
-       bbbbbbbbbbbbbbbb
-25
-bbbrrrbbbrbbrrbbbrrbbbb
-r       w  e    we    r
-b    bw qb  bw   be   b
-b              q   w  b
-r                     r
-b                   e b
-b                     b
-r               e  e qb
-bbrbddbcccrbbrbrrbbrbbb
-b             r     e b
-b   w             q   b
-r w          wb   e w b
-b  e         qbbbrbbbbb
-b             bw  e   b
-r                     b
-r             r  q  e b
-b w           rdbcbbdrb
-re    w            e  b
-b   e                qb
-b            q      w b
-brddccbrdbrfrbbrbrbfbbb
-b e          dq       b
-b e         qc e      b
-b  e ew      rq e w w b
-bbbrbbrbrbrbbrbrbbrbrbb
-43
-mmmmmmmmmmmmmmmmmmmmmmmmmmmm
-m         m        m ww    m
-m                  m     q m
-mmmm  mmmmm        m       m
-m                  m   e   m
-m                    mmmmmmm
-m                          m
-m                   mmm  q m
-m           mmmmm   m  qe  m
-m              e           m
-m                   m  mmm m
-mmmmmmmmm           m  e   m
-m    e              m      m
-mmm    m                   m
-mem   em                   m
-m                     wwq  m
-m                   q      m
-mmmmmmmm             wwqwqwm
-m   e                 e  e m
-m                    e     m
-mmmmmmmmmmmmm  mmmmmmmmmmmmm
-m   e                      m
-m                          m
-mq w  mmmmmmmmggmmmmmmmmmmgm
-mmmmmmm   w w mw  e   e  m m
-m m   e     q mw    w    m m
-m m    w     emq   e       m
-mmm      mmmmmmm  mmmmmmmmmm
-m                          m
-m        e    m e          m
-mmgmmmmmmmmmmmmmmmmmmmmmmmgm
-m  m  w e    m  mem  m     m
-m  m         m  m m  mm    m
-m e       w  m      wme    m
-m   mm mmmmmmm  m    m     m
-m         e     m          m
-mmmmmmmmmmmmmmgmmmmmmmmmmmmm
-me    mmqm m m m m m mwm mqm
-m     mm m m m m m m m m m m
-m                    e     m
-m   mmmmmmmmgmmgmmmmmmmmmmmm
-m     e   m q      w   w q m
-mmmmmmmmmmmmmmmmmmmmmmmmmmmm
+1.0
+0:00:42
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end

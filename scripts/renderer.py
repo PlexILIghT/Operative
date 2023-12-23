@@ -50,7 +50,7 @@ def ray_cast_with_draw_line(ray, start_ray_pos_x, start_ray_pos_y, floor_start_p
                                                                 data.textureHeight)
         wall_column = pygame.transform.scale(wall_column, (data.ray_thickness + 1, projection_height))
         wall_column_surface = pygame.Surface((wall_column.get_width(), wall_column.get_height()), pygame.SRCALPHA)
-        color_of_depth = depth // 6
+        color_of_depth = depth // 10
         if color_of_depth > 255:
             color_of_depth = 255
         pygame.draw.rect(wall_column_surface, (0, 0, 0, color_of_depth),

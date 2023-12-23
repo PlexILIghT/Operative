@@ -12,7 +12,7 @@ mein_menu_flag = False
 dead = False
 tryagain = False
 win_flag = False
-time = 0
+last_time = 0
 
 # general data
 fps = 300
@@ -102,22 +102,34 @@ map_level_1 = []
 map_level_2 = []
 map_level_3 = []
 
+level_1_results = []
+level_2_results = []
+level_3_results = []
+
 
 def load_data():
-    global map_level_1, map_level_2, map_level_3
+    global map_level_1, map_level_2, map_level_3, volume, level_1_results, level_2_results, level_3_results
+    levels_data = open("levels_data.txt", "r")
+    n = int(levels_data.readline())
+    for i in range(n):
+        map_level_1.append(levels_data.readline()[:-1])
+    n = int(levels_data.readline())
+    for i in range(n):
+        map_level_2.append(levels_data.readline()[:-1])
+    n = int(levels_data.readline())
+    for i in range(n):
+        map_level_3.append(levels_data.readline()[:-1])
+
     saved_data = open("saved_data.txt", "r")
-    n = int(saved_data.readline())
-    for i in range(n):
-        map_level_1.append(saved_data.readline())
-    n = int(saved_data.readline())
-    for i in range(n):
-        map_level_2.append(saved_data.readline())
-    n = int(saved_data.readline())
-    for i in range(n):
-        map_level_3.append(saved_data.readline())
+    volume = float(saved_data.readline())
+    for i in range(5):
+        level_1_results.append(saved_data.readline())
+    for i in range(5):
+        level_2_results.append(saved_data.readline())
+    for i in range(5):
+        level_3_results.append(saved_data.readline())
 
 
-#load_data()
 
 
 def convert_map_to_list(cur_map):
