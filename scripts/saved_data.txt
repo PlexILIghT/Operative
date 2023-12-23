@@ -57,47 +57,47 @@ b e         qc e      b
 b  e ew      rq e w w b
 bbbrbbrbrbrbbrbrbbrbrbb
 43
-bbbbbbbbbbbbbrbbbbbbrrbbbbbb
-b         b        r ww    b
-b                  b     q b
-bbrb  rbbrb        r       b
-b                  r   e   r
-b                    rbrbbbb
-b                          b
-r                   bbb  q b
-b           bbrbb   r  qe  r
-r              e           b
-r                   r  rbb r
-rrbbbrbbr           b  e   b
-b    e              b      b
-bbb    r                   b
-deb   eb                   b
-b                     wwq  r
-b                   q      b
-bbbrbbrb             wwqwqwb
-r   e                 e  e r
-b                    e     b
-bbbbbrbbrbbrr  bbrrbbbbrbrbb
-b   e                      b
-r                          b
-bq w  brbrddrrffdbbbrbdrdrfr
-rbbbrbb   w w bw  e   e  b b
-b b   e     q bw    w    b b
-b b    w     erq   e       b
-bbb      bbrbbbb  bbbrbbbrbr
-b                          r
-r        e    b e          b
-brfrbbrbbbrbbrbbbbbbbbbrbrfr
-b  b  w e    b  rer  b     b
-b  r         b  r r  br    b
-b e       w  b      wbe    b
-b   bb bbrrbbb  r    b     b
-r         e     b          r
-bbbrrbrbbrbbrbfbbbrbrrbbbrbr
-re    rrqb r b r b b bwr bqb
-b     bb b r b b b b r b b b
-b                    e     b
-r   bbbbrbrbcbdcdbdbdrbbbbbb
-b     e   b q      w   w q b
-rbrbbrbrbbbbbbbbbbbbbbbbbbbb
+mmmmmmmmmmmmmmmmmmmmmmmmmmmm
+m         m        m ww    m
+m                  m     q m
+mmmm  mmmmm        m       m
+m                  m   e   m
+m                    mmmmmmm
+m                          m
+m                   mmm  q m
+m           mmmmm   m  qe  m
+m              e           m
+m                   m  mmm m
+mmmmmmmmm           m  e   m
+m    e              m      m
+mmm    m                   m
+mem   em                   m
+m                     wwq  m
+m                   q      m
+mmmmmmmm             wwqwqwm
+m   e                 e  e m
+m                    e     m
+mmmmmmmmmmmmm  mmmmmmmmmmmmm
+m   e                      m
+m                          m
+mq w  mmmmmmmmggmmmmmmmmmmgm
+mmmmmmm   w w mw  e   e  m m
+m m   e     q mw    w    m m
+m m    w     emq   e       m
+mmm      mmmmmmm  mmmmmmmmmm
+m                          m
+m        e    m e          m
+mmgmmmmmmmmmmmmmmmmmmmmmmmgm
+m  m  w e    m  mem  m     m
+m  m         m  m m  mm    m
+m e       w  m      wme    m
+m   mm mmmmmmm  m    m     m
+m         e     m          m
+mmmmmmmmmmmmmmgmmmmmmmmmmmmm
+me    mmqm m m m m m mwm mqm
+m     mm m m m m m m m m m m
+m                    e     m
+m   mmmmmmmmgmmgmmmmmmmmmmmm
+m     e   m q      w   w q m
+mmmmmmmmmmmmmmmmmmmmmmmmmmmm
 end
