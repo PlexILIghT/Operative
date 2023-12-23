@@ -42,10 +42,7 @@ textures = {
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
     "f": pygame.image.load("images/textures/door.png").convert(),
     "g": pygame.image.load("images/textures/metal_door.jpg").convert(),
-<<<<<<< Updated upstream
     "x": pygame.image.load("images/textures/dungeon_door.jpg").convert(),
-=======
->>>>>>> Stashed changes
     "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
     "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
     "m": pygame.image.load("images/textures/metal_wall1.jpg").convert_alpha(),
