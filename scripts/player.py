@@ -95,7 +95,7 @@ def blood_animation():
             blood_animation_frame = 255
             bleed = 2
     if bleed == 2:
-        blood_texture = data.textures["blood"].convert_alpha()
+        blood_texture = pygame.transform.scale(data.textures["blood"], (data.screen_width, data.screen_height))
         pygame.transform.scale(blood_texture, (data.screen_width, data.screen_height))
         surface = pygame.Surface((data.screen_width, data.screen_height), flags=pygame.SRCALPHA)
         if blood_animation_frame > 0:

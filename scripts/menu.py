@@ -449,8 +449,8 @@ def game_run():
 
         for event in pygame.event.get():
             if player.health < 0:
-                game_running = False
                 dead_menu(data.font2)
+                game_running = False
 
             if event.type == pygame.QUIT:
                 game_running = False
