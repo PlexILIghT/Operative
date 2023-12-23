@@ -77,7 +77,6 @@ def get_hit(damage):
     bleed = 1
 
 
-
 def blood_animation():
     global blood_animation_frame, bleed
     if bleed == 1:
