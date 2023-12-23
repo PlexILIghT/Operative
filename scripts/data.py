@@ -41,6 +41,7 @@ textures = {
     "r": pygame.image.load("images/textures/brick_wall_rusty.jpg").convert(),
     "d": pygame.image.load("images/textures/brick_wall_with_board.jpg").convert(),
     "f": pygame.image.load("images/textures/door.png").convert(),
+    "g": pygame.image.load("images/textures/metal_door.png").convert(),
     "w": pygame.image.load("images/textures/cases1.png").convert_alpha(),
     "q": pygame.image.load("images/textures/cases2.png").convert_alpha(),
     "m": pygame.image.load("images/textures/metal_wall1.jpg").convert_alpha(),
