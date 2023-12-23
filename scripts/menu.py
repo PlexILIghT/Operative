@@ -121,13 +121,15 @@ def dead_menu(font):
 
             if event.type == pygame.USEREVENT and event.button == back_button:
                 fade()
+                data.dead = False
                 running = False
 
             if event.type == pygame.USEREVENT and event.button == try_again_button:
                 running = False
                 player.clear_level(selected_level)
                 fade()
-                game_run()
+                data.tryagain = True
+                break
 
         for btn in [try_again_button, back_button]:
             btn.check_hover(pygame.mouse.get_pos())
@@ -173,6 +175,11 @@ def main_menu(font):
                     data.back_flag = False
                 else:
                     game_run()
+                    while data.dead:
+                        dead_menu(data.font2)
+                        while data.tryagain:
+                            data.tryagain = False
+                            game_run()
 
             if event.type == pygame.USEREVENT and event.button == settings_button:
                 fade()
@@ -449,8 +456,9 @@ def game_run():
 
         for event in pygame.event.get():
             if player.health < 0:
-                dead_menu(data.font2)
+                data.dead = True
                 game_running = False
+                break
 
             if event.type == pygame.QUIT:
                 game_running = False
