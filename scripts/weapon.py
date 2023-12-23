@@ -93,13 +93,6 @@ class Weapon:
             self.static()
 
 
-pistol = Weapon(data.damage_for_pistol, data.sprites_pistol_shot, data.sprites_pistol_reload, data.max_ammo_pistol,
-                data.anim_speed_for_shot_pistol, data.anim_speed_for_reload_pistol, data.pistol_shot_sound,
-                data.pistol_reload_sound)
-m4 = Weapon(data.damage_for_m4, data.m4_shot, data.m4_reload, data.max_ammo_m4, data.anim_speed_for_shot_m4,
-            data.anim_speed_for_reload_m4, data.m4_shot_sound, data.m4_reload_sound)
-
-
 class Selector:
     def __init__(self, first, second):
         self.first = first
@@ -166,5 +159,11 @@ class Selector:
         else:
             m4.draw_weapon()
 
+
+pistol = Weapon(data.damage_for_pistol, data.sprites_pistol_shot, data.sprites_pistol_reload, data.max_ammo_pistol,
+                data.anim_speed_for_shot_pistol, data.anim_speed_for_reload_pistol, data.pistol_shot_sound,
+                data.pistol_reload_sound)
+m4 = Weapon(data.damage_for_m4, data.m4_shot, data.m4_reload, data.max_ammo_m4, data.anim_speed_for_shot_m4,
+            data.anim_speed_for_reload_m4, data.m4_shot_sound, data.m4_reload_sound)
 
 selector = Selector(m4, pistol)
