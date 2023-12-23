@@ -285,7 +285,7 @@ def choosing_level_menu(font):
         pygame.display.flip()
 
 
-def win_menu(font, font2):
+def win_menu(font, font_2):
     back_button = CreateButton(WIDTH // 2 - button_width // 2,
                                HEIGHT // 2 + 2 * offset_between_buttons, button_width,
                                button_height, "Back to menu",
@@ -303,9 +303,13 @@ def win_menu(font, font2):
         text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 4.5))
         screen.blit(text_surface, text_rect)
 
-        text_surface2 = data.font2.render(f"TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
-        text_rect2 = text_surface2.get_rect(center=(WIDTH / 2, HEIGHT // 2))
+        text_surface2 = font_2.render(f"TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_rect2 = text_surface2.get_rect(center=(WIDTH / 2, HEIGHT // 2.5))
         screen.blit(text_surface2, text_rect2)
+
+        text_surface3 = font_2.render(f"BEST TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_rect3 = text_surface3.get_rect(center=(WIDTH / 2, HEIGHT // 2))
+        screen.blit(text_surface3, text_rect3)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -513,7 +517,6 @@ def game_run():
                 data.win_flag = True
                 data.time = pygame.time.get_ticks() - player.start_time
                 game_running = False
-                break
 
             if event.type == pygame.QUIT:
                 game_running = False
