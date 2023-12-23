@@ -1,12 +1,12 @@
-23 
-bbbbbbrrrbbb           
-b        w b           
-b         qd           
-bbbbbbb bbbbbccbb      
-r               b      
-r e q   e  b    c      
-b     e    d   eb      
-bbbcbbrrrrbbb bbbbbbbbb
+31
+bbbbbbrrrbbb          b
+b        w b          b
+b         qb          b
+bbbbbbb bbbbbbbbb     b
+r               b     b
+r e q   e  b    b     b
+b     e    b   eb     b
+bbbcbbrrcrbbb bbbbbbbbb
        b           e  b
        b e            b
        bbbbbbbbbbbb bbb
@@ -17,11 +17,19 @@ bbbcbbrrrrbbb bbbbbbbbb
                 be   bb
                 b    eb
             bbbbbb bbbb
-            b  e      b
-            b       e b
-            b e       b
-            b   e     b
-            bbbbbbbbbbb
+bbbbbbbbb   b  e      b
+b   e   bbbbb        eb
+b             e       b
+b  eb   bbbbb         b
+bbbbb   bbbbbbbbbbbbbbb
+  bbb      e b        b
+  be         b        b
+  bbbbbbbb  bb        b
+         b  b         b
+       bbb  bbbbbbbbbbb
+       b         e    b
+       be             b
+       bbbbbbbbbbbbbbbb
 25
 bbbrrrbbbrbbrrbbbrrbbbb
 r       w  e    we    r
@@ -31,7 +39,7 @@ r                     r
 b                   e b
 b                     b
 r               e  e qb
-bbrbdrbcccrbbrbrrbbrbbb
+bbrbddbcccrbbrbrrbbrbbb
 b             r     e b
 b   w             q   b
 r w          wb   e w b
@@ -43,53 +51,53 @@ b w           rdbcbbdrb
 re    w            e  b
 b   e                qb
 b            q      w b
-brddccbrdbr rbbrbrb bbb
-b e          bq       b
-b e         qb e      b
+brddccbrdbrfrbbrbrbfbbb
+b e          dq       b
+b e         qc e      b
 b  e ew      rq e w w b
 bbbrbbrbrbrbbrbrbbrbrbb
 43
 bbbbbbbbbbbbbrbbbbbbrrbbbbbb
-b         b        r       b
-b                  b       b
+b         b        r ww    b
+b                  b     q b
 bbrb  rbbrb        r       b
-b                  r       r
+b                  r   e   r
 b                    rbrbbbb
 b                          b
-r                          b
-b                          r
-r                          b
+r                   bbb  q b
+b           bbrbb   r  qe  r
+r              e           b
 r                   r  rbb r
-rrbbbrbbr           b      b
-b                   b      b
+rrbbbrbbr           b  e   b
+b    e              b      b
 bbb    r                   b
-d b    b            b rbbr b
-b                          r
-b                          b
-bbbrbbrb                   b
-r                          r
-b                          b
+deb   eb                   b
+b                     wwq  r
+b                   q      b
+bbbrbbrb             wwqwqwb
+r   e                 e  e r
+b                    e     b
 bbbbbrbbrbbrr  bbrrbbbbrbrbb
-b                          b
+b   e                      b
 r                          b
-b     brbrbbrrccdbbbrbbrbr r
-rbbbrbb       b          b b
-b b           b          b b
-b b           r            b
+bq w  brbrddrrffdbbbrbdrdrfr
+rbbbrbb   w w bw  e   e  b b
+b b   e     q bw    w    b b
+b b    w     erq   e       b
 bbb      bbrbbbb  bbbrbbbrbr
 b                          r
-r             b            b
-br rbbrbbbrbbrbbbbbbbbbrbr r
-bb b         b  r r  b     b
-bb r         b  r r  b     b
-             b       b     b
+r        e    b e          b
+brfrbbrbbbrbbrbbbbbbbbbrbrfr
+b  b  w e    b  rer  b     b
+b  r         b  r r  br    b
+b e       w  b      wbe    b
 b   bb bbrrbbb  r    b     b
-r               b          r
-bbbrrbrbbrbbrb bbbrbrrbbbrbr
-r     rr b r b r b b b r b b
+r         e     b          r
+bbbrrbrbbrbbrbfbbbrbrrbbbrbr
+re    rrqb r b r b b bwr bqb
 b     bb b r b b b b r b b b
-b                          b
-r  rbbbbrbrbbbrbbbbbbrbbbbbb
-b         b                b
+b                    e     b
+r   bbbbrbrbcbdcdbdbdrbbbbbb
+b     e   b q      w   w q b
 rbrbbrbrbbbbbbbbbbbbbbbbbbbb
 end
