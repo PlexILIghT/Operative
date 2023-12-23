@@ -22,10 +22,14 @@ blood_animation_frame = 0
 bleed = 0
 
 
-def clear_level():
-    global health, position, rotation, flag_time, start_time
+def clear_level(selected_map):
+    global health, position, rotation, flag_time, start_time, bleed
     health = 100
-    data.map = data.convert_map_to_list(data.map_level_1)
+    bleed = 0
+    data.enemies = dict()
+    data.environment = []
+    data.worldMap = dict()
+    data.map = data.convert_map_to_list(selected_map)
     data.generate_enemies_and_environment(data.map)
     weapon.pistol.ammo = 0
     weapon.m4.ammo = 0
@@ -80,7 +84,7 @@ def get_hit(damage):
 def blood_animation():
     global blood_animation_frame, bleed
     if bleed == 1:
-        blood_texture = data.textures["blood"].convert_alpha()
+        blood_texture = pygame.transform.scale(data.textures["blood"], (data.screen_width, data.screen_height))
         surface = pygame.Surface((data.screen_width, data.screen_height), flags=pygame.SRCALPHA)
         if blood_animation_frame < 255:
             surface.blit(blood_texture, (0, 0, data.screen_width, data.screen_height))

@@ -31,6 +31,8 @@ pygame.display.set_caption("OPERATIVE")
 # gameIcon = pygame.image.load("images/icon.png")
 # pygame.display.set_icon(gameIcon)
 
+data.load_data()
+selected_level = 0
 
 def overlay(font):
     continue_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Continue",
@@ -122,8 +124,9 @@ def dead_menu(font):
                 running = False
 
             if event.type == pygame.USEREVENT and event.button == try_again_button:
+                running = False
+                player.clear_level(selected_level)
                 fade()
-                player.clear_level()
                 game_run()
 
         for btn in [try_again_button, back_button]:
@@ -164,7 +167,7 @@ def main_menu(font):
 
             if event.type == pygame.USEREVENT and event.button == start_button:
                 fade()
-                player.clear_level()
+                #player.clear_level(selected_level)
                 choosing_level_menu(data.font2)
                 if data.back_flag:
                     data.back_flag = False
@@ -195,6 +198,7 @@ def main_menu(font):
 
 
 def choosing_level_menu(font):
+    global selected_level
     mission_button_lvl_1 = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 - 2 * offset_between_buttons, button_width, button_height,
                                         "LVL 1",
                                         "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
@@ -244,14 +248,20 @@ def choosing_level_menu(font):
                 fade()
 
             if event.type == pygame.USEREVENT and event.button == mission_button_lvl_1:
+                selected_level = data.map_level_1
+                player.clear_level(data.map_level_1)
                 fade()
                 running = False
 
             if event.type == pygame.USEREVENT and event.button == mission_button_lvl_2:
+                selected_level = data.map_level_2
+                player.clear_level(data.map_level_2)
                 fade()
                 running = False
 
             if event.type == pygame.USEREVENT and event.button == mission_button_lvl_3:
+                selected_level = data.map_level_3
+                player.clear_level(data.map_level_3)
                 fade()
                 running = False
 

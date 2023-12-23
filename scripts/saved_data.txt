@@ -1,0 +1,95 @@
+23 
+bbbbbbrrrbbb           
+b        w b           
+b         qd           
+bbbbbbb bbbbbccbb      
+r               b      
+r e q   e  b    c      
+b     e    d   eb      
+bbbcbbrrrrbbb bbbbbbbbb
+       b           e  b
+       b e            b
+       bbbbbbbbbbbb bbb
+                b     b
+                b     b
+                b     b
+                bb    b
+                be   bb
+                b    eb
+            bbbbbb bbbb
+            b  e      b
+            b       e b
+            b e       b
+            b   e     b
+            bbbbbbbbbbb
+25
+bbbrrrbbbrbbrrbbbrrbbbb
+r       w  e    we    r
+b    bw qb  bw   be   b
+b              q   w  b
+r                     r
+b                   e b
+b                     b
+r               e  e qb
+bbrbdrbcccrbbrbrrbbrbbb
+b             r     e b
+b   w             q   b
+r w          wb   e w b
+b  e         qbbbrbbbbb
+b             bw  e   b
+r                     b
+r             r  q  e b
+b w           rdbcbbdrb
+re    w            e  b
+b   e                qb
+b            q      w b
+brddccbrdbr rbbrbrb bbb
+b e          bq       b
+b e         qb e      b
+b  e ew      rq e w w b
+bbbrbbrbrbrbbrbrbbrbrbb
+43
+bbbbbbbbbbbbbrbbbbbbrrbbbbbb
+b         b        r       b
+b                  b       b
+bbrb  rbbrb        r       b
+b                  r       r
+b                    rbrbbbb
+b                          b
+r                          b
+b                          r
+r                          b
+r                   r  rbb r
+rrbbbrbbr           b      b
+b                   b      b
+bbb    r                   b
+d b    b            b rbbr b
+b                          r
+b                          b
+bbbrbbrb                   b
+r                          r
+b                          b
+bbbbbrbbrbbrr  bbrrbbbbrbrbb
+b                          b
+r                          b
+b     brbrbbrrccdbbbrbbrbr r
+rbbbrbb       b          b b
+b b           b          b b
+b b           r            b
+bbb      bbrbbbb  bbbrbbbrbr
+b                          r
+r             b            b
+br rbbrbbbrbbrbbbbbbbbbrbr r
+bb b         b  r r  b     b
+bb r         b  r r  b     b
+             b       b     b
+b   bb bbrrbbb  r    b     b
+r               b          r
+bbbrrbrbbrbbrb bbbrbrrbbbrbr
+r     rr b r b r b b b r b b
+b     bb b r b b b b r b b b
+b                          b
+r  rbbbbrbrbbbrbbbbbbrbbbbbb
+b         b                b
+rbrbbrbrbbbbbbbbbbbbbbbbbbbb
+end

@@ -92,130 +92,28 @@ swap_flag = False
 
 flat_objects_prefabs = ["w", "q"]
 
-map_level_1 = [
-    "bbbbbbrrrbbb           ",
-    "b        w b           ",
-    "b         qd           ",
-    "bbbbbbb bbbbbccbb      ",
-    "r               b      ",
-    "r e q   e  b    c      ",
-    "b     e    d   eb      ",
-    "bbbcbbrrrrbbb bbbbbbbbb",
-    "       b           e  b",
-    "       b e            b",
-    "       bbbbbbbbbbbb bbb",
-    "                b     b",
-    "                b     b",
-    "                b     b",
-    "                bb    b",
-    "                be   bb",
-    "                b    eb",
-    "            bbbbbb bbbb",
-    "            b  e      b",
-    "            b       e b",
-    "            b e       b",
-    "            b   e     b",
-    "            bbbbbbbbbbb"]
+map_level_1 = []
+map_level_2 = []
+map_level_3 = []
 
 
-map_level_2 = [
-    "bbbrrrbbbrbbrrbbbrrbbbb",
-    "r       w  e    we    r",
-    "b    bw qb  bw   be   b",
-    "b              q   w  b",
-    "r                     r",
-    "b                   e b",
-    "b                     b",
-    "r               e  e qb",
-    "bbrbdrbcccrbbrbrrbbrbbb",
-    "b             r     e b",
-    "b   w             q   b",
-    "r w          wb   e w b",
-    "b  e         qbbbrbbbbb",
-    "b             bw  e   b",
-    "r                     b",
-    "r             r  q  e b",
-    "b w           rdbcbbdrb",
-    "re    w            e  b",
-    "b   e                qb",
-    "b            q      w b",
-    "brddccbrdbr rbbrbrb bbb",
-    "b e          bq       b",
-    "b e         qb e      b",
-    "b  e ew      rq e w w b",
-    "bbbrbbrbrbrbbrbrbbrbrbb"]
+def load_data():
+    global map_level_1, map_level_2, map_level_3
+    saved_data = open("saved_data.txt", "r")
+    n = int(saved_data.readline())
+    for i in range(n):
+        map_level_1.append(saved_data.readline())
+    n = int(saved_data.readline())
+    for i in range(n):
+        map_level_2.append(saved_data.readline())
+    n = int(saved_data.readline())
+    for i in range(n):
+        map_level_3.append(saved_data.readline())
 
 
-map_level_1 = [
-    "bmmmmmrrrbbb           ",
-    "b        w b           ",
-    "b         qd           ",
-    "bbbfbbb bbbbbccbb      ",
-    "r               b      ",
-    "r e q   e  b    c      ",
-    "b     e    d   eb      ",
-    "bbbcbbrrrrbbb bbbbbbbbb",
-    "       b           e  b",
-    "       b e            b",
-    "       bbbbbbbbbbbb bbb",
-    "                b     b",
-    "                b     b",
-    "                b     b",
-    "                bb    b",
-    "                be   bb",
-    "                b    eb",
-    "            bbbbbb bbbb",
-    "            b  e      b",
-    "            b       e b",
-    "            b e       b",
-    "            b   e     b",
-    "            bbbbbbbbbbb"]
+#load_data()
 
-map_level_3 = [
-    "bbbbbbbbbbbbbrbbbbbbrrbbbbbb",
-    "b         b        r       b",
-    "b                  b       b",
-    "bbrb  rbbrb        r       b",
-    "b                  r       r",
-    "b                    rbrbbbb",
-    "b                          b",
-    "r                          b",
-    "b                          r",
-    "r                          b",
-    "r                   r  rbb r",
-    "rrbbbrbbr           b      b",
-    "b                   b      b",
-    "bbb    r                   b",
-    "d b    b            b rbbr b",
-    "b                          r",
-    "b                          b",
-    "bbbrbbrb                   b",
-    "r                          r",
-    "b                          b",
-    "bbbbbrbbrbbrr  bbrrbbbbrbrbb",
-    "b                          b",
-    "r                          b",
-    "b     brbrbbrrccdbbbrbbrbr r",
-    "rbbbrbb       b          b b",
-    "b b           b          b b",
-    "b b           r            b",
-    "bbb      bbrbbbb  bbbrbbbrbr",
-    "b                          r",
-    "r             b            b",
-    "br rbbrbbbrbbrbbbbbbbbbrbr r",
-    "bb b         b  r r  b     b",
-    "bb r         b  r r  b     b",
-    "             b       b     b"
-    "b   bb bbrrbbb  r    b     b",
-    "r               b          r",
-    "bbbrrbrbbrbbrb bbbrbrrbbbrbr",
-    "r     rr b r b r b b b r b b",
-    "b     bb b r b b b b r b b b",
-    "b                          b",
-    "r  rbbbbrbrbbbrbbbbbbrbbbbbb",
-    "b         b                 ",
-    "rbrbbrbrbbb                 "
-]
+
 def convert_map_to_list(cur_map):
     res_map = []
     for y in range(len(cur_map)):
@@ -226,16 +124,16 @@ def convert_map_to_list(cur_map):
     return res_map
 
 
-map = convert_map_to_list(map_level_1)
+#map = convert_map_to_list(map_level_1)
 
 
 enemies = dict()
 environment = []
 worldMap = dict()
-
+cur_amount_of_enemies = 0
 
 def generate_enemies_and_environment(map):
-    global enemies, environment, worldMap
+    global enemies, environment, worldMap, cur_amount_of_enemies
     for y in range(len(map)):
         for x in range(len(map[0])):
             if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
@@ -244,11 +142,12 @@ def generate_enemies_and_environment(map):
                 enemies[(x, y)] = AI.Enemy((x, y), 10, 100)
             elif map[y][x] in flat_objects_prefabs:
                 environment.append((x, y))
+    cur_amount_of_enemies = len(enemies)
 
 
-generate_enemies_and_environment(map)
+#generate_enemies_and_environment(map)
 
-cur_amount_of_enemies = len(enemies)
+
 distance_from_screen = accuracy_of_draw / (2 * tan(field_of_view / 2))
 projection_coefficient = screen_height * 0.01 / accuracy_of_draw * 200
 ray_thickness = screen_width / accuracy_of_draw
