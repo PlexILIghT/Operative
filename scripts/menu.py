@@ -331,11 +331,11 @@ def win_menu(font, font2):
         text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 4.5))
         screen.blit(text_surface, text_rect)
 
-        text_surface2 = font2.render(f"TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_surface2 = font2.render(data.last_time, True, "white")
         text_rect2 = text_surface2.get_rect(center=(WIDTH / 2, HEIGHT // 2.5))
         screen.blit(text_surface2, text_rect2)
 
-        text_surface3 = font2.render(f"BEST TIME: {timedelta(milliseconds=data.time)}"[:-7], True, "white")
+        text_surface3 = font2.render(data.last_time, True, "white")
         text_rect3 = text_surface3.get_rect(center=(WIDTH / 2, HEIGHT // 2))
         screen.blit(text_surface3, text_rect3)
 

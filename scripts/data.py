@@ -81,7 +81,7 @@ anim_speed_for_swap = 18
 # first weapon settings
 damage_for_m4 = 30
 max_ammo_m4 = 30
-anim_speed_for_shot_m4 = 140
+anim_speed_for_shot_m4 = 90
 anim_speed_for_reload_m4 = 20
 
 selection_flag = False
@@ -157,7 +157,7 @@ def generate_enemies_and_environment(map):
             if map[y][x] != " " and map[y][x] != "e" and map[y][x] not in flat_objects_prefabs:
                 worldMap[(x * blockSize, y * blockSize)] = map[y][x]
             elif map[y][x] == "e":
-                enemies[(x, y)] = AI.Enemy((x, y), 6, 100)
+                enemies[(x, y)] = AI.Enemy((x, y), 3, 100)
             elif map[y][x] in flat_objects_prefabs:
                 environment.append((x, y))
     cur_amount_of_enemies = len(enemies)
