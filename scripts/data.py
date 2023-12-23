@@ -7,8 +7,6 @@ pygame.init()
 volume = 0.5
 
 # menu data
-black = (0, 0, 0)
-white = (255, 255, 255)
 back_flag = False
 
 # general data
@@ -22,7 +20,7 @@ object_scale_coefficient = 150
 
 # fonts
 font = pygame.font.Font("fonts/Disket-Mono-Regular.ttf", 50)
-
+font2 = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
 
 screen = pygame.display.set_mode((0, 0), flags=pygame.FULLSCREEN)
 screen_width = screen.get_width()

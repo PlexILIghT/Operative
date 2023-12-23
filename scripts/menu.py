@@ -31,7 +31,8 @@ pygame.display.set_caption("OPERATIVE")
 # gameIcon = pygame.image.load("images/icon.png")
 # pygame.display.set_icon(gameIcon)
 
-def overlay():
+
+def overlay(font):
     continue_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Continue",
                                    "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -49,7 +50,6 @@ def overlay():
         screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
         text_surface = font.render("PAUSE", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
@@ -67,7 +67,7 @@ def overlay():
                 fade()
             if event.type == pygame.USEREVENT and event.button == settings_button:
                 fade()
-                settings_menu()
+                settings_menu(data.font2)
 
             if event.type == pygame.USEREVENT and event.button == exit_button:
                 running = False
@@ -84,7 +84,7 @@ def overlay():
         pygame.display.flip()
 
 
-def dead_menu():
+def dead_menu(font):
     try_again_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Try again",
                                     "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                     "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -98,7 +98,6 @@ def dead_menu():
         screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
         text_surface = font.render("YOU ARE DEAD", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
@@ -119,7 +118,7 @@ def dead_menu():
 
             if event.type == pygame.USEREVENT and event.button == back_button:
                 fade()
-                main_menu()
+                main_menu(data.font2)
 
             if event.type == pygame.USEREVENT and event.button == try_again_button:
                 fade()
@@ -133,7 +132,7 @@ def dead_menu():
         pygame.display.flip()
 
 
-def main_menu():
+def main_menu(font):
     start_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Start mission",
                                 "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                 "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -152,7 +151,6 @@ def main_menu():
         screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 120)
         text_surface = font.render("OPERATIVE", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 3.5))
         screen.blit(text_surface, text_rect)
@@ -166,7 +164,7 @@ def main_menu():
             if event.type == pygame.USEREVENT and event.button == start_button:
                 fade()
                 player.clear_level()
-                choosing_level_menu()
+                choosing_level_menu(data.font2)
                 if data.back_flag:
                     data.back_flag = False
                 else:
@@ -174,11 +172,11 @@ def main_menu():
 
             if event.type == pygame.USEREVENT and event.button == settings_button:
                 fade()
-                settings_menu()
+                settings_menu(data.font2)
 
             if event.type == pygame.USEREVENT and event.button == statistics_button:
                 fade()
-                about_menu()
+                about_menu(data.font2)
 
             if event.type == pygame.USEREVENT and event.button == exit_button:
                 running = False
@@ -195,7 +193,7 @@ def main_menu():
         pygame.display.flip()
 
 
-def choosing_level_menu():
+def choosing_level_menu(font):
     mission_button_lvl_1 = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 - 2 * offset_between_buttons, button_width, button_height,
                                         "LVL 1",
                                         "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
@@ -221,7 +219,7 @@ def choosing_level_menu():
         screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 115)
+
         text_surface = font.render("MISSIONS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, HEIGHT // 4.5))
         screen.blit(text_surface, text_rect)
@@ -265,7 +263,7 @@ def choosing_level_menu():
             btn.draw(screen)
         pygame.display.flip()
 
-def settings_menu():
+def settings_menu(font):
     audio_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Audio", "fonts/Disket-Mono-Regular.ttf",
                                 "images/menu_sprites/button3.png",
                                 "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -278,7 +276,7 @@ def settings_menu():
         screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
+
         text_surface = font.render("SETTINGS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
@@ -302,7 +300,7 @@ def settings_menu():
 
             if event.type == pygame.USEREVENT and event.button == audio_button:
                 fade()
-                audio_settings(sliding)
+                audio_settings(sliding, data.font2)
 
         for btn in [audio_button, back_button]:
             btn.check_hover(pygame.mouse.get_pos())
@@ -311,7 +309,7 @@ def settings_menu():
         pygame.display.flip()
 
 
-def audio_settings(sliding):
+def audio_settings(sliding, font):
     back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + 2 * offset_between_buttons, button_width, button_height, "Back to menu",
                                "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -324,7 +322,6 @@ def audio_settings(sliding):
         screen.fill("black")
         screen.blit(background, (0, 0))
 
-        font = pygame.font.Font("fonts/Lazer-Game-Zone.ttf", 100)
         text_surface = font.render("AUDIO SETTINGS", True, "white")
         text_rect = text_surface.get_rect(center=(WIDTH / 2, 100))
         screen.blit(text_surface, text_rect)
@@ -373,7 +370,7 @@ def audio_settings(sliding):
         pygame.display.flip()
 
 
-def about_menu():
+def about_menu(font):
     back_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height, "Back to menu",
                                "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
@@ -442,15 +439,15 @@ def game_run():
         for event in pygame.event.get():
             if player.health < 0:
                 game_running = False
-                dead_menu()
+                dead_menu(data.font2)
 
             if event.type == pygame.QUIT:
                 game_running = False
                 pygame.quit()
 
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE]:
-                overlay()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    overlay(data.font2)
 
         data.game_clock.tick(data.fps)
 
@@ -479,4 +476,4 @@ def fade():
         clock.tick(MAX_FPS)
 
 
-main_menu()
+main_menu(data.font2)
