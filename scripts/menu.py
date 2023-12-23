@@ -39,7 +39,7 @@ def overlay(font):
     settings_button = CreateButton(WIDTH // 2 - button_width // 2, HEIGHT // 2 + offset_between_buttons, button_width, button_height, "Settings",
                                    "fonts/Disket-Mono-Regular.ttf", "images/menu_sprites/button3.png",
                                    "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
-    exit_button = CreateButton(WIDTH / 2 - button_width // 2, HEIGHT // 2 + 2 * offset_between_buttons, button_width, button_height, "Exit", "fonts/Disket-Mono-Regular.ttf",
+    exit_button = CreateButton(WIDTH / 2 - button_width // 2, HEIGHT // 2 + 2 * offset_between_buttons, button_width, button_height, "Back to main menu", "fonts/Disket-Mono-Regular.ttf",
                                "images/menu_sprites/button3.png",
                                "images/menu_sprites/hover_button3.png", "images/menu_sprites/click.mp3")
 
@@ -70,9 +70,10 @@ def overlay(font):
                 settings_menu(data.font2)
 
             if event.type == pygame.USEREVENT and event.button == exit_button:
-                running = False
-                pygame.quit()
-                sys.exit()
+                screen.fill('black')
+                pygame.mouse.set_visible(True)
+                data.mein_menu_flag = True
+                pause = False
 
             for btn in [continue_button, settings_button, exit_button]:
                 btn.handle_event(event)
@@ -118,7 +119,7 @@ def dead_menu(font):
 
             if event.type == pygame.USEREVENT and event.button == back_button:
                 fade()
-                main_menu(data.font2)
+                running = False
 
             if event.type == pygame.USEREVENT and event.button == try_again_button:
                 fade()
@@ -448,6 +449,9 @@ def game_run():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     overlay(data.font2)
+                    if data.mein_menu_flag:
+                        game_running = False
+                        data.mein_menu_flag = False
 
         data.game_clock.tick(data.fps)
 

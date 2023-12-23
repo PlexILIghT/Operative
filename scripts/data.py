@@ -8,6 +8,7 @@ volume = 0.5
 
 # menu data
 back_flag = False
+mein_menu_flag = False
 
 # general data
 fps = 300
